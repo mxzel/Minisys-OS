@@ -25,4 +25,6 @@ Git
 ## 注意事项
 
 确保文件编码为 UTF-8  
-用 VSCode 代替记事本
+用 VSCode 代替记事本  
+终端请使用 PowerShell（Windows）  
+文档中如果包含有代码片段，请使用 Markdown 语法
