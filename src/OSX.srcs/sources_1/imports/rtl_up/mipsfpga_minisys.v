@@ -19,7 +19,9 @@ module mipsfpga_Minisys(
                         input      BTNU, BTND, BTNL, BTNC, BTNR, 
                         input  [15:0] SW,
                         output [15:0] LED,
-                        inout  [ 8:1] JB);
+                        inout  [ 8:1] JB, 
+                        output [ 7:0] AN,
+                        output        CA, CB, CC, CD, CE, CF, CG);
 
   // Press btnCpuReset to reset the processor. 
         
@@ -50,6 +52,8 @@ module mipsfpga_Minisys(
                     .IO_Switch({2'b0,SW}),
                     .IO_PB({BTNU, BTND, BTNL, BTNC, BTNR}),
                     .IO_LEDR(LED),
-                    .IO_LEDG());
+                    .IO_LEDG(), 
+                    .IO_7SEGEN_N(AN),
+                    .IO_7SEG_N({CA,CB,CC,CD,CE,CF,CG}));
           
 endmodule

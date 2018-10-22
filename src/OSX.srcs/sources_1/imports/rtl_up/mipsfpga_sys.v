@@ -22,7 +22,10 @@ module mipsfpga_sys(input         SI_Reset_N,
                     input  [17:0] IO_Switch,
                     input  [ 4:0] IO_PB,
                     output [17:0] IO_LEDR,
-                    output [ 8:0] IO_LEDG);
+                    output [ 8:0] IO_LEDG, 
+                    output reg [  7: 0] IO_7SEGEN_N, 
+                    output reg [  6: 0] IO_7SEG_N
+                );
 
 
 
@@ -281,7 +284,7 @@ module mipsfpga_sys(input         SI_Reset_N,
 
 // AHB module that sits on AHB-Lite bus
 
-    mipsfpga_ahb mipsfpga_ahb(HCLK, HRESETn, HADDR, HBURST, HMASTLOCK, HPROT, HSIZE, HTRANS, HWDATA, HWRITE, HRDATA, HREADY, HRESP, SI_Endian, IO_Switch, IO_PB, IO_LEDR, IO_LEDG);
+    mipsfpga_ahb mipsfpga_ahb(HCLK, HRESETn, HADDR, HBURST, HMASTLOCK, HPROT, HSIZE, HTRANS, HWDATA, HWRITE, HRDATA, HREADY, HRESP, SI_Endian, IO_Switch, IO_PB, IO_LEDR, IO_LEDG, IO_7SEGEN_N, IO_7SEG_N);
 
 // Module for hardware reset of EJTAG just after FPGA configuration
 // It pulses EJ_TRST_N low for 16 clock cycles.

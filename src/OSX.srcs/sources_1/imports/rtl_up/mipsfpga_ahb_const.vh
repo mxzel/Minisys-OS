@@ -29,3 +29,12 @@
 `define H_RAM_ADDR_Match 		(1'b0)
 `define H_LEDR_ADDR_Match		(7'h7e)
 
+`define H_7SEGEN_IONUM         (4'h5)
+`define H_7SEG0_IONUM          (4'h6)
+`define H_7SEG1_IONUM          (4'h7)
+`define H_7SEG2_IONUM          (4'h8)
+`define H_7SEG3_IONUM          (4'h9)
+`define H_7SEG4_IONUM          (4'ha)
+`define H_7SEG5_IONUM          (4'hb)
+`define H_7SEG6_IONUM          (4'hc)
+`define H_7SEG7_IONUM          (4'hd)

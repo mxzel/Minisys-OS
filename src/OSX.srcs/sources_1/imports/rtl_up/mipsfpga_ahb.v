@@ -33,7 +33,9 @@ module mipsfpga_ahb
     input      [ 17: 0] IO_Switch,
     input      [  4: 0] IO_PB,
     output     [ 17: 0] IO_LEDR,
-    output     [  8: 0] IO_LEDG
+    output     [  8: 0] IO_LEDG,
+    output reg [  7: 0] IO_7SEGEN_N, 
+    output reg [  6: 0] IO_7SEG_N
 );
 
 
@@ -56,7 +58,7 @@ module mipsfpga_ahb
   // Module 1
   mipsfpga_ahb_ram mipsfpga_ahb_ram(HCLK, HRESETn, HADDR, HWDATA, HWRITE_d, HSEL[1], HRDATA1);
   // Module 2
-  mipsfpga_ahb_gpio mipsfpga_ahb_gpio(HCLK, HRESETn, HADDR_d[5:2], HWDATA, HWRITE_d, HSEL[2], HRDATA2, IO_Switch, IO_PB, IO_LEDR, IO_LEDG);
+  mipsfpga_ahb_gpio mipsfpga_ahb_gpio(HCLK, HRESETn, HADDR_d[5:2], HWDATA, HWRITE_d, HSEL[2], HRDATA2, IO_Switch, IO_PB, IO_LEDR, IO_LEDG, IO_7SEGEN_N, IO_7SEG_N);
   
 
   ahb_decoder ahb_decoder(HADDR_d, HSEL);
