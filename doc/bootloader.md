@@ -28,6 +28,4 @@ BootLoader 的 stage2 通常包括以下步骤（以执行的先后顺序）：
 
 ## 参考资料
 
-
-
 1. [u-boot/mips移植分析](https://blog.xuite.net/tzeng015/twblog/113272444-u-boot%2Fmips%E7%A7%BB%E6%A4%8D%E5%88%86%E6%9E%90)
