@@ -10,12 +10,14 @@
                 - [GitHub 配置](#github-配置)
         - [开发平台](#开发平台)
     - [注意事项](#注意事项)
+    - [参考资料](#参考资料)
 
 
 ## 可能需要学的知识
 
 makefile  
-markdown
+markdown  
+C 语言（asmlinkage，asm，volatile 等等）
 
 ## 需要的教程
 
@@ -27,7 +29,7 @@ GitHub 是通过 Git 进行版本控制的软件源代码托管服务。
 
 ##### GitHub 配置
 
-暂略
+暂略，网上有很多教程可以参考
 
 ### 开发平台
 
@@ -48,3 +50,7 @@ GitHub 是通过 Git 进行版本控制的软件源代码托管服务。
     }
     ```
     不要在 Word 文档里面插入代码。
+
+## 参考资料
+1. [ucore_os_lab](https://github.com/chyyuu/ucore_os_lab) [gitbook](https://chyyuu.gitbooks.io/ucore_os_docs/content/)  
+os kernel labs for operating systems course in Tsinghua University.
