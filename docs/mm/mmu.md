@@ -4,6 +4,51 @@
 硬件部分的功能有：TLB、虚拟地址到物理地址的映射。  
 通过 CP0 寄存器来控制内核态/用户态，也可以进行其他操作。具体参考《MicroAptiv UP Software User's Manual MD00942》
 
+## 《MicroAptiv UP Software User's Manual MD00942》
+
+### 内存管理
+
+#### TLB
+
+在请求被送到 cache 控制器之前完成虚拟地址到物理地址的转换。MMU 提供两种转换机制 - TLB（Translation Lookaside Buffer）和 FMT（Fixed Mapping Translation），TLB 未映射的区域通过 FMT 来进行映射。  
+JTLB ITLB DTLB
+
+#### 运行模式
+
+- 应用程序大多运行在用户态下
+- 当 reset 或者是异常发生的时候会进入到内核态，在内核态下，软件可以访问到整个地址空间。
+
+![虚拟地址空间](fig/虚拟地址空间.png)
+
+非映射区段不使用 TLB，也不使用 FMT，用的是一种和 FMT 类似的方式来完成地址映射。  
+映射区段使用 TLB 或 FMT 来完成地址映射，以页为基础。
+
+- kseg0 虚拟地址空间为 0x8000_0000 - 0x9FFF_FFFF，减去0x8000_0000来完成地址映射。该区段虚拟空间大小为 512MB。
+- kseg1 虚拟地址空间为 0xA000_0000 - 0xBFFF_FFFF，减去 0xA000_0000 来完成地址映射。该区段虚拟空间大小为 512 MB。
+- kseg2 虚拟地址空间为 0xC000_0000 - 0xDFFF_FFFF，通过 TLB 来完成地址映射
+- kseg3 虚拟地址空间为 0xE000_0000 - 0xFFFF_FFFF，通过 TLB 来完成地址映射
+
+#### TLB
+
+- JTLB（joint TLB）同时完成指令和数据的地址转换
+- microAptiv UPc core 实现了一个随机替换算法，为避免随机替换，可通过设置 CP0寄存器来实现自己的替换算法。
+
+## CP0 寄存器
+
+每个 CP0 寄存器是通过寄存器号来区分的，从 0 到 31。
+0 1 2 3 4 5 6 10 15
+
+R/W 硬件/软件可读可写，一方对其更新后另一方可以访问到  
+R 启动时初始化为全0或者为预设值，或者硬件在满足某些条件的情况下更新它的值，软件只可读  
+W 软件可写，但是软件不可读。如果软件读寄存器的值，会返回未定义的值  
+0 设为全0
+
+<!-- TODO: 138页 -->
+
+
+
+## 其他
+
 boot 中的 Makefile 指明，启动代码和用户代码被放到了内存中的两个不同的位置，有很大迹象表明内存空间可以自行分配。
 ```makefile
 # Place the boot code (physical address). The virtual address for
