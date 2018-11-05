@@ -1,0 +1,806 @@
+Archive member included to satisfy reference by file (symbol)
+
+c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/../../../../mips-mti-elf/lib/mipsel-r2-soft-newlib/lib\libc.a(lib_a-atexit.o)
+                              c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/../../../../mips-mti-elf/lib/mipsel-r2-soft-newlib/lib\crt0.o (atexit)
+c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/../../../../mips-mti-elf/lib/mipsel-r2-soft-newlib/lib\libc.a(lib_a-exit.o)
+                              c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/../../../../mips-mti-elf/lib/mipsel-r2-soft-newlib/lib\crt0.o (exit)
+c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/../../../../mips-mti-elf/lib/mipsel-r2-soft-newlib/lib\libc.a(lib_a-impure.o)
+                              c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/../../../../mips-mti-elf/lib/mipsel-r2-soft-newlib/lib\libc.a(lib_a-exit.o) (_global_impure_ptr)
+c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/../../../../mips-mti-elf/lib/mipsel-r2-soft-newlib/lib\libc.a(lib_a-__atexit.o)
+                              c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/../../../../mips-mti-elf/lib/mipsel-r2-soft-newlib/lib\libc.a(lib_a-atexit.o) (__register_exitproc)
+c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/../../../../mips-mti-elf/lib/mipsel-r2-soft-newlib/lib\libc.a(lib_a-__call_atexit.o)
+                              c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/../../../../mips-mti-elf/lib/mipsel-r2-soft-newlib/lib\libc.a(lib_a-exit.o) (__call_exitprocs)
+c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/../../../../mips-mti-elf/lib/mipsel-r2-soft-newlib/lib\libuhi.a(uhi_exit.o)
+                              c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/../../../../mips-mti-elf/lib/mipsel-r2-soft-newlib/lib\crt0.o (__exit)
+c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/../../../../mips-mti-elf/lib/mipsel-r2-soft-newlib/lib\libuhi.a(uhi_getargs.o)
+                              c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/../../../../mips-mti-elf/lib/mipsel-r2-soft-newlib/lib\crt0.o (__getargs)
+c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/../../../../mips-mti-elf/lib/mipsel-r2-soft-newlib/lib\libuhi.a(uhi_get_ram_range.o)
+                              c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/../../../../mips-mti-elf/lib/mipsel-r2-soft-newlib/lib\crt0.o (_get_ram_range)
+c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/../../../../mips-mti-elf/lib/mipsel-r2-soft-newlib/lib\libhal.a(mips_excpt_entry.o)
+                              (__exception_entry)
+c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/../../../../mips-mti-elf/lib/mipsel-r2-soft-newlib/lib\libhal.a(mips_excpt_handler.o)
+                              (__exception_handle_verbose)
+c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/../../../../mips-mti-elf/lib/mipsel-r2-soft-newlib/lib\libhal.a(mips_excpt_register.o)
+                              c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/../../../../mips-mti-elf/lib/mipsel-r2-soft-newlib/lib\libhal.a(mips_excpt_entry.o) (__first_boot)
+c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/../../../../mips-mti-elf/lib/mipsel-r2-soft-newlib/lib\libhal.a(mips_excpt_boot.o)
+                              c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/../../../../mips-mti-elf/lib/mipsel-r2-soft-newlib/lib\libhal.a(mips_excpt_register.o) (__register_excpt_boot)
+c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/../../../../mips-mti-elf/lib/mipsel-r2-soft-newlib/lib\libhal.a(mips_excpt_isr.o)
+                              (__isr_vec)
+c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/../../../../mips-mti-elf/lib/mipsel-r2-soft-newlib/lib\libc.a(lib_a-strlen.o)
+                              c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/../../../../mips-mti-elf/lib/mipsel-r2-soft-newlib/lib\libhal.a(mips_excpt_handler.o) (strlen)
+c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/../../../../mips-mti-elf/lib/mipsel-r2-soft-newlib/lib\libuhi.a(uhi_write.o)
+                              c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/../../../../mips-mti-elf/lib/mipsel-r2-soft-newlib/lib\libhal.a(mips_excpt_handler.o) (write)
+c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/../../../../mips-mti-elf/lib/mipsel-r2-soft-newlib/lib\libuhi.a(uhi_exception.o)
+                              c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/../../../../mips-mti-elf/lib/mipsel-r2-soft-newlib/lib\libhal.a(mips_excpt_handler.o) (__uhi_exception)
+c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/../../../../mips-mti-elf/lib/mipsel-r2-soft-newlib/lib\libuhi.a(uhi_indirect.o)
+                              c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/../../../../mips-mti-elf/lib/mipsel-r2-soft-newlib/lib\libhal.a(mips_excpt_handler.o) (__uhi_indirect)
+c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/../../../../mips-mti-elf/lib/mipsel-r2-soft-newlib/lib\libc.a(lib_a-errno.o)
+                              c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/../../../../mips-mti-elf/lib/mipsel-r2-soft-newlib/lib\libuhi.a(uhi_write.o) (__errno)
+
+Discarded input sections
+
+ .reginfo       0x0000000000000000       0x18 c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/mipsel-r2-soft-newlib/lib/crti.o
+ .MIPS.abiflags
+                0x0000000000000000       0x18 c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/mipsel-r2-soft-newlib/lib/crti.o
+ .reginfo       0x0000000000000000       0x18 c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/mipsel-r2-soft-newlib/lib/crtbegin.o
+ .MIPS.abiflags
+                0x0000000000000000       0x18 c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/mipsel-r2-soft-newlib/lib/crtbegin.o
+ .reginfo       0x0000000000000000       0x18 boot.o
+ .MIPS.abiflags
+                0x0000000000000000       0x18 boot.o
+ .reginfo       0x0000000000000000       0x18 main.o
+ .MIPS.abiflags
+                0x0000000000000000       0x18 main.o
+ .reginfo       0x0000000000000000       0x18 c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/mipsel-r2-soft-newlib/lib/crtend.o
+ .MIPS.abiflags
+                0x0000000000000000       0x18 c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/mipsel-r2-soft-newlib/lib/crtend.o
+ .reginfo       0x0000000000000000       0x18 c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/mipsel-r2-soft-newlib/lib/crtn.o
+ .MIPS.abiflags
+                0x0000000000000000       0x18 c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/mipsel-r2-soft-newlib/lib/crtn.o
+ .reginfo       0x0000000000000000       0x18 c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/../../../../mips-mti-elf/lib/mipsel-r2-soft-newlib/lib\libc.a(lib_a-atexit.o)
+ .MIPS.abiflags
+                0x0000000000000000       0x18 c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/../../../../mips-mti-elf/lib/mipsel-r2-soft-newlib/lib\libc.a(lib_a-atexit.o)
+ .reginfo       0x0000000000000000       0x18 c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/../../../../mips-mti-elf/lib/mipsel-r2-soft-newlib/lib\libc.a(lib_a-exit.o)
+ .MIPS.abiflags
+                0x0000000000000000       0x18 c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/../../../../mips-mti-elf/lib/mipsel-r2-soft-newlib/lib\libc.a(lib_a-exit.o)
+ .reginfo       0x0000000000000000       0x18 c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/../../../../mips-mti-elf/lib/mipsel-r2-soft-newlib/lib\libc.a(lib_a-impure.o)
+ .MIPS.abiflags
+                0x0000000000000000       0x18 c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/../../../../mips-mti-elf/lib/mipsel-r2-soft-newlib/lib\libc.a(lib_a-impure.o)
+ .reginfo       0x0000000000000000       0x18 c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/../../../../mips-mti-elf/lib/mipsel-r2-soft-newlib/lib\libc.a(lib_a-__atexit.o)
+ .MIPS.abiflags
+                0x0000000000000000       0x18 c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/../../../../mips-mti-elf/lib/mipsel-r2-soft-newlib/lib\libc.a(lib_a-__atexit.o)
+ .reginfo       0x0000000000000000       0x18 c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/../../../../mips-mti-elf/lib/mipsel-r2-soft-newlib/lib\libc.a(lib_a-__call_atexit.o)
+ .MIPS.abiflags
+                0x0000000000000000       0x18 c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/../../../../mips-mti-elf/lib/mipsel-r2-soft-newlib/lib\libc.a(lib_a-__call_atexit.o)
+ .reginfo       0x0000000000000000       0x18 c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/../../../../mips-mti-elf/lib/mipsel-r2-soft-newlib/lib\libuhi.a(uhi_exit.o)
+ .MIPS.abiflags
+                0x0000000000000000       0x18 c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/../../../../mips-mti-elf/lib/mipsel-r2-soft-newlib/lib\libuhi.a(uhi_exit.o)
+ .reginfo       0x0000000000000000       0x18 c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/../../../../mips-mti-elf/lib/mipsel-r2-soft-newlib/lib\libuhi.a(uhi_getargs.o)
+ .MIPS.abiflags
+                0x0000000000000000       0x18 c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/../../../../mips-mti-elf/lib/mipsel-r2-soft-newlib/lib\libuhi.a(uhi_getargs.o)
+ .reginfo       0x0000000000000000       0x18 c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/../../../../mips-mti-elf/lib/mipsel-r2-soft-newlib/lib\libuhi.a(uhi_get_ram_range.o)
+ .MIPS.abiflags
+                0x0000000000000000       0x18 c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/../../../../mips-mti-elf/lib/mipsel-r2-soft-newlib/lib\libuhi.a(uhi_get_ram_range.o)
+ .reginfo       0x0000000000000000       0x18 c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/../../../../mips-mti-elf/lib/mipsel-r2-soft-newlib/lib\libhal.a(mips_excpt_entry.o)
+ .MIPS.abiflags
+                0x0000000000000000       0x18 c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/../../../../mips-mti-elf/lib/mipsel-r2-soft-newlib/lib\libhal.a(mips_excpt_entry.o)
+ .reginfo       0x0000000000000000       0x18 c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/../../../../mips-mti-elf/lib/mipsel-r2-soft-newlib/lib\libhal.a(mips_excpt_handler.o)
+ .MIPS.abiflags
+                0x0000000000000000       0x18 c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/../../../../mips-mti-elf/lib/mipsel-r2-soft-newlib/lib\libhal.a(mips_excpt_handler.o)
+ .reginfo       0x0000000000000000       0x18 c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/../../../../mips-mti-elf/lib/mipsel-r2-soft-newlib/lib\libhal.a(mips_excpt_register.o)
+ .MIPS.abiflags
+                0x0000000000000000       0x18 c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/../../../../mips-mti-elf/lib/mipsel-r2-soft-newlib/lib\libhal.a(mips_excpt_register.o)
+ .reginfo       0x0000000000000000       0x18 c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/../../../../mips-mti-elf/lib/mipsel-r2-soft-newlib/lib\libhal.a(mips_excpt_boot.o)
+ .MIPS.abiflags
+                0x0000000000000000       0x18 c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/../../../../mips-mti-elf/lib/mipsel-r2-soft-newlib/lib\libhal.a(mips_excpt_boot.o)
+ .reginfo       0x0000000000000000       0x18 c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/../../../../mips-mti-elf/lib/mipsel-r2-soft-newlib/lib\libhal.a(mips_excpt_isr.o)
+ .MIPS.abiflags
+                0x0000000000000000       0x18 c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/../../../../mips-mti-elf/lib/mipsel-r2-soft-newlib/lib\libhal.a(mips_excpt_isr.o)
+ .reginfo       0x0000000000000000       0x18 c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/../../../../mips-mti-elf/lib/mipsel-r2-soft-newlib/lib\libc.a(lib_a-strlen.o)
+ .MIPS.abiflags
+                0x0000000000000000       0x18 c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/../../../../mips-mti-elf/lib/mipsel-r2-soft-newlib/lib\libc.a(lib_a-strlen.o)
+ .reginfo       0x0000000000000000       0x18 c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/../../../../mips-mti-elf/lib/mipsel-r2-soft-newlib/lib\libuhi.a(uhi_write.o)
+ .MIPS.abiflags
+                0x0000000000000000       0x18 c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/../../../../mips-mti-elf/lib/mipsel-r2-soft-newlib/lib\libuhi.a(uhi_write.o)
+ .reginfo       0x0000000000000000       0x18 c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/../../../../mips-mti-elf/lib/mipsel-r2-soft-newlib/lib\libuhi.a(uhi_exception.o)
+ .MIPS.abiflags
+                0x0000000000000000       0x18 c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/../../../../mips-mti-elf/lib/mipsel-r2-soft-newlib/lib\libuhi.a(uhi_exception.o)
+ .reginfo       0x0000000000000000       0x18 c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/../../../../mips-mti-elf/lib/mipsel-r2-soft-newlib/lib\libuhi.a(uhi_indirect.o)
+ .MIPS.abiflags
+                0x0000000000000000       0x18 c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/../../../../mips-mti-elf/lib/mipsel-r2-soft-newlib/lib\libuhi.a(uhi_indirect.o)
+ .reginfo       0x0000000000000000       0x18 c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/../../../../mips-mti-elf/lib/mipsel-r2-soft-newlib/lib\libc.a(lib_a-errno.o)
+ .MIPS.abiflags
+                0x0000000000000000       0x18 c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/../../../../mips-mti-elf/lib/mipsel-r2-soft-newlib/lib\libc.a(lib_a-errno.o)
+
+Memory Configuration
+
+Name             Origin             Length             Attributes
+*default*        0x0000000000000000 0xffffffffffffffff
+
+Linker script and memory map
+
+LOAD c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/../../../../mips-mti-elf/lib/mipsel-r2-soft-newlib/lib\crt0.o
+LOAD c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/mipsel-r2-soft-newlib/lib/crti.o
+LOAD c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/mipsel-r2-soft-newlib/lib/crtbegin.o
+                0x00000000bfc00000                __flash_start = 0xbfc00000
+                0x0000000080000000                __flash_app_start = 0x80000000
+                0x0000000080000000                __app_start = 0x80000000
+                0x0000000080040000                __stack = 0x80040000
+                0x000000000001f800                __memory_size = 0x1f800
+LOAD boot.o
+LOAD main.o
+LOAD c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/mipsel-r2-soft-newlib/lib\libgcc.a
+LOAD c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/mipsel-r2-soft-newlib/lib\libgcc.a
+LOAD c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/mipsel-r2-soft-newlib/lib/crtend.o
+LOAD c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/mipsel-r2-soft-newlib/lib/crtn.o
+                0x00000000bfc00000                __entry = DEFINED (__reset_vector)?0xbfc00000:_start
+START GROUP
+LOAD c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/../../../../mips-mti-elf/lib/mipsel-r2-soft-newlib/lib\libc.a
+LOAD c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/../../../../mips-mti-elf/lib/mipsel-r2-soft-newlib/lib\libuhi.a
+LOAD c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/mipsel-r2-soft-newlib/lib\libgcc.a
+LOAD c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/../../../../mips-mti-elf/lib/mipsel-r2-soft-newlib/lib\libhal.a
+END GROUP
+                0x0000000000000000                __DYNAMIC = 0x0
+                0x0000000000000000                PROVIDE (__stack, 0x0)
+                0x0000000000300000                PROVIDE (__memory_size, 0x300000)
+                0x0000000080000000                PROVIDE (__memory_base, 0x80000000)
+                0x0000000000000001                PROVIDE (__tlb_stride_length, 0x1)
+                0x0000000000000000                PROVIDE (__enable_xpa, 0x0)
+                0x0000000000000001                PROVIDE (__use_excpt_boot, 0x1)
+                0x0000000000000001                ASSERT ((DEFINED (__register_excpt_boot) || (__use_excpt_boot == 0x0)), Registration for boot context is required for UHI chaining)
+                0x0000000000000001                PROVIDE (__flush_to_zero, 0x1)
+                0x0000000080000d10                PROVIDE (__exception_handle, DEFINED (__exception_handle_quiet)?__exception_handle_quiet:__exception_handle_verbose)
+                0x0000000080000d10                PROVIDE (_mips_handle_exception, __exception_handle)
+                0x0000000000000000                PROVIDE (hardware_exit_hook, 0x0)
+                0x0000000000000000                PROVIDE (hardware_hazard_hook, 0x0)
+                0x0000000000000000                PROVIDE (hardware_init_hook, 0x0)
+                0x0000000000000000                PROVIDE (software_init_hook, 0x0)
+                0x0000000080000000                PROVIDE (__app_start, DEFINED (__reset_vector)?0x80000000:0x80200000)
+                0x0000000000000020                PROVIDE (__isr_vec_space, 0x20)
+                0x0000000000000009                PROVIDE (__isr_vec_count, 0x9)
+                0x00000000bfc00000                PROVIDE (__flash_start, DEFINED (__reset_vector)?0xbfc00000:__app_start)
+
+.bootrom        0x000000009fc00000      0x4a0 load address 0x00000000bfc00000
+ *(.reset)
+ .reset         0x000000009fc00000      0x49c boot.o
+                0x000000009fc00000                __reset_vector
+                0x000000009fc00014                __cpu_init
+                0x000000009fc000a8                init_icache
+                0x000000009fc00100                init_dcache
+                0x000000009fc00160                change_k0_cca
+                0x000000009fc00288                init_cp0
+                0x000000009fc00308                init_tlb
+ *(.boot)
+                0x000000009fc004a0                . = ALIGN (0x8)
+ *fill*         0x000000009fc0049c        0x4 00000000
+                0x00000000bfc004a0                PROVIDE (__flash_app_start, (SIZEOF (.bootrom) + __flash_start))
+
+.exception_vector
+                0x0000000080000000      0x320
+                0x0000000080000000                __excpt_ebase = ABSOLUTE (.)
+                0x0000000080000000                __base = .
+ *(.text.__exception_entry)
+ .text.__exception_entry
+                0x0000000080000000      0x194 c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/../../../../mips-mti-elf/lib/mipsel-r2-soft-newlib/lib\libhal.a(mips_excpt_entry.o)
+                0x0000000080000000                __exception_entry
+                0x0000000080000200                . = (__base + 0x200)
+ *fill*         0x0000000080000194       0x6c 00000000
+ *(SORT(.text.__isr_vec*))
+ .text.__isr_vec
+                0x0000000080000200      0x118 c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/../../../../mips-mti-elf/lib/mipsel-r2-soft-newlib/lib\libhal.a(mips_excpt_isr.o)
+                0x0000000080000200                __isr_vec_sw0
+                0x0000000080000200                __isr_vec
+                0x0000000080000220                __isr_vec_sw1
+                0x0000000080000240                __isr_vec_hw0
+                0x0000000080000260                __isr_vec_hw1
+                0x0000000080000280                __isr_vec_hw2
+                0x00000000800002a0                __isr_vec_hw3
+                0x00000000800002c0                __isr_vec_hw4
+                0x00000000800002e0                __isr_vec_hw5
+                0x0000000080000300                __isr_vec_fallback
+                0x0000000080000320                . = ((__base + 0x200) + (__isr_vec_space * __isr_vec_count))
+ *fill*         0x0000000080000318        0x8 00000000
+                0x0000000000000001                ASSERT ((__isr_vec_space == DEFINED (__isr_vec_sw0)?(__isr_vec_sw1 - __isr_vec_sw0):__isr_vec_space), Actual ISR vector spacing does not match __isr_vec_space)
+                0x0000000000000001                ASSERT (((__base + 0x200) == DEFINED (__isr_vec_sw0)?(__isr_vec_sw0 & 0xfffffffe):(__base + 0x200)), __isr_vec_sw0 is not placed at EBASE + 0x200)
+                0x0000000080000320                . = ALIGN (0x8)
+
+.text           0x0000000080000320     0x1698
+                0x0000000080000320                _ftext = .
+                0x0000000080000320                PROVIDE (eprol, .)
+ *(.text)
+ .text          0x0000000080000320      0x298 c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/../../../../mips-mti-elf/lib/mipsel-r2-soft-newlib/lib\crt0.o
+                0x0000000080000324                _start
+                0x0000000080000578                _exit
+ .text          0x00000000800005b8        0x0 c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/mipsel-r2-soft-newlib/lib/crti.o
+ .text          0x00000000800005b8      0x1a4 c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/mipsel-r2-soft-newlib/lib/crtbegin.o
+ .text          0x000000008000075c        0x0 boot.o
+ .text          0x000000008000075c       0x24 main.o
+                0x000000008000075c                main
+                0x000000008000076c                _mips_handle_exception
+ .text          0x0000000080000780       0x48 c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/mipsel-r2-soft-newlib/lib/crtend.o
+ .text          0x00000000800007c8        0x0 c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/mipsel-r2-soft-newlib/lib/crtn.o
+ .text          0x00000000800007c8       0x28 c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/../../../../mips-mti-elf/lib/mipsel-r2-soft-newlib/lib\libc.a(lib_a-atexit.o)
+                0x00000000800007c8                atexit
+ .text          0x00000000800007f0       0x3c c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/../../../../mips-mti-elf/lib/mipsel-r2-soft-newlib/lib\libc.a(lib_a-exit.o)
+                0x00000000800007f0                exit
+ .text          0x000000008000082c        0x0 c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/../../../../mips-mti-elf/lib/mipsel-r2-soft-newlib/lib\libc.a(lib_a-impure.o)
+ .text          0x000000008000082c      0x110 c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/../../../../mips-mti-elf/lib/mipsel-r2-soft-newlib/lib\libc.a(lib_a-__atexit.o)
+                0x000000008000082c                __register_exitproc
+ .text          0x000000008000093c      0x180 c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/../../../../mips-mti-elf/lib/mipsel-r2-soft-newlib/lib\libc.a(lib_a-__call_atexit.o)
+                0x000000008000093c                __call_exitprocs
+ .text          0x0000000080000abc       0x88 c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/../../../../mips-mti-elf/lib/mipsel-r2-soft-newlib/lib\libuhi.a(uhi_exit.o)
+                0x0000000080000abc                __exit
+ .text          0x0000000080000b44       0xb8 c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/../../../../mips-mti-elf/lib/mipsel-r2-soft-newlib/lib\libuhi.a(uhi_getargs.o)
+                0x0000000080000b44                __getargs
+ .text          0x0000000080000bfc       0x4c c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/../../../../mips-mti-elf/lib/mipsel-r2-soft-newlib/lib\libuhi.a(uhi_get_ram_range.o)
+                0x0000000080000bfc                _get_ram_range
+ .text          0x0000000080000c48        0x0 c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/../../../../mips-mti-elf/lib/mipsel-r2-soft-newlib/lib\libhal.a(mips_excpt_entry.o)
+ .text          0x0000000080000c48      0x7ac c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/../../../../mips-mti-elf/lib/mipsel-r2-soft-newlib/lib\libhal.a(mips_excpt_handler.o)
+                0x0000000080000d10                __exception_handle_verbose
+ .text          0x00000000800013f4       0xb0 c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/../../../../mips-mti-elf/lib/mipsel-r2-soft-newlib/lib\libhal.a(mips_excpt_register.o)
+                0x00000000800013f4                __register_excpt_handler
+ .text          0x00000000800014a4      0x27c c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/../../../../mips-mti-elf/lib/mipsel-r2-soft-newlib/lib\libhal.a(mips_excpt_boot.o)
+                0x00000000800014a4                __register_excpt_boot
+                0x0000000080001520                __return_to_boot
+                0x00000000800015c0                __chain_uhi_excpt
+                0x0000000080001678                __get_startup_BEV
+                0x0000000080001690                __convert_argv_pointers
+ .text          0x0000000080001720        0x0 c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/../../../../mips-mti-elf/lib/mipsel-r2-soft-newlib/lib\libhal.a(mips_excpt_isr.o)
+ .text          0x0000000080001720       0x1c c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/../../../../mips-mti-elf/lib/mipsel-r2-soft-newlib/lib\libc.a(lib_a-strlen.o)
+                0x0000000080001720                strlen
+ .text          0x000000008000173c       0x50 c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/../../../../mips-mti-elf/lib/mipsel-r2-soft-newlib/lib\libuhi.a(uhi_write.o)
+                0x000000008000173c                write
+ .text          0x000000008000178c       0x14 c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/../../../../mips-mti-elf/lib/mipsel-r2-soft-newlib/lib\libuhi.a(uhi_exception.o)
+                0x000000008000178c                __uhi_exception
+ .text          0x00000000800017a0       0x44 c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/../../../../mips-mti-elf/lib/mipsel-r2-soft-newlib/lib\libuhi.a(uhi_indirect.o)
+                0x00000000800017a0                __uhi_indirect
+ .text          0x00000000800017e4        0xc c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/../../../../mips-mti-elf/lib/mipsel-r2-soft-newlib/lib\libc.a(lib_a-errno.o)
+                0x00000000800017e4                __errno
+ *(.text.*)
+ .text.__exception_save
+                0x00000000800017f0      0x1c8 c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/../../../../mips-mti-elf/lib/mipsel-r2-soft-newlib/lib\libhal.a(mips_excpt_entry.o)
+                0x00000000800017f0                _mips_xtlb_refill
+                0x00000000800017f0                _mips_general_exception
+                0x00000000800017f0                _mips_tlb_refill
+                0x00000000800017f0                __exception_save
+ *(.gnu.linkonce.t.*)
+ *(.mips16.fn.*)
+ *(.mips16.call.*)
+
+.init           0x00000000800019b8       0x24
+ *(.init)
+ .init          0x00000000800019b8        0x8 c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/mipsel-r2-soft-newlib/lib/crti.o
+                0x00000000800019b8                _init
+ .init          0x00000000800019c0        0x8 c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/mipsel-r2-soft-newlib/lib/crtbegin.o
+ .init          0x00000000800019c8        0x8 c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/mipsel-r2-soft-newlib/lib/crtend.o
+ .init          0x00000000800019d0        0xc c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/mipsel-r2-soft-newlib/lib/crtn.o
+
+.fini           0x00000000800019dc       0x1c
+ *(.fini)
+ .fini          0x00000000800019dc        0x8 c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/mipsel-r2-soft-newlib/lib/crti.o
+                0x00000000800019dc                _fini
+ .fini          0x00000000800019e4        0x8 c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/mipsel-r2-soft-newlib/lib/crtbegin.o
+ .fini          0x00000000800019ec        0xc c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/mipsel-r2-soft-newlib/lib/crtn.o
+
+.rel.sdata      0x00000000800019f8        0x0
+                0x00000000800019f8                PROVIDE (__runtime_reloc_start, .)
+ *(.rel.sdata)
+                0x00000000800019f8                PROVIDE (__runtime_reloc_stop, .)
+                0x00000000800019f8                PROVIDE (etext, .)
+                0x00000000800019f8                _etext = .
+
+.eh_frame_hdr
+ *(.eh_frame_hdr)
+
+.eh_frame       0x00000000800019f8        0x4
+ *(.eh_frame)
+ .eh_frame      0x00000000800019f8        0x0 c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/mipsel-r2-soft-newlib/lib/crtbegin.o
+ .eh_frame      0x00000000800019f8        0x4 c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/mipsel-r2-soft-newlib/lib/crtend.o
+
+.gcc_except_table
+ *(.gcc_except_table)
+
+.jcr            0x00000000800019fc        0x4
+ *(.jcr)
+ .jcr           0x00000000800019fc        0x0 c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/mipsel-r2-soft-newlib/lib/crtbegin.o
+ .jcr           0x00000000800019fc        0x4 c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/mipsel-r2-soft-newlib/lib/crtend.o
+
+.ctors          0x0000000080001a00        0x8
+ *crtbegin.o(.ctors)
+ .ctors         0x0000000080001a00        0x4 c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/mipsel-r2-soft-newlib/lib/crtbegin.o
+ *(EXCLUDE_FILE(*crtend.o) .ctors)
+ *(SORT(.ctors.*))
+ *(.ctors)
+ .ctors         0x0000000080001a04        0x4 c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/mipsel-r2-soft-newlib/lib/crtend.o
+
+.dtors          0x0000000080001a08        0x8
+ *crtbegin.o(.dtors)
+ .dtors         0x0000000080001a08        0x4 c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/mipsel-r2-soft-newlib/lib/crtbegin.o
+ *(EXCLUDE_FILE(*crtend.o) .dtors)
+ *(SORT(.dtors.*))
+ *(.dtors)
+ .dtors         0x0000000080001a0c        0x4 c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/mipsel-r2-soft-newlib/lib/crtend.o
+                0x0000000080001a0c                __DTOR_END__
+                0x0000000080001a10                . = .
+
+.MIPS.abiflags  0x0000000080001a10       0x18
+                0x0000000080001a10                __MIPS_abiflags_start = .
+ *(.MIPS.abiflags)
+ .MIPS.abiflags
+                0x0000000080001a10       0x18 c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/../../../../mips-mti-elf/lib/mipsel-r2-soft-newlib/lib\crt0.o
+                0x0000000080001a28                __MIPS_abiflags_end = .
+
+.rodata         0x0000000080001a28      0x4a4
+ *(.rdata)
+ *(.rodata)
+ .rodata        0x0000000080001a28       0x78 c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/../../../../mips-mti-elf/lib/mipsel-r2-soft-newlib/lib\libhal.a(mips_excpt_handler.o)
+ *(.rodata.*)
+ .rodata.str1.4
+                0x0000000080001aa0        0x2 c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/../../../../mips-mti-elf/lib/mipsel-r2-soft-newlib/lib\libc.a(lib_a-impure.o)
+                                          0x4 (size before relaxing)
+ *fill*         0x0000000080001aa2        0x2 
+ .rodata.str1.4
+                0x0000000080001aa4      0x428 c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/../../../../mips-mti-elf/lib/mipsel-r2-soft-newlib/lib\libhal.a(mips_excpt_handler.o)
+                                        0x44c (size before relaxing)
+ *(.gnu.linkonce.r.*)
+                0x0000000080001ed0                . = ALIGN (0x10)
+                0x0000000080001ed0                _fdata = .
+
+.data           0x0000000080001ed0      0x498
+ *(.data)
+ .data          0x0000000080001ed0        0xc c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/../../../../mips-mti-elf/lib/mipsel-r2-soft-newlib/lib\crt0.o
+ .data          0x0000000080001edc        0x0 c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/mipsel-r2-soft-newlib/lib/crti.o
+ .data          0x0000000080001edc        0x0 c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/mipsel-r2-soft-newlib/lib/crtbegin.o
+ .data          0x0000000080001edc        0x0 boot.o
+ .data          0x0000000080001edc        0x0 main.o
+ .data          0x0000000080001edc        0x0 c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/mipsel-r2-soft-newlib/lib/crtend.o
+ .data          0x0000000080001edc        0x0 c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/mipsel-r2-soft-newlib/lib/crtn.o
+ .data          0x0000000080001edc        0x0 c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/../../../../mips-mti-elf/lib/mipsel-r2-soft-newlib/lib\libc.a(lib_a-atexit.o)
+ .data          0x0000000080001edc        0x0 c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/../../../../mips-mti-elf/lib/mipsel-r2-soft-newlib/lib\libc.a(lib_a-exit.o)
+ *fill*         0x0000000080001edc        0x4 
+ .data          0x0000000080001ee0      0x428 c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/../../../../mips-mti-elf/lib/mipsel-r2-soft-newlib/lib\libc.a(lib_a-impure.o)
+ .data          0x0000000080002308        0x0 c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/../../../../mips-mti-elf/lib/mipsel-r2-soft-newlib/lib\libc.a(lib_a-__atexit.o)
+ .data          0x0000000080002308        0x0 c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/../../../../mips-mti-elf/lib/mipsel-r2-soft-newlib/lib\libc.a(lib_a-__call_atexit.o)
+ .data          0x0000000080002308        0x0 c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/../../../../mips-mti-elf/lib/mipsel-r2-soft-newlib/lib\libuhi.a(uhi_exit.o)
+ .data          0x0000000080002308        0x0 c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/../../../../mips-mti-elf/lib/mipsel-r2-soft-newlib/lib\libuhi.a(uhi_getargs.o)
+ .data          0x0000000080002308        0x0 c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/../../../../mips-mti-elf/lib/mipsel-r2-soft-newlib/lib\libuhi.a(uhi_get_ram_range.o)
+ .data          0x0000000080002308        0x0 c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/../../../../mips-mti-elf/lib/mipsel-r2-soft-newlib/lib\libhal.a(mips_excpt_entry.o)
+ .data          0x0000000080002308        0x0 c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/../../../../mips-mti-elf/lib/mipsel-r2-soft-newlib/lib\libhal.a(mips_excpt_handler.o)
+ .data          0x0000000080002308        0x4 c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/../../../../mips-mti-elf/lib/mipsel-r2-soft-newlib/lib\libhal.a(mips_excpt_register.o)
+                0x0000000080002308                __first_boot
+ .data          0x000000008000230c       0x5c c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/../../../../mips-mti-elf/lib/mipsel-r2-soft-newlib/lib\libhal.a(mips_excpt_boot.o)
+                0x000000008000230c                __start_ctx
+                0x0000000080002354                __MIPS_UHI_BAD_POINTER
+ .data          0x0000000080002368        0x0 c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/../../../../mips-mti-elf/lib/mipsel-r2-soft-newlib/lib\libhal.a(mips_excpt_isr.o)
+ .data          0x0000000080002368        0x0 c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/../../../../mips-mti-elf/lib/mipsel-r2-soft-newlib/lib\libc.a(lib_a-strlen.o)
+ .data          0x0000000080002368        0x0 c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/../../../../mips-mti-elf/lib/mipsel-r2-soft-newlib/lib\libuhi.a(uhi_write.o)
+ .data          0x0000000080002368        0x0 c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/../../../../mips-mti-elf/lib/mipsel-r2-soft-newlib/lib\libuhi.a(uhi_exception.o)
+ .data          0x0000000080002368        0x0 c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/../../../../mips-mti-elf/lib/mipsel-r2-soft-newlib/lib\libuhi.a(uhi_indirect.o)
+ .data          0x0000000080002368        0x0 c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/../../../../mips-mti-elf/lib/mipsel-r2-soft-newlib/lib\libc.a(lib_a-errno.o)
+ *(.data.*)
+ *(.gnu.linkonce.d.*)
+
+.tm_clone_table
+                0x0000000080002368        0x0
+ .tm_clone_table
+                0x0000000080002368        0x0 c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/mipsel-r2-soft-newlib/lib/crtbegin.o
+ .tm_clone_table
+                0x0000000080002368        0x0 c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/mipsel-r2-soft-newlib/lib/crtend.o
+                0x0000000080002368                . = ALIGN (0x8)
+                0x000000008000a368                _gp = (. + 0x8000)
+                0x000000008000a368                __global = _gp
+
+.lit8
+ *(.lit8)
+
+.lit4
+ *(.lit4)
+
+.sdata          0x0000000080002368        0xc
+ *(.sdata)
+ .sdata         0x0000000080002368        0x4 c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/mipsel-r2-soft-newlib/lib/crtbegin.o
+                0x0000000080002368                __dso_handle
+ .sdata         0x000000008000236c        0x8 c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/../../../../mips-mti-elf/lib/mipsel-r2-soft-newlib/lib\libc.a(lib_a-impure.o)
+                0x000000008000236c                _global_impure_ptr
+                0x0000000080002370                _impure_ptr
+ *(.sdata.*)
+ *(.gnu.linkonce.s.*)
+                0x0000000080002374                . = ALIGN (0x4)
+                0x0000000080002374                PROVIDE (edata, .)
+                0x0000000080002374                _edata = .
+                0x0000000080002374                _fbss = .
+
+.sbss
+ *(.sbss)
+ *(.sbss.*)
+ *(.gnu.linkonce.sb.*)
+ *(.scommon)
+
+.bss            0x0000000080002374       0x20
+                0x0000000080002374                _bss_start = .
+ *(.bss)
+ .bss           0x0000000080002374        0x0 c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/../../../../mips-mti-elf/lib/mipsel-r2-soft-newlib/lib\crt0.o
+ .bss           0x0000000080002374        0x0 c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/mipsel-r2-soft-newlib/lib/crti.o
+ .bss           0x0000000080002374       0x20 c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/mipsel-r2-soft-newlib/lib/crtbegin.o
+ .bss           0x0000000080002394        0x0 boot.o
+ .bss           0x0000000080002394        0x0 main.o
+ .bss           0x0000000080002394        0x0 c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/mipsel-r2-soft-newlib/lib/crtend.o
+ .bss           0x0000000080002394        0x0 c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/mipsel-r2-soft-newlib/lib/crtn.o
+ .bss           0x0000000080002394        0x0 c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/../../../../mips-mti-elf/lib/mipsel-r2-soft-newlib/lib\libc.a(lib_a-atexit.o)
+ .bss           0x0000000080002394        0x0 c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/../../../../mips-mti-elf/lib/mipsel-r2-soft-newlib/lib\libc.a(lib_a-exit.o)
+ .bss           0x0000000080002394        0x0 c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/../../../../mips-mti-elf/lib/mipsel-r2-soft-newlib/lib\libc.a(lib_a-impure.o)
+ .bss           0x0000000080002394        0x0 c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/../../../../mips-mti-elf/lib/mipsel-r2-soft-newlib/lib\libc.a(lib_a-__atexit.o)
+ .bss           0x0000000080002394        0x0 c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/../../../../mips-mti-elf/lib/mipsel-r2-soft-newlib/lib\libc.a(lib_a-__call_atexit.o)
+ .bss           0x0000000080002394        0x0 c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/../../../../mips-mti-elf/lib/mipsel-r2-soft-newlib/lib\libuhi.a(uhi_exit.o)
+ .bss           0x0000000080002394        0x0 c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/../../../../mips-mti-elf/lib/mipsel-r2-soft-newlib/lib\libuhi.a(uhi_getargs.o)
+ .bss           0x0000000080002394        0x0 c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/../../../../mips-mti-elf/lib/mipsel-r2-soft-newlib/lib\libuhi.a(uhi_get_ram_range.o)
+ .bss           0x0000000080002394        0x0 c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/../../../../mips-mti-elf/lib/mipsel-r2-soft-newlib/lib\libhal.a(mips_excpt_entry.o)
+ .bss           0x0000000080002394        0x0 c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/../../../../mips-mti-elf/lib/mipsel-r2-soft-newlib/lib\libhal.a(mips_excpt_handler.o)
+ .bss           0x0000000080002394        0x0 c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/../../../../mips-mti-elf/lib/mipsel-r2-soft-newlib/lib\libhal.a(mips_excpt_register.o)
+ .bss           0x0000000080002394        0x0 c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/../../../../mips-mti-elf/lib/mipsel-r2-soft-newlib/lib\libhal.a(mips_excpt_boot.o)
+ .bss           0x0000000080002394        0x0 c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/../../../../mips-mti-elf/lib/mipsel-r2-soft-newlib/lib\libhal.a(mips_excpt_isr.o)
+ .bss           0x0000000080002394        0x0 c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/../../../../mips-mti-elf/lib/mipsel-r2-soft-newlib/lib\libc.a(lib_a-strlen.o)
+ .bss           0x0000000080002394        0x0 c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/../../../../mips-mti-elf/lib/mipsel-r2-soft-newlib/lib\libuhi.a(uhi_write.o)
+ .bss           0x0000000080002394        0x0 c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/../../../../mips-mti-elf/lib/mipsel-r2-soft-newlib/lib\libuhi.a(uhi_exception.o)
+ .bss           0x0000000080002394        0x0 c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/../../../../mips-mti-elf/lib/mipsel-r2-soft-newlib/lib\libuhi.a(uhi_indirect.o)
+ .bss           0x0000000080002394        0x0 c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/../../../../mips-mti-elf/lib/mipsel-r2-soft-newlib/lib\libc.a(lib_a-errno.o)
+ *(.bss.*)
+ *(.gnu.linkonce.b.*)
+ *(COMMON)
+                0x0000000080002394                . = ALIGN (0x4)
+                0x0000000080002394                PROVIDE (end, .)
+                0x0000000080002394                _end = .
+
+.startdata      0x00000000800023a0      0x410
+ *(.startdata)
+ .startdata     0x00000000800023a0      0x410 c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/../../../../mips-mti-elf/lib/mipsel-r2-soft-newlib/lib\crt0.o
+
+.debug
+ *(.debug)
+
+.line
+ *(.line)
+
+.debug_srcinfo
+ *(.debug_srcinfo)
+
+.debug_sfnames
+ *(.debug_sfnames)
+
+.debug_aranges  0x0000000000000000      0x298
+ *(.debug_aranges)
+ .debug_aranges
+                0x0000000000000000       0x20 c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/../../../../mips-mti-elf/lib/mipsel-r2-soft-newlib/lib\crt0.o
+ .debug_aranges
+                0x0000000000000020       0x20 boot.o
+ .debug_aranges
+                0x0000000000000040       0x20 main.o
+ .debug_aranges
+                0x0000000000000060       0x20 c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/../../../../mips-mti-elf/lib/mipsel-r2-soft-newlib/lib\libc.a(lib_a-atexit.o)
+ .debug_aranges
+                0x0000000000000080       0x20 c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/../../../../mips-mti-elf/lib/mipsel-r2-soft-newlib/lib\libc.a(lib_a-exit.o)
+ .debug_aranges
+                0x00000000000000a0       0x18 c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/../../../../mips-mti-elf/lib/mipsel-r2-soft-newlib/lib\libc.a(lib_a-impure.o)
+ .debug_aranges
+                0x00000000000000b8       0x20 c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/../../../../mips-mti-elf/lib/mipsel-r2-soft-newlib/lib\libc.a(lib_a-__atexit.o)
+ .debug_aranges
+                0x00000000000000d8       0x20 c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/../../../../mips-mti-elf/lib/mipsel-r2-soft-newlib/lib\libc.a(lib_a-__call_atexit.o)
+ .debug_aranges
+                0x00000000000000f8       0x20 c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/../../../../mips-mti-elf/lib/mipsel-r2-soft-newlib/lib\libuhi.a(uhi_exit.o)
+ .debug_aranges
+                0x0000000000000118       0x20 c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/../../../../mips-mti-elf/lib/mipsel-r2-soft-newlib/lib\libuhi.a(uhi_getargs.o)
+ .debug_aranges
+                0x0000000000000138       0x20 c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/../../../../mips-mti-elf/lib/mipsel-r2-soft-newlib/lib\libuhi.a(uhi_get_ram_range.o)
+ .debug_aranges
+                0x0000000000000158       0x28 c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/../../../../mips-mti-elf/lib/mipsel-r2-soft-newlib/lib\libhal.a(mips_excpt_entry.o)
+ .debug_aranges
+                0x0000000000000180       0x20 c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/../../../../mips-mti-elf/lib/mipsel-r2-soft-newlib/lib\libhal.a(mips_excpt_handler.o)
+ .debug_aranges
+                0x00000000000001a0       0x20 c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/../../../../mips-mti-elf/lib/mipsel-r2-soft-newlib/lib\libhal.a(mips_excpt_register.o)
+ .debug_aranges
+                0x00000000000001c0       0x20 c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/../../../../mips-mti-elf/lib/mipsel-r2-soft-newlib/lib\libhal.a(mips_excpt_boot.o)
+ .debug_aranges
+                0x00000000000001e0       0x20 c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/../../../../mips-mti-elf/lib/mipsel-r2-soft-newlib/lib\libhal.a(mips_excpt_isr.o)
+ .debug_aranges
+                0x0000000000000200       0x18 c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/../../../../mips-mti-elf/lib/mipsel-r2-soft-newlib/lib\libc.a(lib_a-strlen.o)
+ .debug_aranges
+                0x0000000000000218       0x20 c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/../../../../mips-mti-elf/lib/mipsel-r2-soft-newlib/lib\libuhi.a(uhi_write.o)
+ .debug_aranges
+                0x0000000000000238       0x20 c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/../../../../mips-mti-elf/lib/mipsel-r2-soft-newlib/lib\libuhi.a(uhi_exception.o)
+ .debug_aranges
+                0x0000000000000258       0x20 c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/../../../../mips-mti-elf/lib/mipsel-r2-soft-newlib/lib\libuhi.a(uhi_indirect.o)
+ .debug_aranges
+                0x0000000000000278       0x20 c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/../../../../mips-mti-elf/lib/mipsel-r2-soft-newlib/lib\libc.a(lib_a-errno.o)
+
+.debug_pubnames
+ *(.debug_pubnames)
+
+.debug_info     0x0000000000000000     0x4953
+ *(.debug_info)
+ .debug_info    0x0000000000000000       0xe6 c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/../../../../mips-mti-elf/lib/mipsel-r2-soft-newlib/lib\crt0.o
+ .debug_info    0x00000000000000e6       0x86 boot.o
+ .debug_info    0x000000000000016c       0xa0 main.o
+ .debug_info    0x000000000000020c      0x106 c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/../../../../mips-mti-elf/lib/mipsel-r2-soft-newlib/lib\libc.a(lib_a-atexit.o)
+ .debug_info    0x0000000000000312      0x8e0 c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/../../../../mips-mti-elf/lib/mipsel-r2-soft-newlib/lib\libc.a(lib_a-exit.o)
+ .debug_info    0x0000000000000bf2      0x890 c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/../../../../mips-mti-elf/lib/mipsel-r2-soft-newlib/lib\libc.a(lib_a-impure.o)
+ .debug_info    0x0000000000001482      0x930 c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/../../../../mips-mti-elf/lib/mipsel-r2-soft-newlib/lib\libc.a(lib_a-__atexit.o)
+ .debug_info    0x0000000000001db2      0x955 c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/../../../../mips-mti-elf/lib/mipsel-r2-soft-newlib/lib\libc.a(lib_a-__call_atexit.o)
+ .debug_info    0x0000000000002707      0x126 c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/../../../../mips-mti-elf/lib/mipsel-r2-soft-newlib/lib\libuhi.a(uhi_exit.o)
+ .debug_info    0x000000000000282d       0xed c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/../../../../mips-mti-elf/lib/mipsel-r2-soft-newlib/lib\libuhi.a(uhi_getargs.o)
+ .debug_info    0x000000000000291a      0x10f c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/../../../../mips-mti-elf/lib/mipsel-r2-soft-newlib/lib\libuhi.a(uhi_get_ram_range.o)
+ .debug_info    0x0000000000002a29       0xee c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/../../../../mips-mti-elf/lib/mipsel-r2-soft-newlib/lib\libhal.a(mips_excpt_entry.o)
+ .debug_info    0x0000000000002b17      0xb8f c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/../../../../mips-mti-elf/lib/mipsel-r2-soft-newlib/lib\libhal.a(mips_excpt_handler.o)
+ .debug_info    0x00000000000036a6       0xf5 c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/../../../../mips-mti-elf/lib/mipsel-r2-soft-newlib/lib\libhal.a(mips_excpt_register.o)
+ .debug_info    0x000000000000379b       0xf1 c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/../../../../mips-mti-elf/lib/mipsel-r2-soft-newlib/lib\libhal.a(mips_excpt_boot.o)
+ .debug_info    0x000000000000388c       0xf0 c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/../../../../mips-mti-elf/lib/mipsel-r2-soft-newlib/lib\libhal.a(mips_excpt_isr.o)
+ .debug_info    0x000000000000397c       0x6e c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/../../../../mips-mti-elf/lib/mipsel-r2-soft-newlib/lib\libc.a(lib_a-strlen.o)
+ .debug_info    0x00000000000039ea      0x17e c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/../../../../mips-mti-elf/lib/mipsel-r2-soft-newlib/lib\libuhi.a(uhi_write.o)
+ .debug_info    0x0000000000003b68      0x2b0 c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/../../../../mips-mti-elf/lib/mipsel-r2-soft-newlib/lib\libuhi.a(uhi_exception.o)
+ .debug_info    0x0000000000003e18      0x2b6 c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/../../../../mips-mti-elf/lib/mipsel-r2-soft-newlib/lib\libuhi.a(uhi_indirect.o)
+ .debug_info    0x00000000000040ce      0x885 c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/../../../../mips-mti-elf/lib/mipsel-r2-soft-newlib/lib\libc.a(lib_a-errno.o)
+
+.debug_abbrev   0x0000000000000000     0x1275
+ *(.debug_abbrev)
+ .debug_abbrev  0x0000000000000000       0x14 c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/../../../../mips-mti-elf/lib/mipsel-r2-soft-newlib/lib\crt0.o
+ .debug_abbrev  0x0000000000000014       0x14 boot.o
+ .debug_abbrev  0x0000000000000028       0xa6 main.o
+ .debug_abbrev  0x00000000000000ce       0xb3 c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/../../../../mips-mti-elf/lib/mipsel-r2-soft-newlib/lib\libc.a(lib_a-atexit.o)
+ .debug_abbrev  0x0000000000000181      0x1e4 c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/../../../../mips-mti-elf/lib/mipsel-r2-soft-newlib/lib\libc.a(lib_a-exit.o)
+ .debug_abbrev  0x0000000000000365      0x17e c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/../../../../mips-mti-elf/lib/mipsel-r2-soft-newlib/lib\libc.a(lib_a-impure.o)
+ .debug_abbrev  0x00000000000004e3      0x20d c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/../../../../mips-mti-elf/lib/mipsel-r2-soft-newlib/lib\libc.a(lib_a-__atexit.o)
+ .debug_abbrev  0x00000000000006f0      0x21d c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/../../../../mips-mti-elf/lib/mipsel-r2-soft-newlib/lib\libc.a(lib_a-__call_atexit.o)
+ .debug_abbrev  0x000000000000090d       0xec c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/../../../../mips-mti-elf/lib/mipsel-r2-soft-newlib/lib\libuhi.a(uhi_exit.o)
+ .debug_abbrev  0x00000000000009f9       0x14 c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/../../../../mips-mti-elf/lib/mipsel-r2-soft-newlib/lib\libuhi.a(uhi_getargs.o)
+ .debug_abbrev  0x0000000000000a0d       0xab c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/../../../../mips-mti-elf/lib/mipsel-r2-soft-newlib/lib\libuhi.a(uhi_get_ram_range.o)
+ .debug_abbrev  0x0000000000000ab8       0x12 c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/../../../../mips-mti-elf/lib/mipsel-r2-soft-newlib/lib\libhal.a(mips_excpt_entry.o)
+ .debug_abbrev  0x0000000000000aca      0x2a5 c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/../../../../mips-mti-elf/lib/mipsel-r2-soft-newlib/lib\libhal.a(mips_excpt_handler.o)
+ .debug_abbrev  0x0000000000000d6f       0x14 c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/../../../../mips-mti-elf/lib/mipsel-r2-soft-newlib/lib\libhal.a(mips_excpt_register.o)
+ .debug_abbrev  0x0000000000000d83       0x14 c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/../../../../mips-mti-elf/lib/mipsel-r2-soft-newlib/lib\libhal.a(mips_excpt_boot.o)
+ .debug_abbrev  0x0000000000000d97       0x14 c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/../../../../mips-mti-elf/lib/mipsel-r2-soft-newlib/lib\libhal.a(mips_excpt_isr.o)
+ .debug_abbrev  0x0000000000000dab       0x24 c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/../../../../mips-mti-elf/lib/mipsel-r2-soft-newlib/lib\libc.a(lib_a-strlen.o)
+ .debug_abbrev  0x0000000000000dcf       0xc9 c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/../../../../mips-mti-elf/lib/mipsel-r2-soft-newlib/lib\libuhi.a(uhi_write.o)
+ .debug_abbrev  0x0000000000000e98      0x128 c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/../../../../mips-mti-elf/lib/mipsel-r2-soft-newlib/lib\libuhi.a(uhi_exception.o)
+ .debug_abbrev  0x0000000000000fc0      0x128 c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/../../../../mips-mti-elf/lib/mipsel-r2-soft-newlib/lib\libuhi.a(uhi_indirect.o)
+ .debug_abbrev  0x00000000000010e8      0x18d c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/../../../../mips-mti-elf/lib/mipsel-r2-soft-newlib/lib\libc.a(lib_a-errno.o)
+
+.debug_line     0x0000000000000000     0x1a0e
+ *(.debug_line)
+ .debug_line    0x0000000000000000       0xf9 c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/../../../../mips-mti-elf/lib/mipsel-r2-soft-newlib/lib\crt0.o
+ .debug_line    0x00000000000000f9      0x124 boot.o
+ .debug_line    0x000000000000021d       0x3d main.o
+ .debug_line    0x000000000000025a       0xdb c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/../../../../mips-mti-elf/lib/mipsel-r2-soft-newlib/lib\libc.a(lib_a-atexit.o)
+ .debug_line    0x0000000000000335      0x1aa c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/../../../../mips-mti-elf/lib/mipsel-r2-soft-newlib/lib\libc.a(lib_a-exit.o)
+ .debug_line    0x00000000000004df      0x12b c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/../../../../mips-mti-elf/lib/mipsel-r2-soft-newlib/lib\libc.a(lib_a-impure.o)
+ .debug_line    0x000000000000060a      0x1be c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/../../../../mips-mti-elf/lib/mipsel-r2-soft-newlib/lib\libc.a(lib_a-__atexit.o)
+ .debug_line    0x00000000000007c8      0x1f6 c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/../../../../mips-mti-elf/lib/mipsel-r2-soft-newlib/lib\libc.a(lib_a-__call_atexit.o)
+ .debug_line    0x00000000000009be      0x15a c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/../../../../mips-mti-elf/lib/mipsel-r2-soft-newlib/lib\libuhi.a(uhi_exit.o)
+ .debug_line    0x0000000000000b18       0xa6 c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/../../../../mips-mti-elf/lib/mipsel-r2-soft-newlib/lib\libuhi.a(uhi_getargs.o)
+ .debug_line    0x0000000000000bbe      0x142 c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/../../../../mips-mti-elf/lib/mipsel-r2-soft-newlib/lib\libuhi.a(uhi_get_ram_range.o)
+ .debug_line    0x0000000000000d00      0x116 c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/../../../../mips-mti-elf/lib/mipsel-r2-soft-newlib/lib\libhal.a(mips_excpt_entry.o)
+ .debug_line    0x0000000000000e16      0x323 c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/../../../../mips-mti-elf/lib/mipsel-r2-soft-newlib/lib\libhal.a(mips_excpt_handler.o)
+ .debug_line    0x0000000000001139       0xaa c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/../../../../mips-mti-elf/lib/mipsel-r2-soft-newlib/lib\libhal.a(mips_excpt_register.o)
+ .debug_line    0x00000000000011e3      0x11b c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/../../../../mips-mti-elf/lib/mipsel-r2-soft-newlib/lib\libhal.a(mips_excpt_boot.o)
+ .debug_line    0x00000000000012fe       0x9c c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/../../../../mips-mti-elf/lib/mipsel-r2-soft-newlib/lib\libhal.a(mips_excpt_isr.o)
+ .debug_line    0x000000000000139a       0x1d c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/../../../../mips-mti-elf/lib/mipsel-r2-soft-newlib/lib\libc.a(lib_a-strlen.o)
+ .debug_line    0x00000000000013b7      0x1df c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/../../../../mips-mti-elf/lib/mipsel-r2-soft-newlib/lib\libuhi.a(uhi_write.o)
+ .debug_line    0x0000000000001596      0x194 c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/../../../../mips-mti-elf/lib/mipsel-r2-soft-newlib/lib\libuhi.a(uhi_exception.o)
+ .debug_line    0x000000000000172a      0x19f c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/../../../../mips-mti-elf/lib/mipsel-r2-soft-newlib/lib\libuhi.a(uhi_indirect.o)
+ .debug_line    0x00000000000018c9      0x145 c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/../../../../mips-mti-elf/lib/mipsel-r2-soft-newlib/lib\libc.a(lib_a-errno.o)
+
+.debug_frame    0x0000000000000000      0x27c
+ *(.debug_frame)
+ .debug_frame   0x0000000000000000       0x30 main.o
+ .debug_frame   0x0000000000000030       0x2c c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/../../../../mips-mti-elf/lib/mipsel-r2-soft-newlib/lib\libc.a(lib_a-atexit.o)
+ .debug_frame   0x000000000000005c       0x28 c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/../../../../mips-mti-elf/lib/mipsel-r2-soft-newlib/lib\libc.a(lib_a-exit.o)
+ .debug_frame   0x0000000000000084       0x40 c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/../../../../mips-mti-elf/lib/mipsel-r2-soft-newlib/lib\libc.a(lib_a-__atexit.o)
+ .debug_frame   0x00000000000000c4       0x4c c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/../../../../mips-mti-elf/lib/mipsel-r2-soft-newlib/lib\libc.a(lib_a-__call_atexit.o)
+ .debug_frame   0x0000000000000110       0x34 c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/../../../../mips-mti-elf/lib/mipsel-r2-soft-newlib/lib\libuhi.a(uhi_exit.o)
+ .debug_frame   0x0000000000000144       0x20 c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/../../../../mips-mti-elf/lib/mipsel-r2-soft-newlib/lib\libuhi.a(uhi_get_ram_range.o)
+ .debug_frame   0x0000000000000164       0x88 c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/../../../../mips-mti-elf/lib/mipsel-r2-soft-newlib/lib\libhal.a(mips_excpt_handler.o)
+ .debug_frame   0x00000000000001ec       0x30 c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/../../../../mips-mti-elf/lib/mipsel-r2-soft-newlib/lib\libuhi.a(uhi_write.o)
+ .debug_frame   0x000000000000021c       0x20 c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/../../../../mips-mti-elf/lib/mipsel-r2-soft-newlib/lib\libuhi.a(uhi_exception.o)
+ .debug_frame   0x000000000000023c       0x20 c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/../../../../mips-mti-elf/lib/mipsel-r2-soft-newlib/lib\libuhi.a(uhi_indirect.o)
+ .debug_frame   0x000000000000025c       0x20 c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/../../../../mips-mti-elf/lib/mipsel-r2-soft-newlib/lib\libc.a(lib_a-errno.o)
+
+.debug_str      0x0000000000000000      0xc69
+ *(.debug_str)
+ .debug_str     0x0000000000000000       0xe6 main.o
+ .debug_str     0x00000000000000e6      0x191 c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/../../../../mips-mti-elf/lib/mipsel-r2-soft-newlib/lib\libc.a(lib_a-atexit.o)
+                                        0x1d1 (size before relaxing)
+ .debug_str     0x0000000000000277      0x3f7 c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/../../../../mips-mti-elf/lib/mipsel-r2-soft-newlib/lib\libc.a(lib_a-exit.o)
+                                        0x56e (size before relaxing)
+ .debug_str     0x000000000000066e       0x57 c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/../../../../mips-mti-elf/lib/mipsel-r2-soft-newlib/lib\libc.a(lib_a-impure.o)
+                                        0x566 (size before relaxing)
+ .debug_str     0x00000000000006c5       0x55 c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/../../../../mips-mti-elf/lib/mipsel-r2-soft-newlib/lib\libc.a(lib_a-__atexit.o)
+                                        0x5ad (size before relaxing)
+ .debug_str     0x000000000000071a       0x74 c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/../../../../mips-mti-elf/lib/mipsel-r2-soft-newlib/lib\libc.a(lib_a-__call_atexit.o)
+                                        0x592 (size before relaxing)
+ .debug_str     0x000000000000078e      0x13e c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/../../../../mips-mti-elf/lib/mipsel-r2-soft-newlib/lib\libuhi.a(uhi_exit.o)
+                                        0x1d8 (size before relaxing)
+ .debug_str     0x00000000000008cc       0xa5 c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/../../../../mips-mti-elf/lib/mipsel-r2-soft-newlib/lib\libuhi.a(uhi_get_ram_range.o)
+                                        0x1e6 (size before relaxing)
+ .debug_str     0x0000000000000971      0x136 c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/../../../../mips-mti-elf/lib/mipsel-r2-soft-newlib/lib\libhal.a(mips_excpt_handler.o)
+                                        0x2cb (size before relaxing)
+ .debug_str     0x0000000000000aa7       0x52 c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/../../../../mips-mti-elf/lib/mipsel-r2-soft-newlib/lib\libc.a(lib_a-strlen.o)
+                                        0x18c (size before relaxing)
+ .debug_str     0x0000000000000af9       0x74 c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/../../../../mips-mti-elf/lib/mipsel-r2-soft-newlib/lib\libuhi.a(uhi_write.o)
+                                        0x1e1 (size before relaxing)
+ .debug_str     0x0000000000000b6d       0x52 c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/../../../../mips-mti-elf/lib/mipsel-r2-soft-newlib/lib\libuhi.a(uhi_exception.o)
+                                        0x215 (size before relaxing)
+ .debug_str     0x0000000000000bbf       0x60 c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/../../../../mips-mti-elf/lib/mipsel-r2-soft-newlib/lib\libuhi.a(uhi_indirect.o)
+                                        0x215 (size before relaxing)
+ .debug_str     0x0000000000000c1f       0x4a c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/../../../../mips-mti-elf/lib/mipsel-r2-soft-newlib/lib\libc.a(lib_a-errno.o)
+                                        0x54e (size before relaxing)
+
+.debug_loc      0x0000000000000000      0xb10
+ *(.debug_loc)
+ .debug_loc     0x0000000000000000       0x2c c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/../../../../mips-mti-elf/lib/mipsel-r2-soft-newlib/lib\libc.a(lib_a-atexit.o)
+ .debug_loc     0x000000000000002c       0x1e c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/../../../../mips-mti-elf/lib/mipsel-r2-soft-newlib/lib\libc.a(lib_a-exit.o)
+ .debug_loc     0x000000000000004a      0x140 c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/../../../../mips-mti-elf/lib/mipsel-r2-soft-newlib/lib\libc.a(lib_a-__atexit.o)
+ .debug_loc     0x000000000000018a      0x156 c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/../../../../mips-mti-elf/lib/mipsel-r2-soft-newlib/lib\libc.a(lib_a-__call_atexit.o)
+ .debug_loc     0x00000000000002e0       0x1e c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/../../../../mips-mti-elf/lib/mipsel-r2-soft-newlib/lib\libuhi.a(uhi_exit.o)
+ .debug_loc     0x00000000000002fe       0x3c c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/../../../../mips-mti-elf/lib/mipsel-r2-soft-newlib/lib\libuhi.a(uhi_get_ram_range.o)
+ .debug_loc     0x000000000000033a      0x755 c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/../../../../mips-mti-elf/lib/mipsel-r2-soft-newlib/lib\libhal.a(mips_excpt_handler.o)
+ .debug_loc     0x0000000000000a8f       0x63 c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/../../../../mips-mti-elf/lib/mipsel-r2-soft-newlib/lib\libuhi.a(uhi_write.o)
+ .debug_loc     0x0000000000000af2       0x1e c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/../../../../mips-mti-elf/lib/mipsel-r2-soft-newlib/lib\libuhi.a(uhi_indirect.o)
+
+.debug_macinfo
+ *(.debug_macinfo)
+
+.debug_ranges   0x0000000000000000       0x40
+ *(.debug_ranges)
+ .debug_ranges  0x0000000000000000       0x20 c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/../../../../mips-mti-elf/lib/mipsel-r2-soft-newlib/lib\libc.a(lib_a-__call_atexit.o)
+ .debug_ranges  0x0000000000000020       0x20 c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/../../../../mips-mti-elf/lib/mipsel-r2-soft-newlib/lib\libhal.a(mips_excpt_entry.o)
+
+.debug_weaknames
+ *(.debug_weaknames)
+
+.debug_funcnames
+ *(.debug_funcnames)
+
+.debug_typenames
+ *(.debug_typenames)
+
+.debug_varnames
+ *(.debug_varnames)
+
+.mdebug.abi32   0x0000000000000000        0x0
+ *(.mdebug.abi32)
+ .mdebug.abi32  0x0000000000000000        0x0 c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/mipsel-r2-soft-newlib/lib/crtbegin.o
+ .mdebug.abi32  0x0000000000000000        0x0 main.o
+ .mdebug.abi32  0x0000000000000000        0x0 c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/mipsel-r2-soft-newlib/lib/crtend.o
+ .mdebug.abi32  0x0000000000000000        0x0 c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/../../../../mips-mti-elf/lib/mipsel-r2-soft-newlib/lib\libc.a(lib_a-atexit.o)
+ .mdebug.abi32  0x0000000000000000        0x0 c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/../../../../mips-mti-elf/lib/mipsel-r2-soft-newlib/lib\libc.a(lib_a-exit.o)
+ .mdebug.abi32  0x0000000000000000        0x0 c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/../../../../mips-mti-elf/lib/mipsel-r2-soft-newlib/lib\libc.a(lib_a-impure.o)
+ .mdebug.abi32  0x0000000000000000        0x0 c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/../../../../mips-mti-elf/lib/mipsel-r2-soft-newlib/lib\libc.a(lib_a-__atexit.o)
+ .mdebug.abi32  0x0000000000000000        0x0 c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/../../../../mips-mti-elf/lib/mipsel-r2-soft-newlib/lib\libc.a(lib_a-__call_atexit.o)
+ .mdebug.abi32  0x0000000000000000        0x0 c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/../../../../mips-mti-elf/lib/mipsel-r2-soft-newlib/lib\libuhi.a(uhi_exit.o)
+ .mdebug.abi32  0x0000000000000000        0x0 c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/../../../../mips-mti-elf/lib/mipsel-r2-soft-newlib/lib\libuhi.a(uhi_get_ram_range.o)
+ .mdebug.abi32  0x0000000000000000        0x0 c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/../../../../mips-mti-elf/lib/mipsel-r2-soft-newlib/lib\libhal.a(mips_excpt_handler.o)
+ .mdebug.abi32  0x0000000000000000        0x0 c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/../../../../mips-mti-elf/lib/mipsel-r2-soft-newlib/lib\libc.a(lib_a-strlen.o)
+ .mdebug.abi32  0x0000000000000000        0x0 c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/../../../../mips-mti-elf/lib/mipsel-r2-soft-newlib/lib\libuhi.a(uhi_write.o)
+ .mdebug.abi32  0x0000000000000000        0x0 c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/../../../../mips-mti-elf/lib/mipsel-r2-soft-newlib/lib\libuhi.a(uhi_exception.o)
+ .mdebug.abi32  0x0000000000000000        0x0 c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/../../../../mips-mti-elf/lib/mipsel-r2-soft-newlib/lib\libuhi.a(uhi_indirect.o)
+ .mdebug.abi32  0x0000000000000000        0x0 c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/../../../../mips-mti-elf/lib/mipsel-r2-soft-newlib/lib\libc.a(lib_a-errno.o)
+
+.mdebug.abiN32
+ *(.mdebug.abiN32)
+
+.mdebug.abi64
+ *(.mdebug.abi64)
+
+.mdebug.abiO64
+ *(.mdebug.abiO64)
+
+.mdebug.eabi32
+ *(.mdebug.eabi32)
+
+.mdebug.eabi64
+ *(.mdebug.eabi64)
+
+.gcc_compiled_long32
+ *(.gcc_compiled_long32)
+
+.gcc_compiled_long64
+ *(.gcc_compiled_long64)
+OUTPUT(FPGA_Ram.elf elf32-tradlittlemips)
+
+.reginfo        0x0000000000000000       0x18
+ .reginfo       0x0000000000000000       0x18 c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/../../../../mips-mti-elf/lib/mipsel-r2-soft-newlib/lib\crt0.o
+
+.pdr            0x0000000000000000      0x4a0
+ .pdr           0x0000000000000000       0x80 c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/../../../../mips-mti-elf/lib/mipsel-r2-soft-newlib/lib\crt0.o
+ .pdr           0x0000000000000080        0x0 c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/mipsel-r2-soft-newlib/lib/crti.o
+ .pdr           0x0000000000000080        0x0 c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/mipsel-r2-soft-newlib/lib/crtbegin.o
+ .pdr           0x0000000000000080       0xe0 boot.o
+ .pdr           0x0000000000000160       0x40 main.o
+ .pdr           0x00000000000001a0        0x0 c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/mipsel-r2-soft-newlib/lib/crtend.o
+ .pdr           0x00000000000001a0        0x0 c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/mipsel-r2-soft-newlib/lib/crtn.o
+ .pdr           0x00000000000001a0       0x20 c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/../../../../mips-mti-elf/lib/mipsel-r2-soft-newlib/lib\libc.a(lib_a-atexit.o)
+ .pdr           0x00000000000001c0       0x20 c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/../../../../mips-mti-elf/lib/mipsel-r2-soft-newlib/lib\libc.a(lib_a-exit.o)
+ .pdr           0x00000000000001e0        0x0 c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/../../../../mips-mti-elf/lib/mipsel-r2-soft-newlib/lib\libc.a(lib_a-impure.o)
+ .pdr           0x00000000000001e0       0x20 c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/../../../../mips-mti-elf/lib/mipsel-r2-soft-newlib/lib\libc.a(lib_a-__atexit.o)
+ .pdr           0x0000000000000200       0x20 c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/../../../../mips-mti-elf/lib/mipsel-r2-soft-newlib/lib\libc.a(lib_a-__call_atexit.o)
+ .pdr           0x0000000000000220       0x20 c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/../../../../mips-mti-elf/lib/mipsel-r2-soft-newlib/lib\libuhi.a(uhi_exit.o)
+ .pdr           0x0000000000000240       0x20 c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/../../../../mips-mti-elf/lib/mipsel-r2-soft-newlib/lib\libuhi.a(uhi_getargs.o)
+ .pdr           0x0000000000000260       0x20 c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/../../../../mips-mti-elf/lib/mipsel-r2-soft-newlib/lib\libuhi.a(uhi_get_ram_range.o)
+ .pdr           0x0000000000000280       0x40 c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/../../../../mips-mti-elf/lib/mipsel-r2-soft-newlib/lib\libhal.a(mips_excpt_entry.o)
+ .pdr           0x00000000000002c0       0x60 c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/../../../../mips-mti-elf/lib/mipsel-r2-soft-newlib/lib\libhal.a(mips_excpt_handler.o)
+ .pdr           0x0000000000000320       0x20 c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/../../../../mips-mti-elf/lib/mipsel-r2-soft-newlib/lib\libhal.a(mips_excpt_register.o)
+ .pdr           0x0000000000000340       0xa0 c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/../../../../mips-mti-elf/lib/mipsel-r2-soft-newlib/lib\libhal.a(mips_excpt_boot.o)
+ .pdr           0x00000000000003e0       0x20 c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/../../../../mips-mti-elf/lib/mipsel-r2-soft-newlib/lib\libhal.a(mips_excpt_isr.o)
+ .pdr           0x0000000000000400       0x20 c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/../../../../mips-mti-elf/lib/mipsel-r2-soft-newlib/lib\libc.a(lib_a-strlen.o)
+ .pdr           0x0000000000000420       0x20 c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/../../../../mips-mti-elf/lib/mipsel-r2-soft-newlib/lib\libuhi.a(uhi_write.o)
+ .pdr           0x0000000000000440       0x20 c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/../../../../mips-mti-elf/lib/mipsel-r2-soft-newlib/lib\libuhi.a(uhi_exception.o)
+ .pdr           0x0000000000000460       0x20 c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/../../../../mips-mti-elf/lib/mipsel-r2-soft-newlib/lib\libuhi.a(uhi_indirect.o)
+ .pdr           0x0000000000000480       0x20 c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/../../../../mips-mti-elf/lib/mipsel-r2-soft-newlib/lib\libc.a(lib_a-errno.o)
+
+.gnu.attributes
+                0x0000000000000000       0x10
+ .gnu.attributes
+                0x0000000000000000       0x10 c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/mipsel-r2-soft-newlib/lib/crti.o
+ .gnu.attributes
+                0x0000000000000010       0x10 c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/mipsel-r2-soft-newlib/lib/crtbegin.o
+ .gnu.attributes
+                0x0000000000000020       0x10 boot.o
+ .gnu.attributes
+                0x0000000000000030       0x10 main.o
+ .gnu.attributes
+                0x0000000000000040       0x10 c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/mipsel-r2-soft-newlib/lib/crtend.o
+ .gnu.attributes
+                0x0000000000000050       0x10 c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/mipsel-r2-soft-newlib/lib/crtn.o
+ .gnu.attributes
+                0x0000000000000060       0x10 c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/../../../../mips-mti-elf/lib/mipsel-r2-soft-newlib/lib\libc.a(lib_a-atexit.o)
+ .gnu.attributes
+                0x0000000000000070       0x10 c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/../../../../mips-mti-elf/lib/mipsel-r2-soft-newlib/lib\libc.a(lib_a-exit.o)
+ .gnu.attributes
+                0x0000000000000080       0x10 c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/../../../../mips-mti-elf/lib/mipsel-r2-soft-newlib/lib\libc.a(lib_a-impure.o)
+ .gnu.attributes
+                0x0000000000000090       0x10 c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/../../../../mips-mti-elf/lib/mipsel-r2-soft-newlib/lib\libc.a(lib_a-__atexit.o)
+ .gnu.attributes
+                0x00000000000000a0       0x10 c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/../../../../mips-mti-elf/lib/mipsel-r2-soft-newlib/lib\libc.a(lib_a-__call_atexit.o)
+ .gnu.attributes
+                0x00000000000000b0       0x10 c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/../../../../mips-mti-elf/lib/mipsel-r2-soft-newlib/lib\libuhi.a(uhi_exit.o)
+ .gnu.attributes
+                0x00000000000000c0       0x10 c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/../../../../mips-mti-elf/lib/mipsel-r2-soft-newlib/lib\libuhi.a(uhi_getargs.o)
+ .gnu.attributes
+                0x00000000000000d0       0x10 c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/../../../../mips-mti-elf/lib/mipsel-r2-soft-newlib/lib\libuhi.a(uhi_get_ram_range.o)
+ .gnu.attributes
+                0x00000000000000e0       0x10 c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/../../../../mips-mti-elf/lib/mipsel-r2-soft-newlib/lib\libhal.a(mips_excpt_entry.o)
+ .gnu.attributes
+                0x00000000000000f0       0x10 c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/../../../../mips-mti-elf/lib/mipsel-r2-soft-newlib/lib\libhal.a(mips_excpt_handler.o)
+ .gnu.attributes
+                0x0000000000000100       0x10 c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/../../../../mips-mti-elf/lib/mipsel-r2-soft-newlib/lib\libhal.a(mips_excpt_register.o)
+ .gnu.attributes
+                0x0000000000000110       0x10 c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/../../../../mips-mti-elf/lib/mipsel-r2-soft-newlib/lib\libhal.a(mips_excpt_boot.o)
+ .gnu.attributes
+                0x0000000000000120       0x10 c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/../../../../mips-mti-elf/lib/mipsel-r2-soft-newlib/lib\libhal.a(mips_excpt_isr.o)
+ .gnu.attributes
+                0x0000000000000130       0x10 c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/../../../../mips-mti-elf/lib/mipsel-r2-soft-newlib/lib\libc.a(lib_a-strlen.o)
+ .gnu.attributes
+                0x0000000000000140       0x10 c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/../../../../mips-mti-elf/lib/mipsel-r2-soft-newlib/lib\libuhi.a(uhi_write.o)
+ .gnu.attributes
+                0x0000000000000150       0x10 c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/../../../../mips-mti-elf/lib/mipsel-r2-soft-newlib/lib\libuhi.a(uhi_exception.o)
+ .gnu.attributes
+                0x0000000000000160       0x10 c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/../../../../mips-mti-elf/lib/mipsel-r2-soft-newlib/lib\libuhi.a(uhi_indirect.o)
+ .gnu.attributes
+                0x0000000000000170       0x10 c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/../../../../mips-mti-elf/lib/mipsel-r2-soft-newlib/lib\libc.a(lib_a-errno.o)
+
+.comment        0x0000000000000000       0x44
+ .comment       0x0000000000000000       0x44 c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/mipsel-r2-soft-newlib/lib/crtbegin.o
+                                         0x45 (size before relaxing)
+ .comment       0x0000000000000044       0x45 main.o
+ .comment       0x0000000000000044       0x45 c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/mipsel-r2-soft-newlib/lib/crtend.o
+ .comment       0x0000000000000044       0x45 c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/../../../../mips-mti-elf/lib/mipsel-r2-soft-newlib/lib\libc.a(lib_a-atexit.o)
+ .comment       0x0000000000000044       0x45 c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/../../../../mips-mti-elf/lib/mipsel-r2-soft-newlib/lib\libc.a(lib_a-exit.o)
+ .comment       0x0000000000000044       0x45 c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/../../../../mips-mti-elf/lib/mipsel-r2-soft-newlib/lib\libc.a(lib_a-impure.o)
+ .comment       0x0000000000000044       0x45 c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/../../../../mips-mti-elf/lib/mipsel-r2-soft-newlib/lib\libc.a(lib_a-__atexit.o)
+ .comment       0x0000000000000044       0x45 c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/../../../../mips-mti-elf/lib/mipsel-r2-soft-newlib/lib\libc.a(lib_a-__call_atexit.o)
+ .comment       0x0000000000000044       0x45 c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/../../../../mips-mti-elf/lib/mipsel-r2-soft-newlib/lib\libuhi.a(uhi_exit.o)
+ .comment       0x0000000000000044       0x45 c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/../../../../mips-mti-elf/lib/mipsel-r2-soft-newlib/lib\libuhi.a(uhi_get_ram_range.o)
+ .comment       0x0000000000000044       0x45 c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/../../../../mips-mti-elf/lib/mipsel-r2-soft-newlib/lib\libhal.a(mips_excpt_handler.o)
+ .comment       0x0000000000000044       0x45 c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/../../../../mips-mti-elf/lib/mipsel-r2-soft-newlib/lib\libc.a(lib_a-strlen.o)
+ .comment       0x0000000000000044       0x45 c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/../../../../mips-mti-elf/lib/mipsel-r2-soft-newlib/lib\libuhi.a(uhi_write.o)
+ .comment       0x0000000000000044       0x45 c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/../../../../mips-mti-elf/lib/mipsel-r2-soft-newlib/lib\libuhi.a(uhi_exception.o)
+ .comment       0x0000000000000044       0x45 c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/../../../../mips-mti-elf/lib/mipsel-r2-soft-newlib/lib\libuhi.a(uhi_indirect.o)
+ .comment       0x0000000000000044       0x45 c:/progra~1/imagin~1/toolch~1/mips-mti-elf/2016.05-03/bin/../lib/gcc/mips-mti-elf/4.9.2/../../../../mips-mti-elf/lib/mipsel-r2-soft-newlib/lib\libc.a(lib_a-errno.o)
