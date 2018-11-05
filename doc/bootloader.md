@@ -2,6 +2,7 @@
     - [gdb](#gdb)
     - [Makefile 生成的文件](#makefile-生成的文件)
     - [Makefile 的使用](#makefile-的使用)
+    - [启动过程分析](#启动过程分析)
     - [MIPSFPGA 板上各模块的物理地址](#mipsfpga-板上各模块的物理地址)
     - [程序目录下文件分析](#程序目录下文件分析)
 - [以下为网上搜索到的资料](#以下为网上搜索到的资料)
@@ -32,31 +33,36 @@ CSOURES= \
 main.c
 ```
 
+### 启动过程分析
+
+对于 MIPS 结构，复位后的第一条取指
+
 ### MIPSFPGA 板上各模块的物理地址
 
-| 虚拟地址        | 物理地址        | 信号名          | Minisys                   |
-|:-------------:|:-------------:|:--------------:|:---------------------------:|
-| 0xbf80 0000 | 0x1f80 0000 | IO_LEDR      | LEDS                      |
-| 0xbf80 0008 | 0x1f80 0008 | IO_SW        | switches                  |
-| 0xbf80 000c | 0x1f80 000c | IO_PB        | U, D, L, R, C pushbuttons |
-| 0xbf80 0010 | 0x1f80 0010 | SEGEN_N[7:0] | A [7:0]                   |
-| 0xbf80 0014 | 0x1f80 0014 | SEG0_N[7:0]  | Digit 0 value             |
-| 0xbf80 0018 | 0x1f80 0018 | SEG1_N[7:0]  | Digit 1 value             |
-| 0xbf80 001c | 0x1f80 001c | SEG2_N[7:0]  | Digit 2 value             |
-| 0xbf80 0020 | 0x1f80 0020 | SEG3_N[7:0]  | Digit 3 value             |
-| 0xbf80 0024 | 0x1f80 0024 | SEG4_N[7:0]  | Digit 4 value             |
-| 0xbf80 0028 | 0x1f80 0028 | SEG5_N[7:0]  | Digit 5 value             |
-| 0xbf80 002c | 0x1f80 002c | SEG6_N[7:0]  | Digit 6 value             |
-| 0xbf80 0030 | 0x1f80 0030 | SEG7_N[7:0]  | Digit 7 value             |
-
+| 虚拟地址        | 物理地址        | 高地址         | 信号名          | Minisys                   |
+|:-------------:|:-------------:|:-------------:|:--------------:|:---------------------------:|
+| 0xbf80 0000 | 0x1f80 0000 |             | IO_LEDR      | LEDS                      |
+| 0xbf80 0008 | 0x1f80 0008 |             | IO_SW        | switches                  |
+| 0xbf80 000c | 0x1f80 000c |             | IO_PB        | pushbuttons               |
+| 0xbf80 0010 | 0x1f80 0010 |             | SEGEN_N[7:0] | A [7:0]                   |
+| 0xbf80 0014 | 0x1f80 0014 |             | SEG0_N[7:0]  | Digit 0 value             |
+| 0xbf80 0018 | 0x1f80 0018 |             | SEG1_N[7:0]  | Digit 1 value             |
+| 0xbf80 001c | 0x1f80 001c |             | SEG2_N[7:0]  | Digit 2 value             |
+| 0xbf80 0020 | 0x1f80 0020 |             | SEG3_N[7:0]  | Digit 3 value             |
+| 0xbf80 0024 | 0x1f80 0024 |             | SEG4_N[7:0]  | Digit 4 value             |
+| 0xbf80 0028 | 0x1f80 0028 |             | SEG5_N[7:0]  | Digit 5 value             |
+| 0xbf80 002c | 0x1f80 002c |             | SEG6_N[7:0]  | Digit 6 value             |
+| 0xbf80 0030 | 0x1f80 0030 |             | SEG7_N[7:0]  | Digit 7 value             |
+|             | 0x1fc0 0000 | 0x1fc0 1fff |              | RAM0                      |
+|             | 0x1000 0000 | 0x1000 1fff |              | RAM1                      |
 
 ### 程序目录下文件分析
 
 Fibonacci  
     ├─ boot.h 未知  
-    ├─ boot.S 引导程序代码（汇编格式）
+    ├─ boot.S 引导程序代码
     ├─ fpga.h 定义了板子上各种模块的地址  
-    ├─ init_caches.S init_cp0.S init_gpr.S init_tlb.S 应该是初始化的代码  
+    ├─ init_caches.S init_cp0.S init_gpr.S init_tlb.S 初始化的代码  
     ├─ main.c 主程序？  
     └─ Makefile
 
