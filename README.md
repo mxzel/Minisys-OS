@@ -1,22 +1,10 @@
 # 综合课程设计 课题二 - 操作系统的实现
 
-## Contents
-
-- [综合课程设计 课题二 - 操作系统的实现](#综合课程设计-课题二---操作系统的实现)
-    - [Contents](#contents)
-    - [可能需要学的知识](#可能需要学的知识)
-    - [需要的教程](#需要的教程)
-        - [Git](#git)
-                - [GitHub 配置](#github-配置)
-        - [开发平台](#开发平台)
-    - [注意事项](#注意事项)
-    - [参考资料](#参考资料)
-
 ## 可能需要学的知识
 
-makefile  
 markdown  
-C 语言特性（asmlinkage，asm，volatile 等等）
+bash 常用命令  
+C 语言特性（asmlinkage，asm，volatile 等等）  
 
 ## 需要的教程
 
@@ -29,7 +17,7 @@ GitHub 是通过 Git 进行版本控制的软件源代码托管服务。
 ##### GitHub 配置
 
 暂略，网上有很多教程可以参考
-
+<!-- 
 ### Makefile
 
 我们使用 Makefile 的规则是：
@@ -38,24 +26,63 @@ GitHub 是通过 Git 进行版本控制的软件源代码托管服务。
 2. 如果这个工程的某几个c文件被修改，那么我们只编译被修改的c文件，并链接目标程序。
 3. 如果这个工程的头文件被改变了，那么我们需要编译引用了这几个头文件的c文件，并链接目标程序。
 
-make 命令会自动智能地根据当前的文件修改的情况来确定哪些文件需要重编译，从而自己编译所需要的文件和链接目标程序。
+make 命令会自动智能地根据当前的文件修改的情况来确定哪些文件需要重编译，从而自己编译所需要的文件和链接目标程序。 -->
 
-### [gdb](https://chyyuu.gitbooks.io/ucore_os_docs/content/lab0/lab0_2_3_3_gdb.html)
+<!-- ### [gdb](https://chyyuu.gitbooks.io/ucore_os_docs/content/lab0/lab0_2_3_3_gdb.html) -->
+
+### shell
+
+- grep 命令
+
+    正则表达式匹配文件内容，在某路径下查找所有文本文件中某个关键词时会非常方便  
+
+    ```bash
+    # 在当前目录及子目录下的所有文本文件中搜索 "page" 关键字
+    grep -r "page" .
+    ```
+
+- find 命令 - 查找文件，可以根据文件名来查找某个文件
+
+    ```bash
+    # 在当前目录及子目录下寻找 txt 文件
+    find . -name "*.txt"
+    # 找出不是以 txt 结尾的文件
+    find . ! -name "*.txt"
+    # 删除所有 txt 文件的文件
+    find . -name "*.txt" -delete
+    ```
+
+- ctrl + U - 清空当前行
+- ctrl + R - 搜索历史命令
+- vimdiff - 比较两份文件的不同
+
+    ```bash
+    vimdiff -O a.txt b.txt
+    ```
 
 
 
+### 开发规范
 
+- 版本控制 - Git
 
-### 开发平台
+    在完成了某个小的功能，或者是想实施新的想法的时候，可以把已有的代码推送到 github 上面，然后大胆地去实施新的想法。推送的时候多附带注释，代码回滚会非常方便。
+- 代码编辑 - VSCode
 
-- 版本控制 - Git  
-- 代码编辑 - VSCode（不是记事本就可以，但是要确保代码文件文本编码为 UTF-8，否则跨平台会出现各种问题）  
-- 终端 - PowerShell（Win10。Linux 和 Mac 用默认的就可以）
-- 在分析源代码上，可以采用 Scitools 提供的 understand 软件（跨平台），windows 环境上的 source insight 软件，或者基于 emacs+ctags，vim+ctags 等，都可以比较方便在在一堆文件中查找变量、函数定义、调用/访问关系等。
-- 比较文件和目录的不同可发现不同实验中的差异性和进行文件合并操作，可使用 meld、kdiff3、UltraCompare 等软件。
+    不是记事本就可以，但是要确保代码文件文本编码为 UTF-8，否则跨平台会出现各种问题。
+
+- 终端 - PowerShell
+
+    针对 WIN10，主要是方便在 Windows 中使用 shell 中的命令。WIN10 商店中有提供 Ubuntu 的下载，可以说是 Windows 原生支持的了，使用这个 Ubuntu 也是可以的。Linux 和 Mac 用默认的就可以。
+
+- 函数跳转（参考[1]）
+
+    在分析源代码上，可以采用 Scitools 提供的 understand 软件（跨平台），windows 环境上的 source insight 软件，或者基于 emacs+ctags，vim+ctags 等，都可以比较方便在在一堆文件中查找变量、函数定义、调用/访问关系等。
+- 比较两份文本文件的不同
+
+    可以使用 meld、kdiff3、UltraCompare 等软件，也可以使用 vimdiff 命令。
+
 - 调试（debug）实验有助于发现设计中的错误，可采用 gdb（配合 qemu）等调试工具软件。
-- 推荐使用 Linux 环境
-- 源码比较 vimdiff
 
 ### 开发流程
 
