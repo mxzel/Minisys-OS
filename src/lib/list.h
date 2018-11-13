@@ -1,9 +1,14 @@
+
+
+
 #ifndef __LIB_LIST_H__
 #define __LIB_LIST_H__
 
 #ifndef __ASSEMBLER__
 
-#include <defs.h>
+
+
+// #include <defs.h>
 
 /* *
  * 简单的双向链表的实现
