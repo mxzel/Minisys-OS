@@ -23,7 +23,7 @@ JTLB ITLB DTLB
 非映射区段不使用 TLB，也不使用 FMT，用的是一种和 FMT 类似的方式来完成地址映射。  
 映射区段使用 TLB 或 FMT 来完成地址映射，以页为基础。
 
-- kseg0 虚拟地址空间为 0x8000_0000 - 0x9FFF_FFFF，减去0x8000_0000来完成地址映射。该区段虚拟空间大小为 512MB。
+- kseg0 虚拟地址空间为 0x8000_0000 - 0x9FFF_FFFF，减去 0x8000_0000 来完成地址映射。该区段虚拟空间大小为 512 MB。
 - kseg1 虚拟地址空间为 0xA000_0000 - 0xBFFF_FFFF，减去 0xA000_0000 来完成地址映射。该区段虚拟空间大小为 512 MB。
 - kseg2 虚拟地址空间为 0xC000_0000 - 0xDFFF_FFFF，通过 TLB 来完成地址映射
 - kseg3 虚拟地址空间为 0xE000_0000 - 0xFFFF_FFFF，通过 TLB 来完成地址映射
@@ -31,7 +31,34 @@ JTLB ITLB DTLB
 #### TLB
 
 - JTLB（joint TLB）同时完成指令和数据的地址转换
-- microAptiv UPc core 实现了一个随机替换算法，为避免随机替换，可通过设置 CP0寄存器来实现自己的替换算法。
+- JTLB 组织为页面对来最小化总的大小。每一个 tag 条目对应两个数据条目，一个奇数页条目和一个偶数页条目。
+- JTLB 被组织为偶数和奇数条目对
+- 虚拟地址的最高位不参与 tag 比较，只确定哪一个数据条目被使用。  
+<!-- FIXME: 这里有冲突，在手册31页里面说是虚拟地址最高位不参与比较，在 See MIPS Run 里面说是最低位不参与比较，然后奇数和偶数那个是相邻的虚拟页映射到的不同的物理页，这样做可以节省空间 -->
+
+- microAptiv UPc core 实现了一个随机替换算法，也就是随机选一个换出的页面。4.4.2.2 参照145页
+- ASID 地址空间标识符 Address Space Identifier
+- 为更新 JTLB，软件会执行 TLBWI 和 TLBWR 指令，在执行这些指令之前，一些 CP0 寄存器中的值需要被更新：
+    1. PageMask
+    2. EntryHi 寄存器中的 VPN2，VPN2X 和 ASID
+    3. EntryLo0 中的 PFN0，C0，D0，V0 和 G 位
+    4. EntryLo1 中的 PFN1，C1，D1，V1 和 G 位
+    5. JTLB 中的 G 位是 EntryLo0 和 EntryLo1 中 G 位的与
+- 虚拟地址高八位为 ASID，有时候不是（When the Status register’s ERL = 1, the user address region becomes a 229-byte unmapped and uncached address space. While in this setting, the kuseg virtual address maps directly to the same physical address and does not include the ASID field.）
+
+### TLB 指令
+4.4.3
+TLBP TLB探测
+TLBR 读TLB  
+TLBWI 写Index处
+TLBWR 随机写
+
+### 页面重填异常
+重填异常发生时，未能转换的地址已存储在 BadAddr 当中了。
+ASID (地址空间标识符）：正常情况下，这部分留下来保存操作系统当前 地址空间的标识。异常不会影响该域，所以重填异常之后，该域对目前运行的进程来说仍然是正确的。
+
+<!-- TODO: 内置的页面重填异常处理程序是在哪里？处理程序中如何获得物理地址的？系统是否已经自己分号了页？ -->
+<!-- TODO: 如果重填异常处理程序没有内部实现，如何对物理内存分页？pgd 是什么？ -->
 
 ## CP0 寄存器
 
@@ -43,8 +70,17 @@ R 启动时初始化为全0或者为预设值，或者硬件在满足某些条�
 W 软件可写，但是软件不可读。如果软件读寄存器的值，会返回未定义的值  
 0 设为全0
 
-<!-- TODO: 138页 -->
+### Index 寄存器
+执行 TLBR 与 TLBW 指令时，Index 寄存器指向被访问的 TLB entry
 
+### Random 寄存器
+TLB 内部实现了一个随机替换算法，可能需要用到这个寄存器。在页面被替换时该寄存器负责随机选择一个被换出的页。
+
+### EntryLo0 和 EntryLo1
+偶数页和奇数页的入口
+EntryLo0 为偶数虚拟页面的 TLB 条目的低位部分  
+EntryLo1 为奇数虚拟页面的 TLB 条目的低位部分  
+MIPS CPU 一次性映射两个连续的虚拟页到物理页，这两个物理页分别存放在 EntryLo0 和 EntryLo1 里面
 
 
 ## 其他
@@ -66,10 +102,10 @@ LDFLAGS += -Wl,--defsym,__flash_app_start=0x80000000
 
 RAM0 中存放的是引导代码（虚拟地址 0xbfc00000 - 0xbfc1fffc = 物理地址 0x1fc00000 - 0x1fc1fffc），RAM1 中存放的是用户代码（虚拟地址 0x80000000 - 0x8003fffc = 物理地址 0x00000000 - 0x0003fffc）。
 
-| 虚拟地址        | 物理地址        | 高地址         | Minisys                   |
-|:-------------:|:-------------:|:-------------:|:---------------------------:|
-|             | 0x1fc0 0000 | 0x1fc0 1fff | RAM0                      |
-|             | 0x1000 0000 | 0x1000 1fff | RAM1                      |
+| 虚拟地址     | 物理地址      | 信号名        | Minisys                   |
+|:-----------:|:-----------:|:------------:|:-------------------------:|
+| 0xbfc0 0000 - 0xbfc1 fffc | 0x1fc0 0000 - 0x1fc1 fffc | | RAM0       |
+| 0x8000 0000 - 0x8003 fffc | 0x0000 0000 - 0x0003 fffc | | RAM1       |
 
 > 《JamesM's kernel development tutorials》 第九章  
 
@@ -77,7 +113,9 @@ RAM0 中存放的是引导代码（虚拟地址 0xbfc00000 - 0xbfc1fffc = 物理
 要实现内存的管理，首先要解决以下三个问题：
 
 1. 如何获取可用物理内存的大小和地址？
+通过阅读硬件文档，得知 RAM0 和 RAM1 的物理地址和虚拟地址情况如上表，引导代码存放在 RAM0 中，用户代码存放在 RAM1 中，均存放在对应虚拟/物理地址的起始处。引导代码和用户代码所占空间需设为已使用
 2. 采用什么样的数据结构来描述物理内存？
+页表
 3. 申请和释放物理内存的算法如何实现？
 
 
@@ -153,8 +191,14 @@ make link了哪些东西 哪些作为核心 哪些给用户 用户库分离开
 
 ### TODO
 
-CPU 中含有一个页表基址寄存器（Page Table Base Register，PTBR）指向当前页表
+<!-- CPU 中含有一个页表基址寄存器（Page Table Base Register，PTBR）指向当前页表 -->
 
+### 分页系统
+
+- 页面大小为4K，页面偏移需12位，页号为20位，页表条目为4B
+- RAM0 作为 ROM 来使用，不进行分页
+- RAM1 和虚拟地址空间进行分页，虚拟地址空间大小为3G，RAM1 为256K
+- 采用单级页表
 
 ### 页表初始化
 
