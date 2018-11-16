@@ -8,27 +8,31 @@
 #include <types.h>
 #include <atomic.h>
 
-// 默认栈的大小(4096)
-#define STACK_SIZE     (0x1000)
+// 栈的大小 4K
+#define STACK_SIZE 0x1000
 
-// 页面大小
-#define PMM_PAGE_SIZE  (0x1000)
+// 页面大小 4K
+#define PAGE_SIZE 0x1000
 
-// 页掩码 按照 0x1000(4096) 对齐地址
-#define PMM_PAGE_MASK  (0xFFFFF000)
+// 页掩码 4K 对齐地址
+#define PAGE_MASK  0xFFFFF000
+
+// 支持的最大物理内存
+#define PMM_MAX_SIZE 0x0003FFFC
 
 // 内核在物理内存起始位置
-#define RAM_KERNEL_START (0x100000)
+#define RAM_KERNEL_START 0x00000000
 
 // 内核代码在内存中的起始和结束位置，在链接脚本中定义
 extern uint8_t kern_start[];
 extern uint8_t kern_end[];
 
+
 // 开启分页机制之后的内核栈
-extern uint8_t kern_stack[STACK_SIZE];
+// extern uint8_t kern_stack[STACK_SIZE];
 
 // 内核栈的栈顶
-extern uint32_t kern_stack_top;
+// extern uint32_t kern_stack_top;
 
 // BIOS int 0x15 AX = 0xE820 常量
 #define E820MAX             (20)      // 最大的表项数目

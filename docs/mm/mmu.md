@@ -4,7 +4,10 @@
 硬件部分的功能有：TLB、虚拟地址到物理地址的映射。  
 通过 CP0 寄存器来控制内核态/用户态，也可以进行其他操作。具体参考《MicroAptiv UP Software User's Manual MD00942》
 
+外设内存
+
 ## 《MicroAptiv UP Software User's Manual MD00942》
+
 
 ### 内存管理
 
@@ -192,13 +195,6 @@ make link了哪些东西 哪些作为核心 哪些给用户 用户库分离开
 ### TODO
 
 <!-- CPU 中含有一个页表基址寄存器（Page Table Base Register，PTBR）指向当前页表 -->
-
-### 分页系统
-
-- 页面大小为4K，页面偏移需12位，页号为20位，页表条目为4B
-- RAM0 作为 ROM 来使用，不进行分页
-- RAM1 和虚拟地址空间进行分页，虚拟地址空间大小为3G，RAM1 为256K
-- 采用单级页表
 
 ### 页表初始化
 

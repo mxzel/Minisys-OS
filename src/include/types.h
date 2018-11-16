@@ -45,8 +45,7 @@ typedef uint32_t pgd_t;
 typedef uint32_t pte_t;
 
 // 原子类型
-typedef
-struct {
+typedef struct {
 	volatile int counter;
 } atomic_t;
 
