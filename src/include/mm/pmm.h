@@ -29,38 +29,37 @@ extern uint8_t kern_end[];
 
 
 // 开启分页机制之后的内核栈
-// extern uint8_t kern_stack[STACK_SIZE];
+extern uint8_t kern_stack[STACK_SIZE];
 
 // 内核栈的栈顶
-// extern uint32_t kern_stack_top;
+extern uint32_t kern_stack_top;
 
 // BIOS int 0x15 AX = 0xE820 常量
-#define E820MAX             (20)      // 最大的表项数目
-#define E820_ARM            (1)       // 可用 RAM
-#define E820_ARR            (2)       // 保留区域
+// #define E820MAX             (20)      // 最大的表项数目
+// #define E820_ARM            (1)       // 可用 RAM
+// #define E820_ARR            (2)       // 保留区域
 
-typedef
-struct e820map_t {
-        uint32_t count;
-        struct {
-                uint32_t addr_low;
-                uint32_t addr_high;
-                uint32_t length_low;
-                uint32_t length_high;
-                uint32_t type;
-        } __attribute__((packed)) map[E820MAX];
-} e820map_t;
+// typedef struct e820map_t {
+//         uint32_t count;
+//         struct {
+//                 uint32_t addr_low;
+//                 uint32_t addr_high;
+//                 uint32_t length_low;
+//                 uint32_t length_high;
+//                 uint32_t type;
+//         } __attribute__((packed)) map[E820MAX];
+// } e820map_t;
 
 // 内存页类型
-typedef
-enum mem_zone_t {
-        ZONE_DMA = 0,
-        ZONE_NORMAL = 1,
-        ZONE_HIGHMEM = 2
-} mem_zone_t;
+// typedef
+// enum mem_zone_t {
+//         ZONE_DMA = 0,
+//         ZONE_NORMAL = 1,
+//         ZONE_HIGHMEM = 2
+// } mem_zone_t;
 
-#define ZONE_NORMAL_ADDR     (0x1000000)   // 16 MB
-#define ZONE_HIGHMEM_ADDR    (0x38000000)  // 896 MB
+// #define ZONE_NORMAL_ADDR     (0x1000000)   // 16 MB
+// #define ZONE_HIGHMEM_ADDR    (0x38000000)  // 896 MB
 
 // 物理页结构
 typedef
