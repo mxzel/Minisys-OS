@@ -1,5 +1,6 @@
 /*
  * 物理内存管理
+ * 主要为初始化空闲空间链表
  */
 
 #ifndef _INCLUDE_MM_PMM_H
@@ -7,21 +8,19 @@
 
 #include <types.h>
 #include <atomic.h>
+#include <mm/mm.h>
 
 // 栈的大小 4K
 #define STACK_SIZE 0x1000
 
-// 页面大小 4K
-#define PAGE_SIZE 0x1000
-
-// 页掩码 4K 对齐地址
-#define PAGE_MASK  0xFFFFF000
-
 // 支持的最大物理内存
 #define PMM_MAX_SIZE 0x0003FFFC
 
-// 内核在物理内存起始位置
+// 内核在物理内存中的起始位置
 #define RAM_KERNEL_START 0x00000000
+
+// 内核在物理内存中的结束位置
+#define RAM_KERNEL_STOP 0x0003FFFC
 
 // 内核代码在内存中的起始和结束位置，在链接脚本中定义
 extern uint8_t kern_start[];
@@ -62,15 +61,14 @@ extern uint32_t kern_stack_top;
 // #define ZONE_HIGHMEM_ADDR    (0x38000000)  // 896 MB
 
 // 物理页结构
-typedef
-struct page_t {
+typedef struct page_t {
         atomic_t ref;                // 物理页被引用的次数
         uint32_t flag;               // 当前页状态
         union {
                 uint32_t ncount;     // 当前页后续连续页的数量  First-Fit算法需要
                 uint32_t order;      // 当前页的 order 值       buddy 算法需要
         };
-        struct list_head list;       // 链接下一个连续页
+        // struct list_head list;       // 链接下一个连续页
 } page_t;
 
 // page_t 的 flag 参数的操作宏
