@@ -124,5 +124,5 @@ make 命令会自动智能地根据当前的文件修改的情况来确定哪些
 ## 参考资料
 1. [ucore_os_lab](https://github.com/chyyuu/ucore_os_lab) [gitbook](https://chyyuu.gitbooks.io/ucore_os_docs/content/)  
 os kernel labs for operating systems course in Tsinghua University.
-2. [xv6 中文文档](https://th0ar.gitbooks.io/xv6-chinese/content/)
-3. [How to Make a Computer Operating System](https://samypesse.gitbooks.io/how-to-create-an-operating-system/content/)
+2. [https://github.com/hurley25/hurlex-doc](https://github.com/hurley25/hurlex-doc)
+3. [https://github.com/hurley25/Hurlex-II](https://github.com/hurley25/Hurlex-II)
