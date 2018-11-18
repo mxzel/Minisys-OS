@@ -15,9 +15,23 @@ GitHub 是通过 Git 进行版本控制的软件源代码托管服务。
 简而言之，使用 GitHub 进行多人合作会非常方便。
 
 最基本的操作是：`add commit push pull`，这些在网上找找有很多  
-创建分支 `git branch minxue`  
-切换分支 `git checkout minxue`  
-上传代码到新的分支 `git push --set-upstream origin minxue`（只有在切换分支以后第一次上传到新分支的时候才需要这么做，往后直接 push 就可以）  
+
+- 创建分支
+
+`git branch minxue`
+
+- 切换分支
+
+`git checkout minxue`
+
+- 上传代码到新的分支
+
+`git push --set-upstream origin minxue`
+（只有在切换分支以后第一次上传到新分支的时候才需要这么做，往后直接 push 就可以）  
+
+- 查看所有分支
+
+`git branch`
 
 ##### GitHub 配置
 
@@ -37,9 +51,7 @@ make 命令会自动智能地根据当前的文件修改的情况来确定哪些
 
 ### shell
 
-- grep
-
-    正则表达式匹配文件内容，在某路径下查找所有文本文件中某个关键词时会非常方便  
+- grep - 正则表达式匹配文件内容，在某路径下查找所有文本文件中某个关键词时会非常方便  
 
     ```bash
     # 在当前目录及子目录下的所有文本文件中搜索 "page" 关键字
