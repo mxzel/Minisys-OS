@@ -17,10 +17,17 @@
 #define PMM_MAX_SIZE 0x0003FFFC
 
 // 内核在物理内存中的起始位置
-// #define RAM_KERNEL_START 0x00000000
+#define RAM_KERNEL_START 0x80000000
 
 // 内核在物理内存中的结束位置
-// #define RAM_KERNEL_STOP 0x0003FFFC
+// 需要 4KB 对齐
+#define RAM_KERNEL_STOP 0x8000FFFC
+
+#define RAM_START 0x80000000
+
+#define RAM_STOP 0x8003FFFC
+
+#define PMM_PAGE_SIZE 4096
 
 // 内核代码在内存中的起始和结束位置，在链接脚本中定义
 // extern uint8_t kern_start[];
@@ -38,6 +45,8 @@ typedef struct page_t {
         };
         // struct list_head list;       // 链接下一个连续页
 } page_t;
+
+typedef struct free_area_
 
 // page_t 的 flag 参数的操作宏
 #define PG_RESERVED     (0)       // 1 << 0 表示页当前不可用
