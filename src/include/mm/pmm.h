@@ -10,8 +10,8 @@
 #include <atomic.h>
 #include <mm/mm.h>
 
-// 栈的大小 4K
-#define STACK_SIZE 0x1000
+// 栈的大小为64B
+#define STACK_SIZE 64
 
 // 支持的最大物理内存
 #define PMM_MAX_SIZE 0x0003FFFC
@@ -27,7 +27,8 @@
 
 #define RAM_STOP 0x8003FFFC
 
-#define PMM_PAGE_SIZE 4096
+// 页面大小为 4K
+#define PMM_PAGE_SIZE 0x1000
 
 // 内核代码在内存中的起始和结束位置，在链接脚本中定义
 // extern uint8_t kern_start[];
