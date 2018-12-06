@@ -1,5 +1,8 @@
 /*
  * 一些类型的定义
+ * TRUE FALSE bool uint64_t 
+ * time_t pid_t pgd_t pte_t
+ * atomic_t list_head
  */
 
 #ifndef _INCLUDE_TYPES_H
