@@ -28,15 +28,15 @@ int main(int argc, char const *argv[]) {
     // // size_t xx;
     // printf("%d\n", PAGE_SIZE * 2 + PAGE_TABLE_BASE_ADDR);
     // page_fault(1);
-    enum bool
-    {
-        false = 0,
-        true = 1
-    };
-    enum bool x = true;
-    if(x == true){
-        printf("true\n");
-    }
+    // enum bool
+    // {
+    //     false = 0,
+    //     true = 1
+    // };
+    // enum bool x = true;
+    // if(x == true){
+    //     printf("true\n");
+    // }
     return 0;
 }
 

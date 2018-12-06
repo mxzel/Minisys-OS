@@ -1,5 +1,7 @@
 /*
  * 模仿 Linux 内核的 list.h
+ * https://www.ibm.com/developerworks/cn/linux/kernel/l-chain/index.html
+ * list_head 在 types.h 中定义
  */
 
 #ifndef _INCLUDE_LIB_LIST_H
