@@ -46,7 +46,7 @@ typedef struct page_t {
         // struct list_head list;       // 链接下一个连续页
 } page_t;
 
-typedef struct free_area_
+// typedef struct free_area_
 
 // page_t 的 flag 参数的操作宏
 #define PG_RESERVED     (0)       // 1 << 0 表示页当前不可用
