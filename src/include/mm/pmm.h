@@ -3,37 +3,38 @@
  * 主要为初始化空闲空间链表
  */
 
-#ifndef _INCLUDE_MM_PMM_H
-#define _INCLUDE_MM_PMM_H
-
-#include <types.h>
-#include <atomic.h>
-#include <mm/mm.h>
-
-// 栈的大小 4K
-#define STACK_SIZE 0x1000
+#ifndef INCLUDE_MM_PMM_H_
+#define INCLUDE_MM_PMM_H_
 
 // 支持的最大物理内存
 #define PMM_MAX_SIZE 0x0003FFFC
 
 // 内核在物理内存中的起始位置
+// TODO: 修改内核大小
 #define RAM_KERNEL_START 0x80000000
 
 // 内核在物理内存中的结束位置
 // 需要 4KB 对齐
-#define RAM_KERNEL_STOP 0x8000FFFC
+// TODO: 修改内核大小
+#define RAM_KERNEL_STOP 0x8003FFFC
 
+// 物理内存的起始与结束位置
 #define RAM_START 0x80000000
-
 #define RAM_STOP 0x8003FFFC
 
-#define PMM_PAGE_SIZE 4096
+// 页面大小 4K
+#define PMM_PAGE_SIZE 0x1000
+// 页掩码 4K 对齐地址
+#define PAGE_MASK  0xFFFFF000
 
-// 内核代码在内存中的起始和结束位置，在链接脚本中定义
-// extern uint8_t kern_start[];
-// extern uint8_t kern_end[];
+// 页表起始位置（页目录位置）
+#define PTE_ADDR ((RAM_KERNEL_STOP & 0xffffe000) + 0x1000)
 
+// 最多支持的物理页面个数
+#define PAGE_MAX_COUNT ((RAM_STOP - PTE_ADDR) / PMM_PAGE_SIZE)
 
+#include <types.h>
+#include <atomic.h>
 
 // 物理页结构
 typedef struct page_t {
@@ -43,7 +44,7 @@ typedef struct page_t {
                 uint32_t ncount;     // 当前页后续连续页的数量  First-Fit算法需要
                 uint32_t order;      // 当前页的 order 值       buddy 算法需要
         };
-        // struct list_head list;       // 链接下一个连续页
+        struct list_head list;       // 链接下一个连续页
 } page_t;
 
 // typedef struct free_area_
@@ -118,4 +119,4 @@ void free_pages(uint32_t addr, uint32_t n);
 // 当前可用内存页
 uint32_t free_pages_count(void);
 
-#endif  // _INCLUDE_MM_PMM_H
+#endif  // INCLUDE_MM_PMM_H_
