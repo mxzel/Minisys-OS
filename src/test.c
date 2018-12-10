@@ -10,7 +10,7 @@
 /**
  * 请勿删除该注释！！！
  * 
- * 编译时添加 "-I ." 参数，会使 gcc 优先查找给定的目录（当前目录）
+ * 编译时添加 "-I ." 参数，会使 gcc 优先查找给定的目录
  * gcc test.c -o test -I ./include -I ./lib -I ./include/lib
  * cd "/Users/seapatrol/Desktop/Projects/OSX/src/" && gcc test.c -o test -I ./include -I ./lib -I ./include/lib && "/Users/seapatrol/Desktop/Projects/OSX/src/"test
  */
