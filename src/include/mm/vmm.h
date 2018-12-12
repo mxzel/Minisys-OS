@@ -15,7 +15,7 @@
 // 映射 256K 内存所需要的页表条目数
 #define PTE_COUNT PAGE_MAX_COUNT
 
-static pte_t pte_kern[PTE_COUNT];
+// static pte_t pte_kern[PTE_COUNT];
 
 #define le_to_vma(le) list_entry(le, struct vma_struct, list)
 

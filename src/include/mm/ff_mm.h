@@ -16,10 +16,10 @@
  * =====================================================================================
  */
 
-#ifndef _INCLUDE_MM_FF_MM_H
-#define _INCLUDE_MM_FF_MM_H
+#ifndef INCLUDE_MM_FF_MM_H_
+#define INCLUDE_MM_FF_MM_H_
 
 // 首次适应算法
 extern struct pmm_manager ff_mm_manager;
 
-#endif  // _INCLUDE_MM_FF_MM_H
+#endif  // INCLUDE_MM_FF_MM_H_

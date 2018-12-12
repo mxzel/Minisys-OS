@@ -16,8 +16,6 @@
  * =====================================================================================
  */
 
-#include <atomic.h>
-// #include <debug.h>
 #include <mm/pmm.h>
 #include <mm/ff_mm.h>
 #include <lib/list.h>

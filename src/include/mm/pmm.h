@@ -28,7 +28,7 @@
 #define PAGE_MASK  0xFFFFF000
 
 // 页表起始位置（页目录位置）
-#define PTE_ADDR ((RAM_KERNEL_STOP & 0xffffe000) + 0x1000)
+#define PTE_ADDR ((RAM_KERNEL_STOP & 0xfffff000) + 0x1000)
 
 // 最多支持的物理页面个数
 #define PAGE_MAX_COUNT ((RAM_STOP - PTE_ADDR) / PMM_PAGE_SIZE)
@@ -91,6 +91,13 @@ page_t *addr_to_page(uint32_t addr);
 
 // 由页的管理结构的指针计算出页所在物理地址
 uint32_t page_to_addr(page_t *page);
+
+// // 物理内存页面管理的栈
+// extern uint32_t pmm_stack[];
+// // 物理内存管理的栈指针
+// extern uint32_t pmm_stack_top;
+// // 物理内存页的数量
+// extern uint32_t phy_page_count;
 
 // 内存管理子系统管理对象
 struct pmm_manager {
