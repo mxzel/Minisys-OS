@@ -1,10 +1,16 @@
-#ifndef _INCLUDE_MM_MM_H
-#define _INCLUDE_MM_MM_H
+#ifndef INCLUDE_MM_MM_H_
+#define INCLUDE_MM_MM_H_
 
-// 页面大小 4K
-#define PAGE_SIZE 0x1000
+#include <include/mm/pmm.h>
+#include <include/mm/vmm.h>
 
-// 页掩码 4K 对齐地址
-#define PAGE_MASK  0xFFFFF000
+// 内存管理子系统初始化
+void mm_init(void);
 
-#endif // !_INCLUDE_MM_MM_H
+// 为指定进程分配一个页框
+uint32_t alloc_page(pid_t pid);
+
+// 释放指定页框
+void free_page(uint32_t p);
+
+#endif // INCLUDE_MM_MM_H_

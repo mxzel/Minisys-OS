@@ -28,6 +28,7 @@ LDFLAGS += -Wl,--defsym,__stack=0x80040000
 # this size as the amount of free memory between the end of the
 # program data and the lowest address that the stack will reach.
 #
+# TODO: RAM空间是不是在这里被定死了
 # Max 2K for stack (0x800)
 # Max 128K for program code/data (0x20000)
 # Leaving 126K heap (0x1f800)

@@ -33,6 +33,10 @@ GitHub 是通过 Git 进行版本控制的软件源代码托管服务。
 
 `git branch`
 
+- 将主分支的代码合并到当前分支
+
+`git merge master`
+
 ##### GitHub 配置
 
 暂略，网上有很多教程可以参考

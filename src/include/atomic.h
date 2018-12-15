@@ -16,8 +16,8 @@
  * =====================================================================================
  */
 
-#ifndef ATOMIC_H_
-#define ATOMIC_H_
+#ifndef _INCLUDE_ATOMIC_H
+#define _INCLUDE_ATOMIC_H
 
 #include <types.h>
 
@@ -123,4 +123,4 @@ static inline int32_t atomic_dec_and_test(atomic_t *v)
         return (c != 0);
 }
 
-#endif  // ATOMIC_H_
+#endif  // _INCLUDE_ATOMIC_H
