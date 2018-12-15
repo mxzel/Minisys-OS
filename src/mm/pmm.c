@@ -25,11 +25,14 @@ uint32_t phy_page_count;
 void pmm_init(){
     phy_page_count = -1;
     uint32_t page_addr = PTE_ADDR + 0x1000; // 页目录占用一个页框，在此之后才是可分配的页
-    while (page_addr + PMM_PAGE_SIZE < RAM_STOP){
+    int cnt;
+    for (cnt = 0; cnt < PAGE_MAX_COUNT; ++cnt)
+    {
         pmm_free_page(page_addr);
         page_addr += PMM_PAGE_SIZE;
         phy_page_count++;
     }
+
 }
 
 uint32_t pmm_alloc_page()
@@ -48,3 +51,6 @@ void pmm_free_page(uint32_t p)
 	pmm_stack[++pmm_stack_top] = p;
 }
 
+uint32_t free_pages_count(void){
+    return phy_page_count;
+}
