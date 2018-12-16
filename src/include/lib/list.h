@@ -13,7 +13,7 @@
 
 #define __offsetof(TYPE, MEMBER) ((unsigned int) &((TYPE *)0)->MEMBER)
 
-#define LIST_HEAD_INIT(name) { &(name), &(name) }
+#define INIT_LIST_HEAD(name) { &(name), &(name); }
 
 #define LIST_HEAD(name) \
         struct list_head name = LIST_HEAD_INIT(name)
@@ -23,28 +23,28 @@ static inline void init_list_head (struct list_head *list) {
         list->prev = list;
 }
 
-static inline void __list_add(struct list_head *new,
+static inline void __list_add(struct list_head *new_node,
                 struct list_head *prev, struct list_head *next)
 {
-        next->prev = new;
-        new->next = next;
-        new->prev = prev;
-        prev->next = new;
+        next->prev = new_node;
+        new_node->next = next;
+        new_node->prev = prev;
+        prev->next = new_node;
 }
 
-static inline void list_add(struct list_head *new, struct list_head *head)
+static inline void list_add(struct list_head *new_node, struct list_head *head)
 {
-        __list_add(new, head, head->next);
+        __list_add(new_node, head, head->next);
 }
 
-static inline void list_add_before(struct list_head *new, struct list_head *head)
+static inline void list_add_before(struct list_head *new_node, struct list_head *head)
 {
-        __list_add(new, head->prev, head);
+        __list_add(new_node, head->prev, head);
 }
 
-static inline void list_add_tail(struct list_head *new, struct list_head *head)
+static inline void list_add_tail(struct list_head *new_node, struct list_head *head)
 {
-        __list_add(new, head->prev, head);
+        __list_add(new_node, head->prev, head);
 }
 
 static inline void __list_del(struct list_head * prev, struct list_head * next)
@@ -59,18 +59,18 @@ static inline void list_del(struct list_head *entry)
 }
 
 static inline void list_replace(struct list_head *old,
-                struct list_head *new)
+                struct list_head *new_node)
 {
-        new->next = old->next;
-        new->next->prev = new;
-        new->prev = old->prev;
-        new->prev->next = new;
+        new_node->next = old->next;
+        new_node->next->prev = new_node;
+        new_node->prev = old->prev;
+        new_node->prev->next = new_node;
 }
 
 static inline void list_replace_init(struct list_head *old,
-                struct list_head *new)
+                struct list_head *new_node)
 {
-        list_replace(old, new);
+        list_replace(old, new_node);
         INIT_LIST_HEAD(old);
 }
 
@@ -137,7 +137,7 @@ static inline void list_cut_position(struct list_head *list,
                 return;
         if (entry == head)
                 INIT_LIST_HEAD(list);
-        else
+        if (entry != head)
                 __list_cut_position(list, head, entry);
 }
 
