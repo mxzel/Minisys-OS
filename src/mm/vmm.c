@@ -11,25 +11,53 @@ void vmm_init(void){
     int mask = 0xffffffcf;
     for (pte_p = page_table_p; pte_p < page_table_p + 0x1000; pte_p++, cnt++)
     {
-        if(cnt <= PTE_COUNT)
+        if(cnt < PTE_COUNT)
             *pte_p &= mask;
         else
             *pte_p = (*(pte_p) & mask) | 0x02;
     }
 }
 
-// 以下均为物理页号
-// status
-// 0 - 未分配
-// 1 - 已分配
-// 2 - 保留
-// 3 - 无效
-uint32_t get_ppn_from_page(uint32_t page_addr){
-    return (page_addr & PAGE_MASK) >> 12;
+uint32_t get_ppn_from_page(uint32_t phy_page_addr){
+    // 根据物理地址获得物理页号
+    return (phy_page_addr & PAGE_MASK) >> 12;
 }
 
 uint32_t get_ppn_from_pte(pte_t pte){
+    // 根据 PTE 获得物理页号
     return (pte & 0xfc000000) >> 26;
+}
+
+uint32_t get_vpn_from_pte(pte_t pte){
+    // 根据 PTE 获得虚拟页号
+    return (pte & 0x03ffffc0) >> 6;
+}
+
+uint32_t get_vpn_from_page(uint32_t page_addr){
+    // 根据虚拟地址获得虚拟页号
+    return (page_addr & PAGE_MASK) >> 12;
+}
+
+uint32_t get_ppn_by_vpn(uint32_t vpn){
+    // 根据虚拟页号获得物理页号
+    pte_t *pte_p;
+    int cnt = 0;
+    for (pte_p = page_table_p; pte_p < page_table_p + 0x1000 && cnt != PTE_COUNT; pte_p++, cnt++)
+    {
+        if(get_vpn_from_pte(*pte_p) == vpn){
+            return get_ppn_from_pte(*pte_p);
+        }
+    }
+    assert(false);
+    return -1;
+}
+
+uint32_t get_phy_addr_by_vir_addr(uint32_t vir_addr){
+    // 根据虚拟地址获得物理地址
+    uint32_t vpn = get_vpn_from_page(vir_addr);
+    uint32_t ppn = get_ppn_by_vpn(vpn);
+    uint32_t phy_addr = (ppn << 12) | (vir_addr & PAGE_MASK);
+    return phy_addr;
 }
 
 void set_page_unallocated(uint32_t ppn){
@@ -103,10 +131,11 @@ pid_t get_page_pid(uint32_t ppn){
 }
 
 
-void vmm_alloc_page(uint32_t page_addr, pid_t pid)
+uint32_t vmm_alloc_page(uint32_t page_addr, pid_t pid)
 {
+    uint32_t ret_addr = vmm_page_addr;
     uint32_t ppn = get_ppn_from_page(page_addr);
-    uint32_t vpn = (ppn + (uint32_t)0x80000000) >> 12;
+    uint32_t vpn = vmm_page_addr >> 12;
     pte_t *pte_p;
     int cnt = 0;
     for (pte_p = page_table_p; pte_p < page_table_p + 0x1000 && cnt != PTE_COUNT; pte_p++, cnt++)
@@ -120,10 +149,15 @@ void vmm_alloc_page(uint32_t page_addr, pid_t pid)
             return;
         }
     }
+    vmm_page_addr += 0x1000;
+    return ret_addr;
 }
 
 void vmm_free_page(uint32_t page_addr)
 {
+    /**
+     * uint32_t page_addr : 页框的物理地址
+     */
     uint32_t ppn = get_ppn_from_page(page_addr);
     set_page_unallocated(ppn);
 }
