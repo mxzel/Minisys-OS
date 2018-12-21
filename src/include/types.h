@@ -58,4 +58,15 @@ struct list_head {
     struct list_head *prev;
 };
 
+//TODO 互斥锁实现
+//struct mutex;
+
+typedef long long loff_t;
+
+
+struct page{
+  struct list_head list;
+  uint32_t address;
+}
+
 #endif  // _INCLUDE_TYPES_H

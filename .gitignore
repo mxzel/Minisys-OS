@@ -54,3 +54,8 @@ modules.order
 Module.symvers
 Mkfile.old
 dkms.conf
+src/GPATH
+src/GRTAGS
+src/GTAGS
+*.c~
+*.h~

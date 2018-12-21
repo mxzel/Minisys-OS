@@ -13,7 +13,7 @@
 
 #define __offsetof(TYPE, MEMBER) ((unsigned int) &((TYPE *)0)->MEMBER)
 
-#define INIT_LIST_HEAD(name) { &(name), &(name); }
+#define LIST_HEAD_INIT(name) { &(name), &(name); }
 
 #define LIST_HEAD(name) \
         struct list_head name = LIST_HEAD_INIT(name)
