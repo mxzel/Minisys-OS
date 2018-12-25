@@ -14,8 +14,8 @@ void mm_init(void)
     }
     idx = 0;
 
-    pmm_init();
-    vmm_init();
+    // pmm_init();
+    // vmm_init();
 }
 
 // void *alloc_page(pid_t pid, int count)
