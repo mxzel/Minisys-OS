@@ -25,7 +25,7 @@ uint32_t phy_page_count;
 void pmm_init(){
     phy_page_count = -1;
     pmm_stack_top = -1;
-    uint32_t page_addr = PTE_ADDR + 0x1000; // 页目录占用一个页框，在此之后才是可分配的页
+    uint32_t page_addr = PTE_ADDR + PAGE_TABLE_SIZE; // 页目录占用几个页框，在此之后才是可分配的页
     int cnt;
     for (cnt = 0; cnt < PAGE_MAX_COUNT; ++cnt)
     {
@@ -33,7 +33,6 @@ void pmm_init(){
         page_addr += PMM_PAGE_SIZE;
         phy_page_count++;
     }
-
 }
 
 uint32_t pmm_alloc_page()
