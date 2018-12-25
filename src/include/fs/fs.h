@@ -1,6 +1,6 @@
-#include<include/types.h>
+#include"../types.h"
 
-
+/*
 //文件系统调用
 
 //文件读写操作
@@ -30,5 +30,6 @@ rmdir
 mkdir
 
 readdir
+*/
 
 void fs_init();

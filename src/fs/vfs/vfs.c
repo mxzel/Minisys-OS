@@ -1,20 +1,33 @@
-#include<include/fs/fs.h>
-#include<vfs.h>
-#include<include/lib/list.h>
+#include <fs/fs.h>
+#include "vfs.h"
+#include <list.h>
 
-struct list_head mount_list;//所有已挂载的文件系统
+//=====================================================
+//=vfs.c
+//=
+//=本文件是文件系统的入口和主文件，实现了所有在fs.h中定义的函数
+//=
+//=
+//=====================================================
+
 
 
 extern struct fs_type ramfs_fs_type;
 
 
+//TODO: 初始化inode/dentry/file
+void elements_init(){}
+
+
+
 
 void mount_init(struct fs_type *fs_type){
-  LIST_HEAD_INIT(mount_list);
-  struct vfsmonut * mnt = alloc_mount();
-  list_add(&mnt->list,&mount_list);
+  INIT_LIST_HEAD(&mount_list);
+  struct vfsmount *mnt = alloc_mount();//新建一个挂载
+  list_add(&mnt->list,&mount_list);//加入链表
+  //设置参数
   mnt->parent = mnt;
-  mnt->sb=fs_type->alloc_sb();
+  mnt->sb=fs_type->alloc_sb();//建立对应的sb
 
 
 

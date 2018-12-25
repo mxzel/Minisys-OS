@@ -1,19 +1,45 @@
-#include<vfs.h>
-#include<include/lib/list.h>
+#include"vfs.h"
+#include<list.h>
 
-extern struct super_operations ramfs_ops;
-extern struct address_space_operations ramfs_aops;
-extern struct file_operations ramfs_fops;
-extern struct dentry_operations ramfs_dops;
+//TODO memset,malloc
+
+//=====================================================
+//=alloc.c
+//=
+//=本文件涉及所有文件系统相关结构体的内存管理（创建/释放等）
+//=需要将函数签名声明在vfs.h中，通过include"vfs.h"来使用。
+//=====================================================
+
+
+//=====================================================
+//以下是用来管理所有结构体变量的链表和统计信息
+
+//VFSMOUNT相关变量
+LIST_HEAD(mount_list);//所有已挂载的文件系统
+
+
+//INODE相关变量
+int nr_inodes;//inode数量
+LIST_HEAD(inode_list);//保存所有inode的链表
+
+
+
+
+//=======================================================
+//以下是相关函数
+
+//alloc函数
+//此处的所有alloc仅对结构体的基本字段进行初始化，不涉及具体文件系统。
+//文件系统对应的函数调用alloc函数后再进行针对性的初始化。
 
 
 struct vfsmount * alloc_mount(){
   struct vfsmount * mnt;
   mnt = malloc(sizeof(struct vfsmount));
   memset(mnt,0,sizeof(struct vfsmount));
-  LIST_HEAD_INIT(mnt->list);
-  LIST_HEAD_INIT(mnt->mounts);
-  LIST_HEAD_INIT(mnt->child);
+  INIT_LIST_HEAD(&mnt->list);
+  INIT_LIST_HEAD(&mnt->mounts);
+  INIT_LIST_HEAD(&mnt->child);
   mnt->count = 0;
   return mnt;
 }
@@ -22,12 +48,10 @@ struct super_block * alloc_sb(){
   struct super_block * sb;
   sb = malloc(sizeof(struct super_block));
   memset(sb,0,sizeof(struct super_block));
-  LIST_HEAD_INIT(sb->list);
-  LIST_HEAD_INIT(sb->files);
-  LIST_HEAD_INIT(sb->inodes);
-  //sb->sb_operations=&ramfs_ops;
-  //sb->d_operations=&ramfs_dops;
-  sb->sb_mode.mounted=0;
+  INIT_LIST_HEAD(&sb->list);
+  INIT_LIST_HEAD(&sb->files);
+  INIT_LIST_HEAD(&sb->inodes);
+  sb->mode.mounted=0;
   return sb;
 }
 
@@ -37,6 +61,8 @@ struct inode* alloc_inode(struct super_block *sb){
   static struct inode_operations empty_iops;
   static struct file_operations empty_fops;
   struct inode *inode;
+  static unsigned long last_ino;
+
 
   inode=(struct inode*)malloc(sizeof(struct inode));
 
@@ -58,9 +84,11 @@ struct inode* alloc_inode(struct super_block *sb){
     mapping->a_operations = &empty_aops;
     mapping->host = inode;
     mapping->nrpages = 0;
-    mapping->pages=NULL;
+    INIT_LIST_HEAD(&mapping->pages);
     inode->mapping=mapping;
   }
+
+  list_add(&inode->i_list, &inode_list);
   return inode;
 
 }

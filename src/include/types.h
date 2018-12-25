@@ -1,6 +1,6 @@
 /*
  * 一些类型的定义
- * TRUE FALSE bool uint64_t 
+ * TRUE FALSE bool uint64_t
  * time_t pid_t pgd_t pte_t
  * atomic_t list_head
  */
@@ -32,7 +32,7 @@ typedef unsigned short     uint16_t;
 typedef          short     int16_t;
 typedef unsigned char      uint8_t;
 typedef          char      int8_t;
-typedef unsigned int       size_t;
+//typedef unsigned int       size_t;
 typedef          int       ssize_t;
 
 // 时间类型
@@ -67,6 +67,6 @@ typedef long long loff_t;
 struct page{
   struct list_head list;
   uint32_t address;
-}
+};
 
 #endif  // _INCLUDE_TYPES_H
