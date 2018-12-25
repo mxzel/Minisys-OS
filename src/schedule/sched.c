@@ -1,6 +1,6 @@
 
-#include <proc.h>
-#include <sched.h>
+
+#include "sched.h"
 
 
 void wakeup_proc(struct task_struct *proc) {
@@ -15,7 +15,7 @@ void wakeup_proc(struct task_struct *proc) {
 //TODO:调度算法需要修改
 void schedule(void) {
     bool intr_flag;
-    list_entry_t *le, *last;
+    struct list_head *le, *last;
     int32_t highest = 0;
     struct task_struct *next = NULL;
     struct task_struct *current_highest = NULL;
@@ -26,7 +26,7 @@ void schedule(void) {
     do {
         if ((le = le->next) != &proc_list) {
             next = list_entry(le, struct task_struct,list_link);
-            if (next->state == PROC_RUNNABLE) {
+            if (next->state == 0) {
                 if(highest < next->priority){
                     highest = next->priority;
                     current_highest = next;
@@ -34,7 +34,7 @@ void schedule(void) {
             }
         }
     } while (le != last);
-    if (current_highest == NULL || current_highest->state != PROC_RUNNABLE) {
+    if (current_highest == NULL || current_highest->state != 0) {
         current_highest = idleproc;
     }
     

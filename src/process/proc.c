@@ -1,10 +1,10 @@
 
-#include <proc.h>
 #include <vmm.h>
 #include <string.h>
 #include <assert.h>
+#include <proc.h>
 
-struct list_head_t proc_list;   
+struct list_head proc_list;   
 
 struct task_struct *idleproc = NULL;
 struct task_struct *current = NULL;
@@ -29,15 +29,15 @@ static struct task_struct * alloc_proc(void){
 
 
 // set_proc_name - set the name of proc
-char *set_proc_name(struct task_struct *proc, const char *name) {
+void *set_proc_name(struct task_struct *proc, const char *name) {
     memset(proc->name, 0, sizeof(proc->name));
-    return memcpy(proc->name, name, PROC_NAME_LEN);
+    memcpy(proc->name, name, PROC_NAME_LEN);
 }
 
 // get_pid - alloc a unique pid for process
 static int get_pid(void) {
     struct task_struct *proc;
-    list_entry_t *list = &proc_list, *le;
+    struct list_head *list = &proc_list, *le;
     static int next_safe = MAX_PID, last_pid = MAX_PID;
     if (++ last_pid >= MAX_PID) {
         last_pid = 1;
@@ -93,9 +93,11 @@ static void test_main(void *arg){
 
 //根据fn、优先级创建进程
 int create_pro(int (*fn)(void *), void *arg, uint32_t priority){
-
+    
     
     struct task_struct *proc;
+    pid_t ret;
+
     if(nr_process>MAX_PROCESS){
         goto fork_out;
     }
@@ -137,7 +139,8 @@ void proc_init(void){
 
     current = idleproc;//idleproc 进程创建完毕
 
-    int pid = create_pro()TODO://创建init进程，
+    int pid = create_pro(init_main,NULL,1);//创建init进程，TODO:
+
     if (pid <= 0) {
         panic("create user_main failed.\n");
     }

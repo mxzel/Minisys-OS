@@ -3,7 +3,6 @@
 
 #include <proc.h>
 #include <list.h>
-
 void schedule(void);
 void wakeup_proc(struct proc_struct *proc);
 

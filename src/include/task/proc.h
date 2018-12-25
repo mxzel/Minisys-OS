@@ -5,13 +5,15 @@
 
 struct context {
     //TODO:
-}
+     pid_t pid;
+     
+};
 
 #define PROC_NAME_LEN               15
 #define MAX_PROCESS                 1024
 #define MAX_PID                     (MAX_PROCESS * 2)
 
-     
+extern struct list_head proc_list;
 
 struct task_struct
 {
@@ -25,7 +27,7 @@ struct task_struct
     struct task_struct *parent;                 // 父进程
     struct context context;                     // 进程上下文
     //list_head children;                       // 链表的头部，链表的所有元素都是children的子进程
-    list_head_t list_link;                      // 指向proc list
+    struct list_head list_link;                      // 指向proc list
 
 };
 
@@ -47,7 +49,7 @@ struct task_struct
 extern struct task_struct *idleproc, *initproc, *current;
 void proc_init(void);
 int create_pro(int (*fn)(void *), void *arg, uint32_t priority);
-char *set_proc_name(struct proc_struct *proc, const char *name);
+void *set_proc_name(struct proc_struct *proc, const char *name);
 
 
 #endif /* !__KERN_PROCESS_PROC_H__ */
