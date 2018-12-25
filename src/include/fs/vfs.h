@@ -20,6 +20,8 @@
 extern struct vfsmount * alloc_mount();
 extern struct super_block * alloc_sb();
 extern struct inode* alloc_inode(struct super_block *sb);
+extern struct dentry *alloc_dentry_root(struct inode *root_inode);
+extern struct dentry *alloc_dentry(struct dentry * parent, const struct qstr *name);
 
 
 //把所有需要的、写在别的.c中的变量全部extern进来
@@ -28,6 +30,10 @@ extern struct list_head mount_list;
 extern int nr_inodes;
 extern struct list_head inode_list;
 
+struct qstr {
+  unsigned int len;
+  const char *name;
+};
 
 //每个文件系统一个
 struct fs_type{
@@ -69,7 +75,7 @@ struct super_block{
   //struct file_system_type *type;//TODO 文件系统类型？
   struct super_operations *sb_operations;//sb操作的接口
   struct dentry *root;//根目录
-  struct dentry_operations *d_operations;
+  //struct dentry_operations *d_operations;
   struct list_head files;//所有file
   struct list_head inodes;//所有inode
 };
@@ -179,13 +185,13 @@ struct dentry {
   struct list_head child; //所有子dentry
   struct list_head subdirs;//表示子目录的子dentry
   struct list_head alias; //所有与对应inode有关的dentry的链表（inode中的struct hlist_head  dentry）
-  //int d_mounted; //该目录下挂载的文件系统的数量
+  int mounted; //该目录下挂载的文件系统的数量
   //unsigned long time; /* 重新变为有效的时间！注意只要操作成功这个dentry就是有效的，否则无效。（used by d_revalidate） */
   struct dentry_operations *operations;// 目录项方法
   struct super_block * sb; //文件的超级块对象
   //unsigned long d_vfs_flags;
   // void * d_fsdata;//与文件系统相关的数据
-  unsigned char d_iname [DNAME_INLINE_LEN];// 存放文件名
+  struct qstr d_name;// 存放文件名
 };
 
 //dentry的操作
@@ -242,3 +248,13 @@ struct file_operations {
 };
 //TODO 文件列表等
 //https://cloud.tencent.com/developer/article/1053876
+static inline struct dentry *dget(struct dentry *dentry)
+{
+  atomic_inc(&dentry->count);
+  return dentry;
+}
+
+struct path {
+  struct vfsmount *mnt;
+  struct dentry *dentry;
+};

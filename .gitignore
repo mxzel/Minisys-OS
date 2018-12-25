@@ -59,3 +59,4 @@ src/GRTAGS
 src/GTAGS
 *.c~
 *.h~
+*.c#

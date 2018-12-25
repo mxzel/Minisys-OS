@@ -7,7 +7,7 @@
 // TODO: 12.08 vmm slob
 
 #include <types.h>
-#include <include/mm/pmm.h>
+#include <mm/pmm.h>
 
 #ifndef INCLUDE_MM_VMM_H_
 #define INCLUDE_MM_VMM_H_

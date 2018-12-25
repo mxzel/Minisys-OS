@@ -1,7 +1,10 @@
-#include"vfs.h"
 #include<list.h>
+#include<types.h>
+#include<mm/mm.h>
+#include<fs/vfs.h>
 
-//TODO memset,malloc
+
+//TODO memset/memcopy
 
 //=====================================================
 //=alloc.c
@@ -22,7 +25,8 @@ LIST_HEAD(mount_list);//所有已挂载的文件系统
 int nr_inodes;//inode数量
 LIST_HEAD(inode_list);//保存所有inode的链表
 
-
+//DENTRY相关变量
+int nr_dentries;
 
 
 //=======================================================
@@ -35,7 +39,7 @@ LIST_HEAD(inode_list);//保存所有inode的链表
 
 struct vfsmount * alloc_mount(){
   struct vfsmount * mnt;
-  mnt = malloc(sizeof(struct vfsmount));
+  mnt = kmalloc(0,sizeof(struct vfsmount));
   memset(mnt,0,sizeof(struct vfsmount));
   INIT_LIST_HEAD(&mnt->list);
   INIT_LIST_HEAD(&mnt->mounts);
@@ -46,7 +50,7 @@ struct vfsmount * alloc_mount(){
 
 struct super_block * alloc_sb(){
   struct super_block * sb;
-  sb = malloc(sizeof(struct super_block));
+  sb = kmalloc(0,sizeof(struct super_block));
   memset(sb,0,sizeof(struct super_block));
   INIT_LIST_HEAD(&sb->list);
   INIT_LIST_HEAD(&sb->files);
@@ -64,7 +68,7 @@ struct inode* alloc_inode(struct super_block *sb){
   static unsigned long last_ino;
 
 
-  inode=(struct inode*)malloc(sizeof(struct inode));
+  inode=(struct inode*)kmalloc(0,sizeof(struct inode));
 
   if(inode){
     struct address_space * const mapping = &inode->data;
@@ -91,4 +95,57 @@ struct inode* alloc_inode(struct super_block *sb){
   list_add(&inode->i_list, &inode_list);
   return inode;
 
+}
+
+
+struct dentry *alloc_dentry(struct dentry * parent, const struct qstr *name)
+{
+	struct dentry *dentry;
+	char *dname;
+
+	dentry = kmalloc(0,sizeof(struct dentry));
+
+    dname = kmalloc(0,name->len + 1);
+
+	dentry->d_name.name = dname;
+	dentry->d_name.len = name->len;
+	memcpy(dname, name->name, name->len);
+	dname[name->len] = 0;
+
+	atomic_set(&dentry->count, 1);
+	dentry->inode = NULL;
+	dentry->parent = NULL;
+	dentry->sb = NULL;
+	dentry->operations = NULL;
+	dentry->mounted = 0;
+	INIT_LIST_HEAD(&dentry->subdirs);
+	INIT_LIST_HEAD(&dentry->alias);
+
+	if (parent) {
+      dentry->parent = dget(parent);
+      dentry->sb = parent->sb;
+	} else {
+	  INIT_LIST_HEAD(&dentry->child);
+	}
+
+	if (parent)
+		list_add(&dentry->child, &parent->subdirs);
+	nr_dentries++;
+
+    return dentry;
+}
+
+struct dentry * alloc_dentry_root(struct inode *root_inode){
+  struct dentry *res = NULL;
+
+  if (root_inode) {
+    static const struct qstr name = { .name = "/", .len = 1 };
+
+    res = alloc_dentry(NULL, &name);
+    res->sb = root_inode->sb;
+    res->parent = res;
+    list_add(&res->alias, &root_inode->d_list);
+    res->inode = root_inode;
+  }
+  return res;
 }

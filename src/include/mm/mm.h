@@ -1,8 +1,8 @@
 #ifndef INCLUDE_MM_MM_H_
 #define INCLUDE_MM_MM_H_
 
-#include <include/mm/pmm.h>
-#include <include/mm/vmm.h>
+#include <mm\pmm.h>
+#include <mm\vmm.h>
 
 uint32_t page_alloc_addrs[64];
 uint8_t page_alloc_counts[64];
