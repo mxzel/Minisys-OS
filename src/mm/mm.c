@@ -7,10 +7,23 @@ void mm_init(void)
     vmm_init();
 }
 
-uint32_t alloc_page(pid_t pid, int count)
+uint32_t alloc_page(pid_t pid, size_t size)
 {
-    if(count > free_pages_count()){
-        // 物理内存不够
+    /**
+     * 为进程分配内存
+     * pid      : 进程的 id 号
+     * size     : 分配空间的大小
+     */
+    int count = 0;
+    int n_bytes = size;
+    while (n_bytes > 0)
+    {
+        count += 1;
+        n_bytes -= 4096;
+    }
+
+    if(count > free_pages_count() || count == 0){
+        // 物理内存不够用 或者是参数无效
         assert(false);
     }
 
@@ -29,6 +42,17 @@ uint32_t alloc_page(pid_t pid, int count)
     
     // 返回分配的内存空间的首地址（虚拟地址）
     return ret_addr;
+}
+
+
+void copy_page(uint32_t src, uint32_t dst, int count){
+    // 将 src 开始的连续的几个页拷贝到 dst 中（虚拟地址）
+    uint32_t *p_src = src;
+    uint32_t *p_dst = dst;
+    int index;
+    for (index = 0; index < count; ++index){
+        *(p_dst++) = *(p_src++);
+    }
 }
 
 void free_page(uint32_t p, int count)
