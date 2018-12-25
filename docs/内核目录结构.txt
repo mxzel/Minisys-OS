@@ -1,0 +1,25 @@
+# 内核目录结构
+
+参考 linux 操作系统的内核源码目录结构
+
+OSX/src
+├── arch                    # 与处理器结构相关的代码
+│   └── mips
+├── boot                    # 引导程序
+├── include                 # 编译内核所需要的头文件
+│   ├── lib                 # 库函数
+│   ├── linux
+│   ├── mm                  # 内存管理头文件
+│   └── task                # 进程管理头文件
+├── init                    # 系统初始化的代码
+│   └── kmain.c
+├── kernel                  # 内核代码
+├── lib                     # 库函数的实现
+├── mm                      # 内存管理的实现
+└── ...
+
+
+- 编译时添加 "-I ." 参数，会使 gcc 优先查找给定的目录
+- gcc test.c -o test -I ./include -I ./lib -I ./include/lib
+- cd "/Users/seapatrol/Desktop/Projects/OSX/src/" && gcc test.c -o test -I ./include -I ./lib -I ./include/lib && "/Users/seapatrol/Desktop/Projects/OSX/src/"test
+- 以上命令告诉 gcc 优先查找 src/include src/lib src/include/lib 三个目录

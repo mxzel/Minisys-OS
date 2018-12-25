@@ -1,10 +1,27 @@
-#ifndef _INCLUDE_MM_MM_H
-#define _INCLUDE_MM_MM_H
+#ifndef INCLUDE_MM_MM_H_
+#define INCLUDE_MM_MM_H_
 
-// 页面大小 4K
-#define PAGE_SIZE 0x1000
+#include <include/mm/pmm.h>
+#include <include/mm/vmm.h>
 
-// 页掩码 4K 对齐地址
-#define PAGE_MASK  0xFFFFF000
+uint32_t page_alloc_addrs[64];
+uint8_t page_alloc_counts[64];
+int idx;
 
-#endif // !_INCLUDE_MM_MM_H
+// 地址转换为指针
+void *addr_to_ptr(uint32_t addr);
+
+// 内存管理子系统初始化
+void mm_init(void);
+
+// // 为指定进程分配页框
+// void *alloc_page(pid_t pid, int count);
+
+void *kmalloc(pid_t pid, size_t size);
+
+void kfree(void *ptr);
+
+// // 释放指定页框
+// void free_page(uint32_t p);
+
+#endif // INCLUDE_MM_MM_H_

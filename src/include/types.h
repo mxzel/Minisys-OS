@@ -1,5 +1,8 @@
 /*
  * 一些类型的定义
+ * TRUE FALSE bool uint64_t 
+ * time_t pid_t pgd_t pte_t
+ * atomic_t list_head
  */
 
 #ifndef _INCLUDE_TYPES_H
@@ -13,8 +16,6 @@
 #define TRUE  1
 #define FALSE 0
 #endif
-
-// #define __UNUSED__ __attribute__((unused))
 
 typedef enum bool {
     false = 0,
@@ -38,11 +39,8 @@ typedef uint32_t time_t;
 // 进程 PID
 typedef int32_t pid_t;
 
-// 页目录数据类型
-typedef uint32_t pgd_t;
-
-// 页表数据类型
-typedef uint32_t pte_t;
+// 页表条目
+typedef uint64_t pte_t;
 
 // 原子类型
 typedef struct {
