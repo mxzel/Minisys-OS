@@ -1,7 +1,17 @@
-#include <include/mm/vmm.h>
+#include <mm/vmm.h>
 
 static pte_t *pte_addr = (pte_t *)PTE_ADDR;
 
+// 各 block 的偏移量（上式从左到右）
+uint16_t block_offset[BLOCK_NUM_PER_PAGE] = {0};
+
+// 各 block 的标志位
+uint32_t block_flag[BLOCK_NUM_PER_PAGE] = {0};
+
+// 各 block 的大小
+uint16_t block_size[BLOCK_NUM_PER_PAGE] = {0};
+
+uint32_t vmm_page_addr = PTE_ADDR + PAGE_TABLE_SIZE - 0x80000000;
 
 // TODO: 硬件上设置页面大小
 void vmm_init(void){
@@ -9,7 +19,7 @@ void vmm_init(void){
     /* 设置页表中的有效页为未分配，无效页为保留 */
     int cnt = 0;
     uint64_t mask = 0xffffffcf;
-    for (pte_p = page_table_p; pte_p < page_table_p + PAGE_TABLE_SIZE; pte_p++, cnt++)
+    for (pte_p = PAGE_TABLE_P; pte_p < PAGE_TABLE_P + PAGE_TABLE_SIZE; pte_p++, cnt++)
     {
         if(cnt < PTE_COUNT)
             *pte_p &= mask;
@@ -103,14 +113,13 @@ pte_t *get_pte_by_page_addr(uint32_t page_addr){
     page_addr &= PAGE_MASK;
     int vpn = get_vpn_from_page_addr(page_addr);
     int cnt = 0;
-    for (pte_p = page_table_p; pte_p < page_table_p + PAGE_TABLE_SIZE && cnt != PTE_COUNT; pte_p++, cnt++)
+    for (pte_p = PAGE_TABLE_P; pte_p < PAGE_TABLE_P + PAGE_TABLE_SIZE && cnt != PTE_COUNT; pte_p++, cnt++)
     {
         if(get_vpn_from_pte(*pte_p) == vpn){
             return pte_p;
         }
     }
-    assert(false);
-    return -1;
+    return NULL;
 }
 
 uint32_t get_vpn_from_page_addr(uint32_t page_addr){
@@ -121,19 +130,18 @@ uint32_t get_vpn_from_page_addr(uint32_t page_addr){
 uint32_t get_ppn_by_vpn(uint32_t vpn){
     // 根据虚拟页号获得物理页号
     int cnt = 0;
-    for (pte_p = page_table_p; pte_p < page_table_p + PAGE_TABLE_SIZE && cnt != PTE_COUNT; pte_p++, cnt++)
+    for (pte_p = PAGE_TABLE_P; pte_p < PAGE_TABLE_P + PAGE_TABLE_SIZE && cnt != PTE_COUNT; pte_p++, cnt++)
     {
         if(get_vpn_from_pte(*pte_p) == vpn){
             return get_ppn_from_pte(*pte_p);
         }
     }
-    assert(false);
-    return -1;
+    return 0;
 }
 
 uint32_t get_phy_addr_by_vir_addr(uint32_t vir_addr){
     // 根据虚拟地址获得物理地址
-    uint32_t vpn = get_vpn_from_page(vir_addr);
+    uint32_t vpn = get_vpn_from_page_addr(vir_addr);
     uint32_t ppn = get_ppn_by_vpn(vpn);
     uint32_t phy_addr = (ppn << 12) | (vir_addr & PAGE_MASK);
     return phy_addr;
@@ -155,7 +163,7 @@ void set_page_status(uint32_t ppn, int status){
     }
     pte_t* pte_p;
     int cnt = 0;
-    for (pte_p = page_table_p; pte_p < page_table_p + 0x1000 && cnt != PTE_COUNT; pte_p++, cnt++)
+    for (pte_p = PAGE_TABLE_P; pte_p < PAGE_TABLE_P + 0x1000 && cnt != PTE_COUNT; pte_p++, cnt++)
     {
         if(get_ppn_from_pte(*pte_p) == ppn){
             int mask = 0xffffffcf;
@@ -236,7 +244,7 @@ uint32_t find_block(pid_t pid, size_t size){
      */
     size_t size_up_round = up_round(size);
     int cnt = 0;
-    for (pte_p = page_table_p; pte_p < page_table_p + PAGE_TABLE_SIZE && cnt != PTE_COUNT; pte_p++, cnt++)
+    for (pte_p = PAGE_TABLE_P; pte_p < PAGE_TABLE_P + PAGE_TABLE_SIZE && cnt != PTE_COUNT; pte_p++, cnt++)
     {
         if(get_pid_from_pte(*pte_p) == pid){
             int block_idx = get_suitable_block_from_pte(*pte_p, size);
@@ -254,7 +262,7 @@ uint32_t vmm_alloc_page(uint32_t page_addr, pid_t pid, bool is_split_block)
     uint32_t ppn = get_ppn_from_page(page_addr);
     uint32_t vpn = vmm_page_addr >> 12;
     int cnt = 0;
-    for (pte_p = page_table_p; pte_p < page_table_p + PAGE_TABLE_SIZE && cnt != PTE_COUNT; pte_p++, cnt++)
+    for (pte_p = PAGE_TABLE_P; pte_p < PAGE_TABLE_P + PAGE_TABLE_SIZE && cnt != PTE_COUNT; pte_p++, cnt++)
     {
         if(get_ppn_from_pte(*pte_p) == ppn){
             *pte_p = 0;
