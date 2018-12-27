@@ -37,7 +37,7 @@ LDFLAGS += -Wl,--defsym,__memory_size=0x1f800
 LDFLAGS += -Wl,-e,0xbfc00000
 
 ASOURCES= \
-boot/boot.S process/switch.s
+boot/boot.S process/switch.S
 
 CSOURCES= \
 lib/string.c mm/pmm.c mm/vmm.c mm/mm.c main.c process/proc.c schedule/sched.c

@@ -1,9 +1,9 @@
-#include <task/proc.h>
+#include<mips/asm.h>
     .align	5
 /*TODO:偏移量还得考虑一哈
  * void switch_to(struct context *from, struct context *to);                     
  */
-    LEAF(switch_to)
+ LEAF(switch_to)
     sw $16,($4)
     sw $17,4($4)
     sw $18,8($4)
@@ -27,4 +27,5 @@
     lw $29,32($4)
     lw $30,36($4)
     lw $31,40($4)
-    END(switch_to)
+    jr	$31
+END(switch_to)

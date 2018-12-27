@@ -75,7 +75,7 @@ static uint32_t get_pid(void) {
 void set_current(struct task_struct * proc){
     current = proc;//idleproc 进程创建完毕 
     asm volatile(     
-           "sw $28, %0"   
+           "move $28, %0"   
            :
            :"r"(proc)          
      );
@@ -149,7 +149,7 @@ void proc_init(void){
     init_list_head(&proc_list);
     pid_t idle_pid = get_pid();
     if((idleproc = alloc_proc(idle_pid)) == NULL){
-        panic("cannot alloc idleproc.\n");
+        //panic("cannot alloc idleproc.\n");
     }
     idleproc->pid = idle_pid;
     idleproc->state = 0;
@@ -162,7 +162,7 @@ void proc_init(void){
     int pid = create_pro(init_main,NULL,1);//创建init进程 
     
     if (pid <= 0) {
-        panic("create user_main failed.\n");
+        //panic("create user_main failed.\n");
     }
 
 }

@@ -8,7 +8,7 @@ void wakeup_proc(struct task_struct *proc) {
         proc->state = 1;
     }
     else {
-        warn("wakeup runnable process.\n");
+        //warn("wakeup runnable process.\n");
     }
 
 }
