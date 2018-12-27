@@ -7,6 +7,6 @@
  */
 
 int main(){
-    // mm_init();
+    mm_init();
     return 0;
 }
