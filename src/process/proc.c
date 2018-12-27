@@ -12,7 +12,7 @@ struct task_struct *current = NULL;
 
 static int nr_process = 0; //进程数
 
-void switch_to(struct context *from, struct context *to);
+
 
 
 static struct task_struct * alloc_proc(pid_t pid){
@@ -72,7 +72,7 @@ static uint32_t get_pid(void) {
 }
 
 //将当前运行的进程的task_Struct的地址存入$28号寄存器，给刘狗用
-void set_current(task_struct * proc){
+void set_current(struct task_struct * proc){
     current = proc;//idleproc 进程创建完毕 
     asm volatile(     
            "sw $28, %0"   
@@ -131,7 +131,7 @@ int create_pro(int (*fn)(void *), void *arg, uint32_t priority){
 
     proc->pid = porc_id;
     setup_kstack(proc);
-    proc->context.reg31 = (uintptr_t)fn; 
+    proc->context.reg31 = (uint32_t)fn; 
     proc->context.reg29 = proc->kstack + PAGE_SIZE - 1; //堆栈指针指向栈底
     list_add(&(proc->list_link),&proc_list);
     nr_process ++;

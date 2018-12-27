@@ -60,7 +60,7 @@ struct task_struct
 extern struct task_struct *idleproc, *initproc, *current;
 void proc_init(void);
 int create_pro(int (*fn)(void *), void *arg, uint32_t priority);
-void *set_proc_name(struct proc_struct *proc, const char *name);
+void *set_proc_name(struct task_struct *proc, const char *name);
 
 
 #endif /* !__KERN_PROCESS_PROC_H__ */
