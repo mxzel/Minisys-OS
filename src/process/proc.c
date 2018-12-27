@@ -1,8 +1,8 @@
 
-#include <mm.h>
+#include <mm/mm.h>
 #include <string.h>
 #include <assert.h>
-#include <proc.h>
+#include <task/proc.h>
 
 
 struct list_head proc_list;   

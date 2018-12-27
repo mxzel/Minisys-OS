@@ -4,12 +4,11 @@
 #include <list.h>
 
 // 上下文，需要保存的寄存器
-struct context {
+struct context{
 
     uint32_t reg16;
     uint32_t reg17, reg18, reg19, reg20, reg21, reg22, reg23;//16~23号寄存器为子程序寄存器变量
     uint32_t reg29, reg30, reg31;//29号寄存器：堆栈指针； 30号：帧指针；31号：子程序返回地址
-     
 };
 
 //28号寄存器是全局指针，用于存储当前运行的进程

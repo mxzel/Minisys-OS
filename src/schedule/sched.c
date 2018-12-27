@@ -1,6 +1,6 @@
 
 
-#include "sched.h"
+#include <task/sched.h>
 
 
 void wakeup_proc(struct task_struct *proc) {

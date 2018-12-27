@@ -23,7 +23,7 @@
 // #include <arch.h>
 // #include <common.h>
 #include <mm/mm.h>
-#include <lib/list.h>
+#include <list.h>
 // #include <fs.h>
 
 // fork flag
