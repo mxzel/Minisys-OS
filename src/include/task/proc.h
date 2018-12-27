@@ -17,6 +17,7 @@ register struct task_struct *__current_task __asm__("$28");
 #define current_task()  __current_task
 
 
+void switch_to(struct context *from, struct context *to);
 
 #define PROC_NAME_LEN               15
 #define MAX_PROCESS                 1024
