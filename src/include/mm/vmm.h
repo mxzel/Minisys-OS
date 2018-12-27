@@ -4,22 +4,20 @@
  * 主要为初始化页表
  */
 
-// TODO: 12.08 vmm slob
-
 #include <types.h>
-#include <include/mm/pmm.h>
+#include <mm/pmm.h>
 
 #ifndef INCLUDE_MM_VMM_H_
 #define INCLUDE_MM_VMM_H_
 
 // 映射剩余内存所需要的页表条目数
 #define PTE_COUNT PAGE_MAX_COUNT
+#define PAGE_TABLE_P ((pte_t*)PTE_ADDR)
 
-pte_t* page_table_p = (pte_t*)PTE_ADDR;
 pte_t *pte_p; // 游标
-// 页面起始位置（虚拟地址）
-uint32_t vmm_page_addr = PTE_ADDR + PAGE_TABLE_SIZE - 0x80000000;
 
+// 页面起始位置（虚拟地址）
+extern uint32_t vmm_page_addr;
 /**
  * 
  *     PTE
@@ -54,13 +52,13 @@ uint32_t vmm_page_addr = PTE_ADDR + PAGE_TABLE_SIZE - 0x80000000;
 #define BLOCK_NUM_PER_PAGE 29
 
 // 各 block 的偏移量（上式从左到右）
-uint16_t block_offset[BLOCK_NUM_PER_PAGE] = {0};
+extern uint16_t block_offset[BLOCK_NUM_PER_PAGE];
 
 // 各 block 的标志位
-uint32_t block_flag[BLOCK_NUM_PER_PAGE] = {0};
+extern uint32_t block_flag[BLOCK_NUM_PER_PAGE];
 
 // 各 block 的大小
-uint16_t block_size[BLOCK_NUM_PER_PAGE] = {0};
+extern uint16_t block_size[BLOCK_NUM_PER_PAGE];
 
 // 虚拟内存管理初始化
 void vmm_init(void);
