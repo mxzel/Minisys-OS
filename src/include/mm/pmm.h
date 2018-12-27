@@ -49,8 +49,4 @@ void pmm_free_page(uint32_t p);
 // 当前可用内存页
 uint32_t free_pages_count(void);
 
-// typedef struct page_t {
-//     uint64_t flags;
-//     void *freelist; // slob
-// }
 #endif  // INCLUDE_MM_PMM_H_

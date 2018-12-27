@@ -1,17 +1,5 @@
-/*
- * =====================================================================================
- *
- *       Filename:  pmm.c
- *
- *    Description:  页内存管理
- * 
- * =====================================================================================
- */
 
-// #include "multiboot.h"
-// #include "common.h"
-// #include "debug.h"
-#include <include/mm/pmm.h>
+#include <mm/pmm.h>
 
 // 物理内存页面管理的栈
 static uint32_t pmm_stack[PAGE_MAX_COUNT];
@@ -38,9 +26,11 @@ void pmm_init(){
 uint32_t pmm_alloc_page()
 {
     // 返回页框的物理地址（内核栈中存放的是页框的物理地址）
-	assert(pmm_stack_top != -1, "out of memory");
+	// assert(pmm_stack_top != -1, "out of memory");
+    if(pmm_stack_top == -1)
+        return NULL;
 
-	uint32_t page = pmm_stack[pmm_stack_top--];
+    uint32_t page = pmm_stack[pmm_stack_top--];
     --phy_page_count;
     
     return page;
@@ -49,9 +39,10 @@ uint32_t pmm_alloc_page()
 void pmm_free_page(uint32_t p)
 {
     // 参数为页面的物理地址
-	assert(pmm_stack_top != PAGE_MAX_COUNT, "out of pmm_stack stack");
-
-	pmm_stack[++pmm_stack_top] = p;
+	// assert(pmm_stack_top != PAGE_MAX_COUNT, "out of pmm_stack stack");
+    if(pmm_stack_top != PAGE_MAX_COUNT)
+        return;
+    pmm_stack[++pmm_stack_top] = p;
     ++phy_page_count;
 }
 

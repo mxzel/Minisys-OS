@@ -15,28 +15,21 @@
  * cd "/Users/seapatrol/Desktop/Projects/OSX/src/" && gcc test.c -o test -I ./include -I ./lib -I ./include/lib && "/Users/seapatrol/Desktop/Projects/OSX/src/"test
  */
 
-#include <types.h>
-#include <list.h>
-#include <defs.h>
-#include <mm/pmm.h>
+// #include <types.h>
+// #include <list.h>
+// #include <defs.h>
+// #include <mm/pmm.h>
+
+#include <stdio.h>
 
 int main(int argc, char const *argv[]) {
-    // struct Page page;
-    // // bool x;
-    // bool x;
-    // x = true;
-    // // size_t xx;
-    // printf("%d\n", PAGE_SIZE * 2 + PAGE_TABLE_BASE_ADDR);
-    // page_fault(1);
-    // enum bool
-    // {
-    //     false = 0,
-    //     true = 1
-    // };
-    // enum bool x = true;
-    // if(x == true){
-    //     printf("true\n");
-    // }
+    int a = 0x0000ffff;
+    printf("%x\n", ~a);
+    // int x = &a;
+    // // int *p = (int *)123;
+    // printf("%x\n", x);
+    // int *c = x;
+    // printf("%d\n", *c);
     return 0;
 }
 
