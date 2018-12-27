@@ -49,7 +49,7 @@ void fs_init(){
 //https://elixir.bootlin.com/linux/v2.6.11-tree/source/fs/namespace.c#L1008
 //http://www.cnblogs.com/cslunatic/p/3683117.html
 
-
+/*
 //TODO
 ssize_t vfs_read(struct file * file ,const char* buf ,size_t count, loff_t * pos){
   ssize_t ret;
@@ -68,14 +68,17 @@ ssize_t vfs_read(struct file * file ,const char* buf ,size_t count, loff_t * pos
 
  return ret;
 }
+**/
 
-
+//获得当前进程中可用的文件描述符fd
+//@return 可用的文件描述符或-1
 int get_fd(){
   int fd= 0;
   while(fd<OPEN_MAX&&current->files[fd]!=NULL)fd++;
   if (fd==OPEN_MAX) return -1;
   return fd;
 }
+
 
 int open(const char* filename,int mode){
   //struct file* file = current->files[xxx];
@@ -87,9 +90,13 @@ int open(const char* filename,int mode){
   return fd;
 }
 
-
+//构造并返回打开文件的file结构体
+//@parameter filename 文件名（包含路径）
+//@parameter mode 读写权限
+//@return 指向构建的file结构体的指针
 struct file* get_file(const char* filename,int mode){
   struct file* file=alloc_file();
+  //TODO
 }
 
 
@@ -98,8 +105,6 @@ struct file* get_file(const char* filename,int mode){
   #define OPEN_MAX 5
 
 memset(task->files,0,sizeof(struct file* )*OPEN_MAX);
-
-
 
   struct file* files[OPEN_MAX];
 

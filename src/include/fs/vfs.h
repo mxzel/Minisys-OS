@@ -72,7 +72,7 @@ struct super_block{
   int ref_count;//引用计数
   struct sb_mode mode;//状态信息
 
-d //struct file_system_type *type;//TODO 文件系统类型？
+  //struct file_system_type *type;//TODO 文件系统类型？
   struct super_operations *sb_operations;//sb操作的接口
   struct dentry *root;//根目录
   //struct dentry_operations *d_operations;
