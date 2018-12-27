@@ -15,14 +15,14 @@ static int nr_process = 0; //进程数
 void switch_to(struct context *from, struct context *to);
 
 
-static struct task_struct * alloc_proc(void){
-    struct task_struct *proc =kmalloc(sizeof(struct task_struct));
+static struct task_struct * alloc_proc(pid_t pid){
+    struct task_struct *proc =kmalloc(pid, sizeof(struct task_struct));
     if(proc != NULL){
         proc->state = -1;
         proc->need_resched = 0;
         proc->kstack = 0;
         proc->parent = NULL;
-        memset($(proc->context),0,sizeof(struct context));
+        memset(&(proc->context),0,sizeof(struct context));
         memset(proc->name, 0, PROC_NAME_LEN);
     }
     return proc;
@@ -39,7 +39,7 @@ void *set_proc_name(struct task_struct *proc, const char *name) {
 
 // get_pid - alloc a unique pid for process
 static uint32_t get_pid(void) {
-    static uint32_t tno=1;
+    static uint32_t tno=0;
     // struct task_struct *proc;
     // struct list_head *list = &proc_list, *le;
     // static int next_safe = MAX_PID, last_pid = MAX_PID;
@@ -118,20 +118,19 @@ int create_pro(int (*fn)(void *), void *arg, uint32_t priority){
     
     struct task_struct *proc;
     pid_t ret;
-
+    pid_t porc_id = get_pid(); 
     if(nr_process>MAX_PROCESS){
         goto fork_out;
     }
-    if((proc = alloc_proc() == NULL)){
+    if((proc = alloc_proc(porc_id) == NULL)){
         goto fork_out;
     }
 
     proc->parent = current;
     proc->priority = priority;
 
-    proc->pid = get_pid();
+    proc->pid = porc_id;
     setup_kstack(proc);
-    //TODO:需要考量31号寄存器是否是下一条指令执行位置
     proc->context.reg31 = (uintptr_t)fn; 
     proc->context.reg29 = proc->kstack + PAGE_SIZE - 1; //堆栈指针指向栈底
     list_add(&(proc->list_link),&proc_list);
@@ -148,15 +147,14 @@ void proc_init(void){
     int i;
     
     init_list_head(&proc_list);
-    
-    if((idleproc = alloc_proc()) == NULL){
+    pid_t idle_pid = get_pid();
+    if((idleproc = alloc_proc(idle_pid)) == NULL){
         panic("cannot alloc idleproc.\n");
     }
-
-    idleproc->pid = 0;
+    idleproc->pid = idle_pid;
     idleproc->state = 0;
     idleproc->need_resched = 1;
-    //TODO: 将栈指针指向栈顶，idle的栈顶为内核栈目录表的基址，idleproc->kstack = 
+    setup_kstack(idleproc); 
     set_proc_name(idleproc, "idle");
     nr_process++;
     set_current(idleproc);
