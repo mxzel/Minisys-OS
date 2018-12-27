@@ -11,6 +11,7 @@
 //=
 //=本文件涉及所有文件系统相关结构体的内存管理（创建/释放等）
 //=需要将函数签名声明在vfs.h中，通过include"vfs.h"来使用。
+//=
 //=====================================================
 
 
@@ -148,4 +149,12 @@ struct dentry * alloc_dentry_root(struct inode *root_inode){
     res->inode = root_inode;
   }
   return res;
+}
+
+struct file* alloc_file(){
+  struct file* f = kmalloc(0,sizeof(struct file));
+  memset(f,0,sizeof(struct file));
+  INIT_LIST_HEAD(&f->list);
+
+
 }

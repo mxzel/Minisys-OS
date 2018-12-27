@@ -11,10 +11,6 @@ creat
 
 close
 
-read
-
-write
-
 lseek
 
 //文件系统操作
@@ -28,8 +24,13 @@ rename
 rmdir
 
 mkdir
-
-readdir
 */
+
+extern ssize_t vfs_read(struct file *, size_t, loff_t *);
+extern ssize_t vfs_write(struct file *,  size_t, loff_t *);
+
+extern int vfs_readdir(struct file *, filldir_t, void *);
+
+
 
 void fs_init();

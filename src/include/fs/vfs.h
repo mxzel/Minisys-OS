@@ -72,7 +72,7 @@ struct super_block{
   int ref_count;//引用计数
   struct sb_mode mode;//状态信息
 
-  //struct file_system_type *type;//TODO 文件系统类型？
+d //struct file_system_type *type;//TODO 文件系统类型？
   struct super_operations *sb_operations;//sb操作的接口
   struct dentry *root;//根目录
   //struct dentry_operations *d_operations;
@@ -84,8 +84,8 @@ struct super_block{
 
 //sb操作的接口定义
 struct super_operations {
-   	struct inode *(*alloc_inode)(struct super_block *sb);
-	void (*destroy_inode)(struct inode *);
+  struct inode *(*alloc_inode)(struct super_block *sb,int type);
+	void (*delete_inode)(struct inode *);
 
 	void (*read_inode) (struct inode *);
 
@@ -216,7 +216,7 @@ struct file {
   struct inode		*inode;//对应的inode
   loff_t            position;//访问文件内的位置
   //struct mutex      m_position;//修改位置的互斥锁
-  const struct file_operations	*f_operations;//对文件的所有操作
+  struct file_operations	*f_operations;//对文件的所有操作
   struct file_state * state;//文件的状态和权限
   atomic_t count;//文件的打开次数
   //当我们关闭一个进程的某一个文件描述符时候，其实并不是真正的关闭文件，仅仅是将count减一，当count=0时候，才会真的去关闭它。

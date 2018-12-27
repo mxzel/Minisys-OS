@@ -1,6 +1,7 @@
 #include <fs/fs.h>
 #include <fs/vfs.h>
 #include <list.h>
+#include <current.h>
 
 //=====================================================
 //=fs.c
@@ -47,3 +48,59 @@ void fs_init(){
 //TODO: mount
 //https://elixir.bootlin.com/linux/v2.6.11-tree/source/fs/namespace.c#L1008
 //http://www.cnblogs.com/cslunatic/p/3683117.html
+
+
+//TODO
+ssize_t vfs_read(struct file * file ,const char* buf ,size_t count, loff_t * pos){
+  ssize_t ret;
+
+  if (!file->f_operations || !file->f_operations->read)
+    return -1;
+  //TODO 保证区域可读写且有权限
+  //ret = rw_verify_area(READ, file, pos, count);
+  //if (!ret) {
+  //ret = security_file_permission (file, MAY_READ);
+  // if (!ret) {
+  ret = file->f_operations->read(file, buf,count, pos);
+
+      // }
+      // }
+
+ return ret;
+}
+
+
+int get_fd(){
+  int fd= 0;
+  while(fd<OPEN_MAX&&current->files[fd]!=NULL)fd++;
+  if (fd==OPEN_MAX) return -1;
+  return fd;
+}
+
+int open(const char* filename,int mode){
+  //struct file* file = current->files[xxx];
+  int fd = get_fd();
+  if(fd>=0){
+    struct file * f = get_file();
+    current->files[fd]=f;
+  }
+  return fd;
+}
+
+
+struct file* get_file(const char* filename,int mode){
+  struct file* file=alloc_file();
+}
+
+
+
+/*
+  #define OPEN_MAX 5
+
+memset(task->files,0,sizeof(struct file* )*OPEN_MAX);
+
+
+
+  struct file* files[OPEN_MAX];
+
+**/
