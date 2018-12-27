@@ -37,7 +37,7 @@ typedef          int       ssize_t;
 typedef uint32_t time_t;
 
 // 进程 PID
-typedef int32_t pid_t;
+typedef uint32_t pid_t;
 
 // 页表条目
 typedef uint64_t pte_t;

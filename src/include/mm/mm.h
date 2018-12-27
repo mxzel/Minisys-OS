@@ -7,7 +7,7 @@
 uint32_t page_alloc_addrs[64];
 uint8_t page_alloc_counts[64];
 int idx;
-
+#define PAGE_SIZE 4096
 // 地址转换为指针
 void *addr_to_ptr(uint32_t addr);
 

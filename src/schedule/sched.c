@@ -12,7 +12,7 @@ void wakeup_proc(struct task_struct *proc) {
     }
 
 }
-//TODO:调度算法需要修改
+//TODO:优先级调度，遍历查找需要运行的进程中优先级最高的
 void schedule(void) {
     bool intr_flag;
     struct list_head *le, *last;

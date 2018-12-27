@@ -3,11 +3,20 @@
 
 #include <list.h>
 
+// 上下文，需要保存的寄存器
 struct context {
-    //TODO:
-     pid_t pid;
+
+    uint32_t reg16;
+    uint32_t reg17, reg18, reg19, reg20, reg21, reg22, reg23;//16~23号寄存器为子程序寄存器变量
+    uint32_t reg29, reg30, reg31;//29号寄存器：堆栈指针； 30号：帧指针；31号：子程序返回地址
      
 };
+
+//28号寄存器是全局指针，用于存储当前运行的进程
+register struct task_struct *__current_task __asm__("$28");
+#define current_task()  __current_task
+
+
 
 #define PROC_NAME_LEN               15
 #define MAX_PROCESS                 1024
@@ -21,14 +30,16 @@ struct task_struct
     //uint32_t run_time;                        // 运行时间
     int32_t priority;                          // 进程优先级
     int32_t state;                              // -1 unrunable, 0 runnable, 1 stopped
-    char name[PROC_NAME_LEN + 1];               // 进程名
-    //uint32_t kstack;                            // 内核栈
+    char name[PROC_NAME_LEN + 1];               // 进程名                 
+    uint32_t kstack;                            // 内核栈
     volatile bool need_resched;                 // 是否需要调度以释放CPU
     struct task_struct *parent;                 // 父进程
     struct context context;                     // 进程上下文
     //list_head children;                       // 链表的头部，链表的所有元素都是children的子进程
     struct list_head list_link;                      // 指向proc list
-
+    struct fs_struct * fs;//TODO:
+    struct files_struct *files;//TODO:
+    struct namespace *namespace;//TODO:
 };
 
 /* Return the offset of 'member' relative to the beginning of a struct type */
