@@ -66,6 +66,8 @@ clean:
 	rm -f FPGA_Ram_map.txt
 	rm -f FPGA_Ram.rec
 	rm -f FPGA_Ram.elf
+	rm -f lib/*.o
+	rm -f mm/*.o
 	rm -f *.o
 	rm -rf MemoryFiles
 
