@@ -1,5 +1,9 @@
 
-#include <include/mm/mm.h>
+#include <mm/mm.h>
+
+uint32_t page_alloc_addrs[64];
+uint8_t page_alloc_counts[64];
+int idx;
 
 // 地址转换为指针
 void *addr_to_ptr(uint32_t addr){
@@ -14,33 +18,9 @@ void mm_init(void)
     }
     idx = 0;
 
-    pmm_init();
-    vmm_init();
+    // pmm_init();
+    // vmm_init();
 }
-
-// void *alloc_page(pid_t pid, int count)
-// {
-//     if(count > free_pages_count()){
-//         // 物理内存不够
-//         assert(false);
-//     }
-
-//     // 首先分配一个页，根据这个页可以获得分配的所有空间的首地址（虚拟地址），即 ret_addr
-//     uint32_t phy_page_addr;
-//     phy_page_addr = pmm_alloc_page();
-//     uint32_t ret_addr;
-//     ret_addr = vmm_alloc_page(phy_page_addr, pid, true);
-
-//     // 然后在虚拟内存上连续分配页，这些页在物理内存上可能是不连续的
-//     int i;
-//     for (i = 1; i < count; ++i){
-//         phy_page_addr = pmm_alloc_page();
-//         vmm_alloc_page(phy_page_addr, pid, true);
-//     }
-    
-//     // 返回分配的内存空间的首地址（虚拟地址）
-//     return addr_to_ptr(ret_addr);
-// }
 
 void *kmalloc(pid_t pid, size_t size){
     /**
@@ -63,19 +43,24 @@ void *kmalloc(pid_t pid, size_t size){
      */
     if(size <= 1024){
         // 以block为粒度来分配
-        uint32_t block_addr = find_block(pid, size);
-        if(block_addr == NULL){
+        uint32_t new_block_addr = find_block(pid, size);
+        if(new_block_addr == NULL){
             // 分配新的页，更新 block_addr
-            if(free_pages_count() < 1)
-                assert(false);
+            if(free_pages_count() < 1){
+                // 没有空闲页
+                return NULL;
+            }
+                
             uint32_t phy_page_addr = pmm_alloc_page();
             vmm_alloc_page(phy_page_addr, pid, true);
-            block_addr = find_block(pid, size);
-            if(block_addr == NULL)
-                assert(false);
+            new_block_addr = find_block(pid, size);
+            if(new_block_addr == NULL){
+                // find_block 内部出现错误
+                return NULL;
+            }
         }
 
-        return addr_to_ptr(block_addr);
+        return addr_to_ptr(new_block_addr);
     }else{
         // 以页为粒度来分配
         int count = 0;
@@ -103,8 +88,8 @@ void *kmalloc(pid_t pid, size_t size){
 }
 
 void kfree(void *ptr){
-    uint32_t block_addr = (uint32_t)ptr;
-    uint32_t page_addr = block_addr & PAGE_MASK;
+    uint32_t ptr_block_addr = (uint32_t)ptr;
+    uint32_t page_addr = ptr_block_addr & PAGE_MASK;
 
     // 判断释放的block是否以页为粒度
     int i;
@@ -137,24 +122,5 @@ void kfree(void *ptr){
     }
 
     // 释放block
-    free_block(block_addr);
+    free_block(ptr_block_addr);
 }
-
-// void free_page(uint32_t p, int count)
-// {
-//     /**
-//      * uint32_t p : 分配的内存首地址（虚拟地址）
-//      * int count  : 分配的页框数量
-//      */
-//     int i;
-//     uint32_t phy_addr, vir_addr;
-//     vir_addr = p;
-//     for (i = 0; i < count; ++i)
-//     {
-//         phy_addr = get_phy_addr_by_vir_addr(vir_addr);
-//         pmm_free_page(phy_addr);
-//         vmm_free_page(phy_addr);
-//         vir_addr += 0x1000;
-//     }
-// }
-

@@ -2,6 +2,8 @@
 *.code-workspace
 .vscode
 
+FPGA_*
+
 # Prerequisites
 *.d
 
