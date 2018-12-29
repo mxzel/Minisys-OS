@@ -4,6 +4,9 @@
 #include <mm\pmm.h>
 #include <mm\vmm.h>
 
+#define PAGE_SIZE 4096
+#define PAGE_SHIFT	12
+
 uint32_t page_alloc_addrs[64];
 uint8_t page_alloc_counts[64];
 int idx;

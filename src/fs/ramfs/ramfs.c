@@ -1,5 +1,8 @@
 #include <list.h>
 #include <fs/vfs.h>
+#include <mm/mm.h>
+#include <types.h>
+#include <string.h>
 
 #define INODE_DIR 1
 #define INODE_FILE 2
@@ -51,7 +54,7 @@ void ramfs_kill_sb (struct super_block * sb){
 
 struct fs_type ramfs_fs_type={
   .name = "ramfs",
-  .alloc_sb = ramfs_get_sb,
+  .get_sb = ramfs_get_sb,
   .kill_sb = ramfs_kill_sb,
 };
 
@@ -163,6 +166,72 @@ struct dentry *simple_lookup(struct inode *dir, struct dentry *dentry, struct na
 }
 */
 
+ //========================================
+ //=    ramfs address space operations    =
+ //========================================
+
+
+ //TODO
+ //readpage作用是从设备读入cache中的一页，似乎可以不写？
+ //ref:https://www.cnblogs.com/wangzahngjun/p/5553793.html
+int simple_readpage(struct file *file, struct page *page)
+{
+/*
+  void *kaddr;
+
+  if (PageUptodate(page))
+    goto out;
+
+  kaddr = kmap_atomic(page, KM_USER0);
+  memset(kaddr, 0, PAGE_CACHE_SIZE);
+  kunmap_atomic(kaddr, KM_USER0);
+  flush_dcache_page(page);
+  SetPageUptodate(page);
+ out:
+  unlock_page(page);
+*/
+  return 0;
+}
+
+
+//TODO
+//暂时没太懂是干啥用的
+//如果from-to不够一页，就把一页中除了from-to以外的地方清零
+int simple_prepare_write(struct file *file, struct page* page,
+                         unsigned from, unsigned to)
+{
+  // if (!PageUptodate(page)) {
+    if (to - from != PAGE_SIZE) {
+      //void *kaddr = kmap_atomic(page, KM_USER0);
+      memset(page->address, 0, from);
+      memset(page->address + to, 0, PAGE_SIZE - to);
+      //flush_dcache_page(page);
+      //kunmap_atomic(kaddr, KM_USER0);
+    }
+    // SetPageUptodate(page);
+    // }
+  return 0;
+}
+
+//simple_commit_write - 写入页成功后的操作（如果写入导致大小变大了则改变inode的大小）
+//@parameter file 文件指针
+//@parameter page 当前写的那一页
+//@parameter offset 从页的哪里开始写
+//@parameter to 写到当前页的哪里
+int simple_commit_write(struct file *file, struct page *page,
+                        unsigned offset, unsigned to)
+{
+  struct inode *inode = file->mapping->host;
+  loff_t pos = ((loff_t)page->address) + to;
+  /*
+   * No need to use i_size_read() here, the i_size
+   * cannot change under us because we hold the i_sem.
+   */
+  if (pos > inode->mode.size)
+    inode->mode.size=pos;
+  //set_page_dirty(page);
+  return 0;
+}
 
 
 

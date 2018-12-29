@@ -61,7 +61,7 @@ typedef long long loff_t;
 
 struct page{
   struct list_head list;
-  uint32_t address;
+  void* address;
 };
 
 #endif  // _INCLUDE_TYPES_H
