@@ -17,12 +17,15 @@
 
 
 //把所有需要的、写在别的.c中的函数全部extern进来
+//alloc.c
 extern struct vfsmount * alloc_mount();
 extern struct super_block * alloc_sb();
 extern struct inode* alloc_inode(struct super_block *sb);
 extern struct dentry *alloc_dentry_root(struct inode *root_inode);
 extern struct dentry *alloc_dentry(struct dentry * parent, const struct qstr *name);
-
+//dentry.c
+extern inline struct dentry *dget(struct dentry *dentry);
+extern void d_instantiate(struct dentry *entry, struct inode * inode);
 
 //把所有需要的、写在别的.c中的变量全部extern进来
 extern struct list_head mount_list;
@@ -38,9 +41,9 @@ struct qstr {
 //每个文件系统一个
 struct fs_type{
   const char * name;
-  struct super_block * (*alloc_sb)();
+  struct super_block * (*get_sb)();
   void (*kill_sb) (struct super_block *);
-  //struct list_head list;
+  // struct list_head sb_list;//所有该文件系统的sb
 };
 
 //已挂载的文件系统链表
@@ -163,17 +166,19 @@ struct inode{
   //TODO 可能有其他inode list
 };
 
-
+//TODO
+struct nameidata{};
 
 //inode的操作
 struct inode_operations{
-  int (*create) (struct inode *, struct dentry*, struct nameidata *);//为dentry创建inode
+  void (*create) (struct inode *, struct dentry*, int ,struct nameidata *);//为dentry创建inode
   struct dentry *(*lookup)(struct inode *, struct dentry *, struct nameidata *);//在dentry和它对应的inode下查找dentry
-  int (*mkdir)(struct inode *, struct dentry *, umode_t);//为dentry创建一个inode
+  void (*mkdir)(struct inode *, struct dentry *, int);//为dentry创建一个inode
   int (*rmdir) (struct inode *,struct dentry *);//删除dentry下对应的inode的子dentry
   int (*rename)(struct inode *, struct dentry *, struct inode *, struct dentry *);//将old_dir目录下的文件 old_dentry移到new_dir目录下，新文件名包含在 new_dentry指向的目录项中
   //int (*setattr) (struct dentry *, struct iattr *);//设置dentry属性
    int (*getattr) (const struct path *, struct kstat *, u32, unsigned int);
+  void (*mknod)(struct inode *dir, struct dentry *dentry, int mode);
 };
 
 //dentry的定义（树结构）
@@ -199,7 +204,7 @@ struct dentry_operations {
     int (*d_compare)(const struct dentry *, const struct inode *,
                     const struct dentry *, const struct inode *,
                      unsigned int, const char *, const struct qstr *);//比较两个dentry
-  // int (*d_delete)(const struct dentry *);
+  int (*d_delete)(struct dentry *);
   void (*d_release)(struct dentry *);//用于释放dentry资源
   void (*d_iput)(struct dentry *, struct inode *);//释放dentry对应inode引用计数
 };
@@ -248,12 +253,9 @@ struct file_operations {
 };
 //TODO 文件列表等
 //https://cloud.tencent.com/developer/article/1053876
-static inline struct dentry *dget(struct dentry *dentry)
-{
-  atomic_inc(&dentry->count);
-  return dentry;
-}
 
+
+//TODO
 struct path {
   struct vfsmount *mnt;
   struct dentry *dentry;
