@@ -22,7 +22,6 @@
     (ptr)->next = (ptr); (ptr)->prev = (ptr);   \
   } while (0)
 
-
 static inline void init_list_head (struct list_head *list) {
         list->next = list;
         list->prev = list;
