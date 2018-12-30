@@ -7,20 +7,18 @@
 #define INCLUDE_MM_PMM_H_
 
 // 支持的最大物理内存
-#define PMM_MAX_SIZE 0x0003FFFC
+#define PMM_MAX_SIZE 0x0003F800
 
 // 内核在物理内存中的起始位置
-// TODO: 修改内核大小
 #define RAM_KERNEL_START 0x80000000
 
 // 内核在物理内存中的结束位置
 // 需要 4KB 对齐
-// TODO: 修改内核大小
-#define RAM_KERNEL_STOP 0x8003FFFC
+#define RAM_KERNEL_STOP 0x8001FFFF
 
 // 物理内存的起始与结束位置
 #define RAM_START 0x80000000
-#define RAM_STOP 0x8003FFFC
+#define RAM_STOP 0x8003F800
 
 // 页面大小 4K
 #define PMM_PAGE_SIZE 0x1000
@@ -30,8 +28,11 @@
 // 页表大小 
 #define PAGE_TABLE_SIZE (2 * PMM_PAGE_SIZE)
 
-// 页表起始位置（页目录位置）
-#define PTE_ADDR ((RAM_KERNEL_STOP & PAGE_MASK) + PAGE_TABLE_SIZE)
+// 页表起始位置（页目录位置） 
+#define PTE_ADDR ((RAM_KERNEL_STOP & PAGE_MASK) + PMM_PAGE_SIZE)
+
+// 页表 0x80020000
+// 页框 0x80022000
 
 // 最多支持的物理页面个数
 #define PAGE_MAX_COUNT ((RAM_STOP - PTE_ADDR - PAGE_TABLE_SIZE) / PMM_PAGE_SIZE)

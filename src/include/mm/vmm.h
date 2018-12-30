@@ -52,6 +52,12 @@ extern uint32_t vmm_page_addr;
 #define BLOCK_NUM_PER_PAGE 29
 
 // 各 block 的偏移量（上式从左到右）
+// 1024: 0
+// 512: 400
+// 256: 600 700 800
+// 128: 900 980 a00 a80 b00 b80 c00 c80
+// 64: d00 d40 d80 dc0 e00 e40 e80 ec0
+// 32: f00 f20 f40 f60 f80 fa0 fc0 fe0
 extern uint16_t block_offset[BLOCK_NUM_PER_PAGE];
 
 // 各 block 的标志位

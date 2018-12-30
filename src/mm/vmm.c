@@ -249,11 +249,12 @@ uint32_t find_block(pid_t pid, size_t size){
         if(get_pid_from_pte(*pte_p) == pid){
             int block_idx = get_suitable_block_from_pte(*pte_p, size);
             if(block_idx == -1)
-                return NULL;
+                continue;
             uint32_t block_addr = get_vpn_from_pte(*pte_p) << 12 + block_offset[block_idx];
             return block_addr;
         }
     }
+    return NULL;
 }
 
 uint32_t vmm_alloc_page(uint32_t page_addr, pid_t pid, bool is_split_block)
