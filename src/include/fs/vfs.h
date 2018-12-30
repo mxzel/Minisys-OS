@@ -24,8 +24,12 @@ extern struct inode* alloc_inode(struct super_block *sb);
 extern struct dentry *alloc_dentry_root(struct inode *root_inode);
 extern struct dentry *alloc_dentry(struct dentry * parent, const struct qstr *name);
 //dentry.c
-extern inline struct dentry *dget(struct dentry *dentry);
-extern void d_instantiate(struct dentry *entry, struct inode * inode);
+inline struct dentry *dget(struct dentry *dentry);
+void d_instantiate(struct dentry *entry, struct inode * inode);
+
+//file.c
+int dcache_readdir(struct file * filp, void * dirent, filldir_t filldir);
+
 
 //把所有需要的、写在别的.c中的变量全部extern进来
 extern struct list_head mount_list;
@@ -115,6 +119,7 @@ struct address_space {
   //struct list_head	private_list;
   //void			*private_data;
 };
+static struct file;
 
 struct address_space_operations {
   //int (*writepage)(struct page *page, struct writeback_control *wbc);用于写入IO的，似乎没用
@@ -219,7 +224,7 @@ struct file {
   //struct path		path;//文件路径
   struct dentry     *dentry;
   struct inode		*inode;//对应的inode
-  loff_t            position;//访问文件内的位置
+  loff_t            position;//访问文件内的位置,如果是目录则表示在目录中的文职
   //struct mutex      m_position;//修改位置的互斥锁
   struct file_operations	*f_operations;//对文件的所有操作
   struct file_state * state;//文件的状态和权限
@@ -259,4 +264,12 @@ struct file_operations {
 struct path {
   struct vfsmount *mnt;
   struct dentry *dentry;
+};
+
+
+//用于缓冲区读写
+struct iovec
+{
+  void *iov_base;//指向缓冲区要读写的部分
+  size_t iov_len; //要读写的数据长度
 };

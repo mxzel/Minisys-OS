@@ -255,6 +255,9 @@ struct file_operations ramfs_file_ops_file = {
   .llseek		= generic_file_llseek,
 };
 
+//TODO
+//可以考虑不实现，如果对文件file的操作没重用的话就不写，因为体现不出来
+//每个打开的目录也会分配对应的fd和struct file,可以通过file进行如下操作：
 struct file_operations ramfs_file_ops_dir = {
   .open		= dcache_dir_open,
   .release	= dcache_dir_close,
