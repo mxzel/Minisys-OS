@@ -18,11 +18,12 @@ void writeValTo7SegsDec(unsigned int val) {
         en = en | enBit;
         addr_7SEG += 1;
         i++;
-  } while ( (val > 0) && (i < 8));
+    } while ((val > 0) && (i < 8));
 
-  *IO_7SEGEN = ~en; // enable 7-segment displays
-  
-  return;
+    *IO_7SEGEN = ~en; // enable 7-segment displays
+
+    delay();
+    return;
 }
 
 void writeValTo7SegsHex(unsigned int val){
@@ -58,6 +59,12 @@ void writeValTo7SegsHex(unsigned int val){
     switches = switches >> 4; // shift off next hex digit
     *IO_7SEG7 = switches;     // write next hex digit to 7SEG3
     switches = switches >> 4; // shift off next hex digit
+
+    delay();
+}
+
+void writeValTo7SegsHex1(unsigned int high, unsigned int low){
+    writeValTo7SegsHex((high << 16) + low);
 }
 
 void led_red(int value){
@@ -67,5 +74,5 @@ void led_red(int value){
 
 void delay() {
     volatile unsigned int j;
-    for (j = 0; j < (10000000); j++) ;	// delay
+    for (j = 0; j < (7000000); j++) ;	// delay
 }

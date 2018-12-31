@@ -3,7 +3,7 @@
 #define _INCLUDE_DEBUG_H
 
 /**
- * 开始时一共有28个空闲物理页
+ * 
  * 
  */
 
@@ -12,6 +12,8 @@ extern int value_global;
 void writeValTo7SegsDec(unsigned int val);
 
 void writeValTo7SegsHex(unsigned int val);
+
+void writeValTo7SegsHex1(unsigned int high, unsigned int low);
 
 void led_red(int value);
 

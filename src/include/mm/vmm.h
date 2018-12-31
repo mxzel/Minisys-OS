@@ -6,6 +6,7 @@
 
 #include <types.h>
 #include <mm/pmm.h>
+#include <debug.h>
 
 #ifndef INCLUDE_MM_VMM_H_
 #define INCLUDE_MM_VMM_H_
@@ -69,8 +70,10 @@ extern uint16_t block_size[BLOCK_NUM_PER_PAGE];
 // 虚拟内存管理初始化
 void vmm_init(void);
 
+void set_ppn_to_pte(int ppn, pte_t *pte);
+
 // 根据物理地址获得物理页号
-uint32_t get_ppn_from_page(uint32_t phy_page_addr);
+uint32_t get_ppn_from_page_addr(uint32_t phy_page_addr);
 
 // 根据 PTE 获得物理页号
 uint32_t get_ppn_from_pte(pte_t pte);
@@ -82,7 +85,7 @@ uint32_t get_vpn_from_pte(pte_t pte);
 uint32_t get_pid_from_pte(pte_t pte);
 
 // 根据页的虚拟地址获得pte
-pte_t *get_pte_by_page_addr(uint32_t page_addr);
+pte_t *get_pte_by_page_addr(uint32_t vir_page_addr);
 
 // 根据虚拟地址获得虚拟页号
 uint32_t get_vpn_from_page_addr(uint32_t vir_page_addr);
@@ -99,7 +102,9 @@ void set_page_reserved(uint32_t ppn);
 void set_page_status(uint32_t ppn, int status);
 
 // 判断是否以block为粒度来分配
-bool judge_is_split_block(uint32_t pte_block_flag);
+bool is_split_block(uint32_t pte_block_flag);
+
+int get_page_status_from_pte(pte_t pte);
 
 int get_page_status(uint32_t vir_page_addr);
 

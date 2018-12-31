@@ -44,7 +44,7 @@ void pmm_free_page(uint32_t p)
     if(pmm_stack_top == PAGE_MAX_COUNT)
         return;
     pmm_stack[++pmm_stack_top] = p;
-    phy_page_count--;
+    phy_page_count++;
 }
 
 uint32_t free_pages_count(void){
