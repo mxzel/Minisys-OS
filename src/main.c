@@ -1,7 +1,11 @@
 #include <mm/mm.h>
 #include <debug.h>
 #include <mm/mm_test.h>
-
+#include <mips/hal.h>
+#include <mips/m32tlb.h>
+#include <stdio.h>
+#include <mips/cpu.h>
+#include <mips/m32c0.h>
 /**
  * 
  *  cd "c:\Comprehensive\OSX\src\" ; if ($?) { gcc main.c -o main -I ./include -I ./lib -I ./include/lib } ; if ($?) { .\main }
@@ -54,22 +58,48 @@ void test_vmm(){
 
 int main(){
     mm_init();
-    test_alloc_memory();
-    // test_rw_memory();
+    // test_alloc_memory();
+    // writeValTo7SegsDec(0);
+    test_rw_memory();
     // test_vmm();
     return 0;
+}
 
-    mm_init();
-    unsigned int page_addr;
-    // page_addr = (unsigned int)(int *)kmalloc(1, 32);
-    // pte_t *pte;
-    // pte = get_pte_by_page_addr(page_addr);
-    // uint32_t high = (uint32_t)((*pte) >> 32);
-    // uint32_t low = (uint32_t)(*pte);
-    // uint32_t ppn = get_ppn_from_pte(*pte);
-    // uint32_t vpn = get_vpn_from_pte(*pte);
-    // writeValTo7SegsHex((ppn << 4) + vpn);
-    
-    delay();
-    return 0;
+
+// TODO: Software User's Manual 文档216页指出了软件初始化需要做的一些事情
+__attribute__ ((nomips16)) void _mips_handle_exception (struct gpctx *ctx, int exception)
+{
+    switch(exception){
+    case EXC_SYS://system call
+        switch(ctx->r[1]){
+        case 1:
+            // sys_led(ctx->r[3]);
+            break;
+        }
+        break;
+    case EXC_TLBL://load tlb miss
+    case EXC_TLBS://store tld miss
+        // writeValTo7SegsHex(ctx->context);
+        // sys_led(90);
+        // uint32_t pagenumber;
+        // pagenumber = ((uint32_t)mips32_get_c0(C0_BADVADDR)) >> 12;
+        writeValTo7SegsHex(((uint32_t)mips32_get_c0(C0_BADVADDR)));
+        // if(pagenumber>=0xc0000){
+        //     int framenumber=pagenumber-0xc0000;
+        //     int odd = pagenumber%2;
+        //     pagenumber=pagenumber>>1;
+        //     pagenumber=pagenumber<<13;
+        //     framenumber<<6;
+        //     if (odd ==1){
+        //         mips_tiber2 (pagenumber,framenumber+0x16,0x00000002,0x1ffff800);
+        //     }else{
+        
+        //     }
+        // }
+        // void mips_tlbwr2(tlbhi_t hi, tlblo_t lo0, tlblo_t lo1, unsigned int pmsk);
+        break;
+    default:
+        __exception_handle(ctx, exception);
+  }
+      
 }

@@ -1,18 +1,19 @@
 #include <mm/mm_test.h>
 
 pid_t pid = 0;
-int alloc_size[TEST_COUNT] = {33, 64, 128, 256, 512, 1024, 2048, 4096, 6144};
+int alloc_size[TEST_COUNT] = {33, 64, 128, 256, 512, 1024, 2048, 4096, 6144, 4096};
 // 0x80022000
 
 
 int test_alloc_memory(){
     int *addr_alloc[TEST_COUNT] = {NULL};
-    int addr_true_int[TEST_COUNT] = {0x80022ec0, 0x80022e80, 0x80022c80, 0x80022800, 0x80022400, 0x80022000, 0x80023000, 0x80024000, 0x80025000};
+    int addr_true_int[TEST_COUNT] = {0x80022ec0, 0x80022e80, 0x80022c80, 0x80022800, 0x80022400, 0x80022000, 0x80023000, 0x80024000, 0x80025000, 0x80027000};
     int *addr_true[TEST_COUNT];
     
     int i;
     for(i = 0; i < TEST_COUNT; ++i)
         addr_true[i] = (int *)(addr_true_int[i] - 0x80000000);
+
     for (i = 0; i < TEST_COUNT; ++i){
         // writeValTo7SegsDec(i);
         addr_alloc[i] = (int *)kmalloc(pid, alloc_size[i]);
@@ -20,7 +21,7 @@ int test_alloc_memory(){
             // 错误类型一
             // 页面在分配之后未修改标志位
             writeValTo7SegsHex(0xffffffff);
-            return 1000;
+            return 1;
         }
 
         if(addr_alloc[i] != addr_true[i]){
@@ -33,17 +34,20 @@ int test_alloc_memory(){
             writeValTo7SegsHex(0xfffffff0);
             writeValTo7SegsDec(i);
             writeValTo7SegsHex(addr_alloc[i]);
-            return 2000;
+            return 2;
         }
             
     }
-    return 3000;
+    writeValTo7SegsHex(0x00);
+    return 3;
 }
 
 int test_rw_memory(){
+    // 用虚拟地址进行读写会触发TLB重填的异常
     int *addr = (int *)kmalloc(0, 32);
+    writeValTo7SegsHex(addr);
     *addr = 2048;
-    writeValTo7SegsDec(*addr);
+    writeValTo7SegsHex(*addr);
     return 1;
 }
 

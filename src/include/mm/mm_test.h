@@ -4,7 +4,7 @@
 #ifndef INCLUDE_MM_MM_TEST_H_
 #define INCLUDE_MM_MM_TEST_H_
 
-#define TEST_COUNT 9
+#define TEST_COUNT 10
 
 extern pid_t pid;
 extern int alloc_size[TEST_COUNT];

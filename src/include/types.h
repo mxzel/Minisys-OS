@@ -9,6 +9,11 @@
 #define _INCLUDE_TYPES_H
 
 #include <debug.h>
+#include <mips/hal.h>
+#include <mips/m32tlb.h>
+#include <stdio.h>
+#include <mips/cpu.h>
+#include <mips/m32c0.h>
 
 #ifndef NULL
 #define NULL 0
@@ -24,22 +29,19 @@ typedef enum bool {
     true = 1
 } bool;
 
-typedef unsigned long long uint64_t;
-typedef          long long int64_t;
-typedef unsigned int       uint32_t;
-typedef          int       int32_t;
-typedef unsigned short     uint16_t;
-typedef          short     int16_t;
-typedef unsigned char      uint8_t;
-typedef          char      int8_t;
-typedef unsigned int       size_t;
-typedef          int       ssize_t;
-
-// 时间类型
-typedef uint32_t time_t;
+// typedef unsigned long long uint64_t;
+// // typedef          long long int64_t;
+// typedef unsigned int       uint32_t;
+// typedef          int       int32_t;
+// typedef unsigned short     uint16_t;
+// // typedef          short     int16_t;
+// // typedef unsigned char      uint8_t;
+// // typedef          char      int8_t;
+// typedef unsigned int       size_t;
+// // typedef          int       ssize_t;
 
 // 进程 PID
-typedef int32_t pid_t;
+// typedef int32_t pid_t;
 
 // 页表条目
 typedef uint64_t pte_t;
