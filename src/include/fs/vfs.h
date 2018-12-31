@@ -28,7 +28,7 @@ inline struct dentry *dget(struct dentry *dentry);
 void d_instantiate(struct dentry *entry, struct inode * inode);
 
 //file.c
-int dcache_readdir(struct file * filp, void * dirent, filldir_t filldir);
+//int dcache_readdir(struct file * filp, void * dirent, filldir_t filldir);
 
 
 //把所有需要的、写在别的.c中的变量全部extern进来
@@ -224,7 +224,7 @@ struct file {
   //struct path		path;//文件路径
   struct dentry     *dentry;
   struct inode		*inode;//对应的inode
-  loff_t            position;//访问文件内的位置,如果是目录则表示在目录中的文职
+  loff_t            position;//访问文件内的位置(是一个内存地址),如果是目录则表示在目录中的位置（下标）
   //struct mutex      m_position;//修改位置的互斥锁
   struct file_operations	*f_operations;//对文件的所有操作
   struct file_state * state;//文件的状态和权限
@@ -244,15 +244,15 @@ struct file_state{
 struct file_operations {
   //struct module *owner;
   loff_t (*llseek) (struct file *, loff_t, int);//改变读写位置
-  ssize_t (*read) (struct file *, size_t, loff_t *);
-  ssize_t (*write) (struct file *, size_t, loff_t *);
+  int (*read) (struct file *, size_t, loff_t *);
+  int (*write) (struct file *, size_t, loff_t *);
 
-  int (*readdir) (struct file *, void *, filldir_t);//读取目录，返回什么？
+  //int (*readdir) (struct file *, void *, filldir_t);//读取目录，返回什么？
 
   int (*open) (struct inode *, struct file *);//从inode打开文件
 
   int (*release) (struct inode *, struct file *);//从inode释放文件
-  ssize_t (*sendfile)(struct file*,loff_t *, size_t,read_actor_t, void *);
+  //ssize_t (*sendfile)(struct file*,loff_t *, size_t,read_actor_t, void *);
 
   //t (*dir_notify)(struct file *filp, unsigned long arg);//请求改变目录时调用
 };
@@ -273,3 +273,14 @@ struct iovec
   void *iov_base;//指向缓冲区要读写的部分
   size_t iov_len; //要读写的数据长度
 };
+
+//用于存储读取行为的信息
+typedef struct {
+  size_t written;
+  size_t count;
+  union {
+    char *buf;
+    void *data;
+  } arg;
+  int error;
+} read_descriptor_t;

@@ -1,14 +1,52 @@
-#include<fs/vfs.h>
+#include <fs/vfs.h>
 #include <list.h>
 #include <mm/mm.h>
+#include <string.h>
 
 
-//file_read_actor - 将页的内容复制到指定缓冲区
-//@parameter desc 读操作的详细信息
-//@parameter page 要复制的页
-//@parameter offset 从页内的offset开始复制
-//@parameter 复制size字节
-//@return 剩余多少字节复制失败
+/**
+copy_to_buffer - 将一段内存的内容复制到指定地方
+@parameter to 指针，复制到哪里
+@parameter from 从哪里开始复制
+@parameter length 要复制多长
+@return 有多大没有复制成功
+ **/
+unsigned long copy_to_buffer(void* to,void* from,unsigned long length ){
+  memcpy(to,from,length);
+  return 0;
+}
+
+//TODO
+
+/**
+find_get_page - 在as中找到指定标号的页
+@parameter mapping
+@parameter index
+@return 创建新的页的结构体的指针
+ */
+struct page *find_get_page(struct address_space *mapping, unsigned long index){
+
+  return NULL;
+}
+//TODO
+
+/**
+file_accessed - 标记文件已被访问
+@parameter filp 要被标记的文件指针
+ */
+void file_accessed(struct file *filp){
+
+}
+
+
+/**
+file_read_actor - 将页的内容复制到指定缓冲区
+@parameter desc 读操作的详细信息
+@parameter page 要复制的页
+@parameter offset 从页内的offset开始复制
+@parameter 复制size字节
+@return 剩余多少字节复制失败
+**/
 int file_read_actor(read_descriptor_t *desc, struct page *page,
                     unsigned long offset, unsigned long size)
 {
@@ -32,23 +70,21 @@ int file_read_actor(read_descriptor_t *desc, struct page *page,
   return size;
 }
 
-
-//do_generic_mapping_read - 执行对页实际的读取操作
-//@parameter
-void do_generic_mapping_read(struct address_space *mapping,
-                             //struct file_ra_state *_ra,
-			     struct file *filp,
-                             loff_t *ppos,//是一个地址
-			     read_descriptor_t *desc)
+/**
+do_generic_mapping_read - 执行对页实际的读取操作
+@parameter mapping file对应的address space
+@parameter filp 文件
+@parameter ppos 读取位置的指针
+@parameter desc 读取行为描述符
+**/
+void do_generic_mapping_read(struct address_space *mapping,struct file *filp,loff_t *ppos,read_descriptor_t *desc)
 {
 	struct inode *inode = mapping->host;
 	unsigned long index;//页号
 	unsigned long end_index;//一共多少页
 	unsigned long offset;//页内偏移量
 	loff_t isize;
-	struct page *cached_page;
 
-	cached_page = NULL;
 	index = *ppos >> PAGE_SHIFT;//要读的页号
 	offset = *ppos & ~PAGE_MASK;//要读的偏移
 
@@ -72,10 +108,8 @@ void do_generic_mapping_read(struct address_space *mapping,
 		}
 		nr = nr - offset;//这一页里要读的大小
 
-find_page:
         //TODO
 		page = find_get_page(mapping, index);//根据页号从所有页中找到对应的页
-page_ok:
 
 		/* If users can be writing to this page using arbitrary
 		 * virtual addresses, take care about potential aliasing
@@ -93,23 +127,13 @@ page_ok:
 		//mark_page_accessed(page);//标记这页正在被访问
 		//prev_index = index;
 
-		/*
-		 * Ok, we have the page, and it's up-to-date, so
-		 * now we can copy it to user space...
-		 *
-		 * The actor routine returns how many bytes were actually used..
-		 * NOTE! This may not be the same as how much of a user buffer
-		 * we filled up (we may be padding etc), so we can only update
-		 * "pos" here (the actor routine has to update the user buffer
-		 * pointers and the remaining count).
-		 */
         //把页复制到用户空间
 		ret = file_read_actor(desc, page, offset, nr);//实际上往用户缓冲区内复制了多少
 		offset += ret;//接下来要读的地方
 		index += offset >> PAGE_SHIFT;//接下来要读的页
 		offset &= ~PAGE_MASK;//
 
-		//page_cache_release(page);//???
+		kfree(page);
 		if (ret == nr && desc->count)//如果这一页要读的正确复制，然后还有下面的要读
           continue;//就继续循环读下一页
 		goto out;
@@ -117,39 +141,32 @@ page_ok:
 	}
 
 out:
-	//*_ra = ra;
 
 	*ppos = ((loff_t) index << PAGE_SHIFT) + offset;
-	//if (cached_page)
-	//	page_cache_release(cached_page);
-	//if (filp)
+
     //TODO
 	file_accessed(filp);//文件标记为被访问
 }
 
 
-
-//generic_file_read -
-ssize_t generic_file_read(struct file *filp, char  *buf, size_t count, loff_t *ppos){
+/**
+generic_file_read - 读文件函数
+@parameter filp 要读取的文件
+@parameter buf 缓冲区位置
+@parameter count 读取字节数
+@parameter ppos 指向文件位置的指针
+@return 成功0 ，失败-1
+**/
+int generic_file_read(struct file *filp, char  *buf, size_t count, loff_t *ppos){
   struct iovec iov = { .iov_base = buf, .iov_len = count };
+  //ssize_t retval=0;
+  read_descriptor_t desc={.written = 0, .arg.buf = iov.iov_base, .count = iov.iov_len};
 
-  ssize_t retval;
-  unsigned long seg;
-  retval = 0;
-
-
-  read_descriptor_t desc;
-
-  desc.written = 0;
-  desc.arg.buf = iov.iov_base;
-  desc.count = iov.iov_len;
-  desc.error = 0;
   do_generic_mapping_read(filp->mapping,filp,ppos,&desc);
 
-  retval += desc.written;
+  //retval += desc.written;
 
-  return retval;
-
+  return desc.error;
 }
 
 
@@ -160,7 +177,8 @@ ssize_t generic_file_read(struct file *filp, char  *buf, size_t count, loff_t *p
 //@parameter dirent 返回的结果
 //@parameter 如何填写dirent的函数
 //           ref：https://elixir.bootlin.com/linux/v2.6.11/source/fs/readdir.c#L71
-int dcache_readdir(struct file * filp, void * dirent, filldir_t filldir){
+/*
+  int dcache_readdir(struct file * filp, void * dirent, filldir_t filldir){
 	struct dentry *dentry = filp->dentry;
 	struct dentry *cursor = filp->private_data;//???
 	struct list_head *p, *q = &cursor->child;
@@ -174,14 +192,14 @@ int dcache_readdir(struct file * filp, void * dirent, filldir_t filldir){
 				break;
 			filp->position++;
 			i++;
-			/* fallthrough */
+			//fallthrough
 		case 1:
 			ino = parent_ino(dentry);
 			if (filldir(dirent, "..", 2, i, ino, DT_DIR) < 0)
 				break;
 			filp->position++;
 			i++;
-			/* fallthrough */
+			// fallthrough
 		default:
           //spin_lock(&dcache_lock);
 			if (filp->position == 2) {
@@ -198,7 +216,7 @@ int dcache_readdir(struct file * filp, void * dirent, filldir_t filldir){
 				if (filldir(dirent, next->d_name.name, next->d_name.len, filp->position, next->inode->ino, dt_type(next->inode)) < 0)
 					return 0;
 				//spin_lock(&dcache_lock);
-				/* next is still alive */
+                // next is still alive
 				list_del(q);
 				list_add(q, p);
 				p = q;
@@ -208,3 +226,4 @@ int dcache_readdir(struct file * filp, void * dirent, filldir_t filldir){
 	}
 	return 0;
 }
+*/
