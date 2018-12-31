@@ -2,18 +2,19 @@
 #include <mm/pmm.h>
 
 // 物理内存页面管理的栈
-static uint32_t pmm_stack[PAGE_MAX_COUNT];
+uint32_t pmm_stack[PAGE_MAX_COUNT + 1];
 
 // 物理内存管理的栈指针
-static uint32_t pmm_stack_top;
+int32_t pmm_stack_top = -1;
 
 // 物理内存页的数量
-uint32_t phy_page_count;
+int32_t phy_page_count = -1;
 
 void pmm_init(){
     phy_page_count = -1;
     pmm_stack_top = -1;
-    uint32_t page_addr = PTE_ADDR + PAGE_TABLE_SIZE; // 页目录占用几个页框，在此之后才是可分配的页
+    uint32_t page_addr = PTE_ADDR + PAGE_TABLE_SIZE - 0x80000000; // 页目录占用几个页框，在此之后才是可分配的页
+    // value_global = (int)page_addr;
     int cnt;
     for (cnt = 0; cnt < PAGE_MAX_COUNT; ++cnt)
     {
@@ -31,21 +32,21 @@ uint32_t pmm_alloc_page()
         return NULL;
 
     uint32_t page = pmm_stack[pmm_stack_top--];
-    --phy_page_count;
-    
+    phy_page_count--;
+
     return page;
 }
 
 void pmm_free_page(uint32_t p)
 {
     // 参数为页面的物理地址
-	// assert(pmm_stack_top != PAGE_MAX_COUNT, "out of pmm_stack stack");
-    if(pmm_stack_top != PAGE_MAX_COUNT)
+	// assert(pmm_stack_top == PAGE_MAX_COUNT, "out of pmm_stack stack");
+    if(pmm_stack_top == PAGE_MAX_COUNT)
         return;
     pmm_stack[++pmm_stack_top] = p;
-    ++phy_page_count;
+    phy_page_count--;
 }
 
 uint32_t free_pages_count(void){
-    return phy_page_count;
+    return phy_page_count + 1;
 }

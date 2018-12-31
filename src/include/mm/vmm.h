@@ -85,7 +85,7 @@ uint32_t get_pid_from_pte(pte_t pte);
 pte_t *get_pte_by_page_addr(uint32_t page_addr);
 
 // 根据虚拟地址获得虚拟页号
-uint32_t get_vpn_from_page_addr(uint32_t page_addr);
+uint32_t get_vpn_from_page_addr(uint32_t vir_page_addr);
 
 // 根据虚拟页号获得物理页号
 uint32_t get_ppn_by_vpn(uint32_t vpn);
@@ -100,6 +100,8 @@ void set_page_status(uint32_t ppn, int status);
 
 // 判断是否以block为粒度来分配
 bool judge_is_split_block(uint32_t pte_block_flag);
+
+int get_page_status(uint32_t vir_page_addr);
 
 // 从 pte 中获得满足 size 大小的合适的 block
 int get_suitable_block_from_pte(pte_t pte, size_t size);

@@ -8,6 +8,8 @@
 #ifndef _INCLUDE_TYPES_H
 #define _INCLUDE_TYPES_H
 
+#include <debug.h>
+
 #ifndef NULL
 #define NULL 0
 #endif

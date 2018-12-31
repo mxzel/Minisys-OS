@@ -18,8 +18,8 @@ void mm_init(void)
     }
     idx = 0;
 
-    // pmm_init();
-    // vmm_init();
+    pmm_init();
+    vmm_init();
 }
 
 void *kmalloc(pid_t pid, size_t size){

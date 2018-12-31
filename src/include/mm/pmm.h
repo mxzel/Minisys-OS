@@ -38,7 +38,18 @@
 #define PAGE_MAX_COUNT ((RAM_STOP - PTE_ADDR - PAGE_TABLE_SIZE) / PMM_PAGE_SIZE)
 
 #include <types.h>
+#include <debug.h>
 #include <atomic.h>
+
+// 物理内存页面管理的栈
+extern uint32_t pmm_stack[PAGE_MAX_COUNT + 1];
+
+// 物理内存管理的栈指针
+extern int32_t pmm_stack_top;
+
+// 物理内存页的数量
+extern int32_t phy_page_count;
+
 
 // 物理内存管理初始化
 void pmm_init();
@@ -47,7 +58,7 @@ uint32_t pmm_alloc_page();
 
 void pmm_free_page(uint32_t p);
 
-// 当前可用内存页
+// 当前可用内存页，重启时一共有28个空闲的物理页
 uint32_t free_pages_count(void);
 
 #endif  // INCLUDE_MM_PMM_H_

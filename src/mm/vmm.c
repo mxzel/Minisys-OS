@@ -122,9 +122,9 @@ pte_t *get_pte_by_page_addr(uint32_t page_addr){
     return NULL;
 }
 
-uint32_t get_vpn_from_page_addr(uint32_t page_addr){
+uint32_t get_vpn_from_page_addr(uint32_t vir_page_addr){
     // 根据虚拟地址获得虚拟页号
-    return (page_addr & PAGE_MASK) >> 12;
+    return (vir_page_addr & PAGE_MASK) >> 12;
 }
 
 uint32_t get_ppn_by_vpn(uint32_t vpn){
@@ -161,9 +161,8 @@ void set_page_status(uint32_t ppn, int status){
     if(status < 0 || status > 2){
         return;
     }
-    pte_t* pte_p;
     int cnt = 0;
-    for (pte_p = PAGE_TABLE_P; pte_p < PAGE_TABLE_P + 0x1000 && cnt != PTE_COUNT; pte_p++, cnt++)
+    for (pte_p = PAGE_TABLE_P; pte_p < PAGE_TABLE_P + PAGE_TABLE_SIZE && cnt != PTE_COUNT; pte_p++, cnt++)
     {
         if(get_ppn_from_pte(*pte_p) == ppn){
             int mask = 0xffffffcf;
@@ -172,6 +171,20 @@ void set_page_status(uint32_t ppn, int status){
             break;
         }
     }
+}
+
+int get_page_status(uint32_t vir_page_addr){
+    int vpn = get_vpn_from_page_addr(vir_page_addr);
+    int cnt = 0;
+    for (pte_p = PAGE_TABLE_P; pte_p < PAGE_TABLE_P + PAGE_TABLE_SIZE && cnt != PTE_COUNT; pte_p++, cnt++)
+    {
+        if(get_vpn_from_pte(*pte_p) == vpn){
+            int mask = 0xffffffcf;
+            int status = (*(pte_p) & (~mask)) >> 4;
+            return status;
+        }
+    }
+    return -1;
 }
 
 bool judge_is_split_block(uint32_t pte_block_flag){

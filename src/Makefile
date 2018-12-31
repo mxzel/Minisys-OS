@@ -40,7 +40,7 @@ ASOURCES= \
 boot/boot.S
 
 CSOURCES= \
-lib/string.c mm/pmm.c mm/vmm.c mm/mm.c main.c
+lib/string.c mm/pmm.c mm/vmm.c mm/mm.c debug.c mm/mm_test.c main.c
 
 all: FPGA_RAM
 
