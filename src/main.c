@@ -62,6 +62,7 @@ int main(){
     // writeValTo7SegsDec(0);
     test_rw_memory();
     writeValTo7SegsHex(0x66666666);
+    while(1){}
     // test_vmm();
     return 0;
 }
@@ -119,12 +120,11 @@ __attribute__ ((nomips16)) void _mips_handle_exception (struct gpctx *ctx, int e
             mips32_set_c0(C0_ENTRYHI, vpn << 12);
 
             // TLBWR
-            mips_tlbwi2(
+            mips_tlbwr2(
                 mips32_get_c0(C0_ENTRYHI),
                 mips32_get_c0(C0_ENTRYLO0),
                 mips32_get_c0(C0_ENTRYLO1),
                 mips32_get_c0(C0_PAGEMASK), 
-                1
             );
 
             // uint32_t hi, lo0, lo1, msk;
@@ -137,7 +137,7 @@ __attribute__ ((nomips16)) void _mips_handle_exception (struct gpctx *ctx, int e
             // writeValTo7SegsHex(lo0);
             // writeValTo7SegsHex(lo1);
             // writeValTo7SegsHex(msk);
-            
+
             break;
         default:
             __exception_handle(ctx, exception);
