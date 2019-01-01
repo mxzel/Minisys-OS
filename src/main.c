@@ -11,7 +11,7 @@
  *  cd "c:\Comprehensive\OSX\src\" ; if ($?) { gcc main.c -o main -I ./include -I ./lib -I ./include/lib } ; if ($?) { .\main }
  * 
  */
-
+int index_;
 void test_pmm(){
     /**
      * 开始时一共有28个空闲物理页
@@ -61,6 +61,7 @@ int main(){
     // test_alloc_memory();
     // writeValTo7SegsDec(0);
     test_rw_memory();
+    writeValTo7SegsHex(0x66666666);
     // test_vmm();
     return 0;
 }
@@ -69,37 +70,77 @@ int main(){
 // TODO: Software User's Manual 文档216页指出了软件初始化需要做的一些事情
 __attribute__ ((nomips16)) void _mips_handle_exception (struct gpctx *ctx, int exception)
 {
+    writeValTo7SegsHex(0xffffffff);
     switch(exception){
-    case EXC_SYS://system call
-        switch(ctx->r[1]){
-        case 1:
-            // sys_led(ctx->r[3]);
+        case EXC_SYS://system call
+            switch(ctx->r[1]){
+            case 1:
+                // sys_led(ctx->r[3]);
+                break;
+            }
             break;
-        }
-        break;
-    case EXC_TLBL://load tlb miss
-    case EXC_TLBS://store tld miss
-        // writeValTo7SegsHex(ctx->context);
-        // sys_led(90);
-        // uint32_t pagenumber;
-        // pagenumber = ((uint32_t)mips32_get_c0(C0_BADVADDR)) >> 12;
-        writeValTo7SegsHex(((uint32_t)mips32_get_c0(C0_BADVADDR)));
-        // if(pagenumber>=0xc0000){
-        //     int framenumber=pagenumber-0xc0000;
-        //     int odd = pagenumber%2;
-        //     pagenumber=pagenumber>>1;
-        //     pagenumber=pagenumber<<13;
-        //     framenumber<<6;
-        //     if (odd ==1){
-        //         mips_tiber2 (pagenumber,framenumber+0x16,0x00000002,0x1ffff800);
-        //     }else{
-        
-        //     }
-        // }
-        // void mips_tlbwr2(tlbhi_t hi, tlblo_t lo0, tlblo_t lo1, unsigned int pmsk);
-        break;
-    default:
-        __exception_handle(ctx, exception);
-  }
+        case EXC_MOD:
+            writeValTo7SegsHex(0x02020202);
+            break;
+        case EXC_ADEL:
+        case EXC_ADES:
+            writeValTo7SegsHex(0x04040404);
+            // for (index_ = 0; index_ < 31; ++index_){
+            //     writeValTo7SegsHex(ctx->r[index_]);
+            // }
+            break;
+        case EXC_TLBL://load tlb miss
+            writeValTo7SegsHex(0x03030303);
+            break;
+        case EXC_TLBS://store tld miss
+            writeValTo7SegsHex(0x01010101);
+
+            // TLB size 为 16
+            // PageMask
+            mips32_set_c0(C0_PAGEMASK, 0x0fff);
+
+            uint32_t badvaddr = ctx->r[3];
+            uint32_t vpn = badvaddr >> 12;
+
+            // EntryLo0 和 EntryLo1
+            uint32_t ppn;
+            if(vpn % 2 == 0){
+                ppn = get_ppn_by_vpn(vpn);
+                mips32_set_c0(C0_ENTRYLO0, 7 | (ppn << 6));
+                mips32_set_c0(C0_ENTRYLO1, 1);
+
+            }else{
+                ppn = get_ppn_by_vpn(vpn);
+                mips32_set_c0(C0_ENTRYLO0, 1);
+                mips32_set_c0(C0_ENTRYLO1, 7 | (ppn << 6));
+            }
+
+            // EntryHI
+            mips32_set_c0(C0_ENTRYHI, vpn << 12);
+
+            // TLBWR
+            mips_tlbwi2(
+                mips32_get_c0(C0_ENTRYHI),
+                mips32_get_c0(C0_ENTRYLO0),
+                mips32_get_c0(C0_ENTRYLO1),
+                mips32_get_c0(C0_PAGEMASK), 
+                1
+            );
+
+            // uint32_t hi, lo0, lo1, msk;
+            // mips_tlbri2(&hi, &lo0, &lo1, &msk, 1);
+
+            // asm("tlbwr\t\n");
+            //  mips_tlbri2 (tlbhi_t *phi, tlblo_t *plo0, tlblo_t *plo1, unsigned int *pmsk, int index)
+
+            // writeValTo7SegsHex(hi);
+            // writeValTo7SegsHex(lo0);
+            // writeValTo7SegsHex(lo1);
+            // writeValTo7SegsHex(msk);
+            
+            break;
+        default:
+            __exception_handle(ctx, exception);
+    }
       
 }
