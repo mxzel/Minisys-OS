@@ -44,10 +44,10 @@ int test_alloc_memory(){
 
 int test_rw_memory(){
     // 用虚拟地址进行读写会触发TLB重填的异常
-    int *addr = (int *)kmalloc(0, 32);
-    writeValTo7SegsHex(addr);
-    *addr = 2048;
-    writeValTo7SegsHex(*addr);
+    int *addr = (int *)kmalloc(0, 64);
+    writeValTo7SegsHex(((uint32_t)addr));
+    *addr = 123;
+    writeValTo7SegsDec(*addr);
     return 1;
 }
 
