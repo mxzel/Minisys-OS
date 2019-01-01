@@ -215,8 +215,13 @@ struct dentry_operations {
 };
 
 
-//TODO
-struct fown_struct{};
+//struct fown_struct{};
+
+struct file_state{
+  enum{F_NONE,F_INIT,F_OPENED,F_CLOSED} status;
+  bool readable;//1可0不可
+  bool writeable;//1可0不可
+};
 
 //打开的文件
 struct file {
@@ -227,18 +232,14 @@ struct file {
   loff_t            position;//访问文件内的位置(是一个内存地址),如果是目录则表示在目录中的位置（下标）
   //struct mutex      m_position;//修改位置的互斥锁
   struct file_operations	*f_operations;//对文件的所有操作
-  struct file_state * state;//文件的状态和权限
+  struct file_state state;//文件的状态和权限
   atomic_t count;//文件的打开次数
   //当我们关闭一个进程的某一个文件描述符时候，其实并不是真正的关闭文件，仅仅是将count减一，当count=0时候，才会真的去关闭它。
-  struct fown_struct	owner;//打开文件的进程
+  //struct fown_struct	owner;//打开文件的进程
   struct address_space	*mapping;//与inode 的mapping一样
 };
 
-struct file_state{
-  enum{F_NONE,F_INIT,F_OPENED,F_CLOSED} status;
-  bool readable;//1可0不可
-  bool writeable;//1可0不可
-};
+
 
 //文件的操作
 struct file_operations {

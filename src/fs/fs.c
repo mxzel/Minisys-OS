@@ -90,10 +90,12 @@ int open(const char* filename,int mode){
   return fd;
 }
 
-//构造并返回打开文件的file结构体
-//@parameter filename 文件名（包含路径）
-//@parameter mode 读写权限
-//@return 指向构建的file结构体的指针
+/**
+get_file - 构造并返回打开文件的file结构体
+@parameter filename 文件名（包含路径）
+@parameter mode 读写权限
+@return 指向构建的file结构体的指针
+**/
 struct file* get_file(const char* filename,int mode){
   struct file* file=alloc_file();
   //TODO
@@ -109,3 +111,11 @@ memset(task->files,0,sizeof(struct file* )*OPEN_MAX);
   struct file* files[OPEN_MAX];
 
 **/
+
+
+int __read(int fd,char * buf,size_t len){
+  struct file* file = current->files[fd];
+  if(file&&file->f_operations->read)
+    return file->f_operations->read(file,buf,len);
+  return -1;
+}
