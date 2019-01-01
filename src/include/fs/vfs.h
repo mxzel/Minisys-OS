@@ -28,7 +28,14 @@ inline struct dentry *dget(struct dentry *dentry);
 void d_instantiate(struct dentry *entry, struct inode * inode);
 
 //file.c
+struct file;
 //int dcache_readdir(struct file * filp, void * dirent, filldir_t filldir);
+int generic_file_read(struct file *filp, char *buf, size_t count);
+int generic_file_write(struct file *file, const char *buf,size_t count);
+
+//INODE的两种类型，对应不同的operations
+#define INODE_DIR 1
+#define INODE_FILE 2
 
 
 //把所有需要的、写在别的.c中的变量全部extern进来
@@ -119,7 +126,6 @@ struct address_space {
   //struct list_head	private_list;
   //void			*private_data;
 };
-static struct file;
 
 struct address_space_operations {
   //int (*writepage)(struct page *page, struct writeback_control *wbc);用于写入IO的，似乎没用
@@ -229,7 +235,7 @@ struct file {
   //struct path		path;//文件路径
   struct dentry     *dentry;
   struct inode		*inode;//对应的inode
-  loff_t            position;//访问文件内的位置(是一个内存地址),如果是目录则表示在目录中的位置（下标）
+  loff_t            position;//访问文件内的位置（字节数）,如果是目录则表示在目录中的位置（下标）
   //struct mutex      m_position;//修改位置的互斥锁
   struct file_operations	*f_operations;//对文件的所有操作
   struct file_state state;//文件的状态和权限
@@ -245,10 +251,10 @@ struct file {
 struct file_operations {
   //struct module *owner;
   loff_t (*llseek) (struct file *, loff_t, int);//改变读写位置
-  int (*read) (struct file *, size_t, loff_t *);
-  int (*write) (struct file *, size_t, loff_t *);
+  int (*read) (struct file *, char* , size_t);
+  int (*write) (struct file *,const char*, size_t);
 
-  //int (*readdir) (struct file *, void *, filldir_t);//读取目录，返回什么？
+  int (*readdir) (struct file *, void *, filldir_t);//读取目录，返回什么？
 
   int (*open) (struct inode *, struct file *);//从inode打开文件
 

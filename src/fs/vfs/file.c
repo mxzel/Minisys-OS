@@ -17,18 +17,20 @@ unsigned long copy_to_buffer(void* to,void* from,unsigned long length ){
 }
 
 /**
-find_get_page - 在as中找到指定标号的页
+find_get_page - 在as中找到第index页
 @parameter mapping
-@parameter index
+@parameter index 页的下标
 @return 创建新的页的结构体的指针
  */
 struct page *find_get_page(struct address_space *mapping, unsigned long index){
   struct list_head *next_node = mapping->pages.next;
-  //unsigned long current_index;
+  unsigned long current_index=0;
   struct page * ret=NULL;
   while(next_node){
     ret = list_entry(next_node,struct page,list);
-    if(((unsigned long)ret->address >> PAGE_SHIFT)==index) return ret;
+    if(current_index==index) return ret;
+    current_index++;
+    next_node = ret->list.next;
   }
   return ret;
 }
@@ -106,20 +108,19 @@ void do_generic_mapping_read(struct address_space *mapping,struct file *filp,lof
           if (index > end_index)//读多了，非法
             return;
           nr = ((isize - 1) & ~PAGE_MASK) + 1;
-          if (nr <= offset) {//要读的比文件还往后了，报错
+          if (nr <= offset) {//要读的位置比文件结尾还往后了，报错
             return;
           }
-          desc->error = 0;//其他情况，无错
-          goto out;
+          //desc->error = 0;//其他情况，无错
 		}
-		nr = nr - offset;//这一页里要读的大小
+		nr = nr - offset;//这一页里要实际读的字节数
 
   		page = find_get_page(mapping, index);//根据页号从所有页中找到对应的页
         //把页复制到用户空间
 		ret = file_read_actor(desc, page, offset, nr);//实际上往用户缓冲区内复制了多少
 		offset += ret;//接下来要读的地方
 		index += offset >> PAGE_SHIFT;//接下来要读的页
-		offset &= ~PAGE_MASK;//
+		offset &= ~PAGE_MASK;//下一页的页内偏移
 
 		//kfree(page);//未新建page，故不用free
 		if (ret == nr && desc->count)//如果这一页要读的正确复制，然后还有下面的要读
@@ -153,25 +154,23 @@ int generic_file_read(struct file *filp, char  *buf, size_t count){
 
 //=====================================================
 
-
+/**
+generic_file_buffered_write - 实际的写操作函数
+@parameter file
+@parameter iov
+@parameter pos
+@parameter ppos
+@parameter count
+@parameter written
+@return
+ **/
 ssize_t generic_file_buffered_write(struct file *file, const struct iovec *iov, loff_t pos, loff_t *ppos,size_t count, ssize_t written)
 {
 	struct address_space * mapping = file->mapping;
 	struct address_space_operations *a_ops = mapping->a_operations;
-	struct inode 	*inode = mapping->host;
-	long		status = 0;
 	struct page	*page;
-	struct page	*cached_page = NULL;
 	size_t		bytes;
-	struct pagevec	lru_pvec;//??
-	const struct iovec *cur_iov = iov; /* current iovec */
-	size_t		iov_base = 0;	   /* offset in the current iovec */
-	char *buf;
-
-	pagevec_init(&lru_pvec, 0);//???
-
-
-	buf = iov->iov_base + written;
+	char *buf = iov->iov_base + written;
 
 
 	do {
@@ -179,158 +178,78 @@ ssize_t generic_file_buffered_write(struct file *file, const struct iovec *iov, 
 		unsigned long offset;
 		size_t copied;
 
-		offset = (pos & (PAGE_SIZE -1)); /* Within page */
-		index = pos >> PAGE_SHIFT;
-		bytes = PAGE_SIZE - offset;
+		offset = (pos & (PAGE_SIZE -1)); //页内偏移
+		index = pos >> PAGE_SHIFT;//要写的页号
+		bytes = PAGE_SIZE - offset;//本页中实际要写的字节数
 		if (bytes > count)
 			bytes = count;
 
-		/*
-		 * Bring in the user page that we will copy from _first_.
-		 * Otherwise there's a nasty deadlock on copying from the
-		 * same page as we're writing to, without it being marked
-		 * up-to-date.
-		 */
-		fault_in_pages_readable(buf, bytes);
 
-		page = __grab_cache_page(mapping,index,&cached_page,&lru_pvec);
-		if (!page) {
-			status = -ENOMEM;
-			break;
+        //TODO
+        //按照index取出对应的页，如果不存在就新建
+		page = grab_page(mapping,index);
+
+		//status = a_ops->prepare_write(file, page, offset, offset+bytes);
+        //TODO
+        //从用户处拷贝到存储位置，返回已经拷贝的大小
+	   copied = copy_from_user(page, offset,buf, bytes);
+
+       //如果扩大了文件则改变inode的大小
+       a_ops->commit_write(file, page, offset, offset+bytes);
+       //更新，准备写下一页
+		if (copied > 0) {
+            written += copied;
+            count -= copied;
+            pos += copied;
+            buf += copied;
 		}
 
-		status = a_ops->prepare_write(file, page, offset, offset+bytes);
-		if (unlikely(status)) {
-			loff_t isize = i_size_read(inode);
-			/*
-			 * prepare_write() may have instantiated a few blocks
-			 * outside i_size.  Trim these off again.
-			 */
-			unlock_page(page);
-			page_cache_release(page);
-			if (pos + bytes > isize)
-				vmtruncate(inode, isize);
-			break;
-		}
-		if (likely(nr_segs == 1))
-			copied = filemap_copy_from_user(page, offset,
-							buf, bytes);
-		else
-			copied = filemap_copy_from_user_iovec(page, offset,
-						cur_iov, iov_base, bytes);
-		flush_dcache_page(page);
-		status = a_ops->commit_write(file, page, offset, offset+bytes);
-		if (likely(copied > 0)) {
-			if (!status)
-				status = copied;
-
-			if (status >= 0) {
-				written += status;
-				count -= status;
-				pos += status;
-				buf += status;
-				if (unlikely(nr_segs > 1))
-					filemap_set_next_iovec(&cur_iov,
-							&iov_base, status);
-			}
-		}
-		if (unlikely(copied != bytes))
-			if (status >= 0)
-				status = -EFAULT;
-		unlock_page(page);
-		mark_page_accessed(page);
-		page_cache_release(page);
-		if (status < 0)
-			break;
-		balance_dirty_pages_ratelimited(mapping);
-		cond_resched();
 	} while (count);
 	*ppos = pos;
 
-	if (cached_page)
-		page_cache_release(cached_page);
-
-	/*
-	 * For now, when the user asks for O_SYNC, we'll actually give O_DSYNC
-	 */
-	if (likely(status >= 0)) {
-		if (unlikely((file->f_flags & O_SYNC) || IS_SYNC(inode))) {
-			if (!a_ops->writepage || !is_sync_kiocb(iocb))
-				status = generic_osync_inode(inode, mapping,
-						OSYNC_METADATA|OSYNC_DATA);
-		}
-  	}
-	pagevec_lru_add(&lru_pvec);
-	return written ? written : status;
+	return written;
 }
 
 int __generic_file_write_nolock(const struct file* file,const struct iovec *iov, loff_t *ppos)
 {
-	struct address_space * mapping = file->mapping;
-	size_t ocount;		/* original count */
-	size_t count;		/* after file limit checks */
-	struct inode 	*inode = mapping->host;
-	unsigned long	seg;
-	loff_t		pos;
-	ssize_t		written;
-	ssize_t		err;
+	size_t count=iov->iov_len;;		/* after file limit checks */
+	loff_t		pos=*ppos;
+	ssize_t		written=0;
 
-	ocount = iov->iov_len;
-
-	count = ocount;
-	pos = *ppos;
-
-	//vfs_check_frozen(inode->i_sb, SB_FREEZE_WRITE);
-
-	written = 0;
     //检查一些可能的错误
-    //TODO
-	err = generic_write_checks(file, &pos, &count, S_ISBLK(inode->mode));
-	if (err)
-		goto out;
-
-	if (count == 0)
-		goto out;
-
-    //？？？
-	err = remove_suid(file->dentry);
-	if (err)
-		goto out;
-
-	//inode_update_time(inode, 1);
+	if (file->state.writeable||count == 0)
+      goto out;
 
     //写，返回实际写了多少字节
 	written = generic_file_buffered_write(file, iov,pos, ppos, count, written);
 out:
 	//current->backing_dev_info = NULL;
-	return written ? written : err;
+	return written ? written : -1;
 }
 
 
 /**
-   generic_file_read - 写文件函数
+   generic_file_write - 写文件函数
    @parameter filp 要写的文件
    @parameter buf 缓冲区位置
    @parameter count 写字节数
    @return 成功0 ，失败-1
 **/
-int generic_file_write(struct file *file, const char *buf,
-                           size_t count, loff_t *ppos)
-{
+int generic_file_write(struct file *file, const char *buf,size_t count){
   struct address_space *mapping = file->mapping;
   struct inode *inode = mapping->host;
   ssize_t	ret;
   struct iovec local_iov = { .iov_base = (void *)buf,
                              .iov_len = count };
 
-  ret = __generic_file_write_nolock(file, &local_iov, 1, ppos);
+  ret = __generic_file_write_nolock(file, &local_iov, &file->position);
 
 
   //？？？
   if (ret > 0 && ((file->f_flags & O_SYNC) || IS_SYNC(inode))) {
     ssize_t err;
 
-    err = sync_page_range(inode, mapping, *ppos - ret, ret);//？？？
+    err = sync_page_range(inode, mapping, file->position - ret, ret);
     if (err < 0)
       ret = err;
   }

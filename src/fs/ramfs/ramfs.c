@@ -4,8 +4,7 @@
 #include <types.h>
 #include <string.h>
 
-#define INODE_DIR 1
-#define INODE_FILE 2
+
 
 static struct super_operations ramfs_super_ops;
 //static struct dentry_operatons ramfs_dops;
@@ -193,9 +192,14 @@ int simple_readpage(struct file *file, struct page *page)
   return 0;
 }
 
-
-//TODO
-//暂时没太懂是干啥用的
+/**
+simple_prepare_write -
+@parameter file
+@parameter page
+@parameter from
+@parameter to
+@return
+ **/
 //如果from-to不够一页，就把一页中除了from-to以外的地方清零
 int simple_prepare_write(struct file *file, struct page* page,
                          unsigned from, unsigned to)
