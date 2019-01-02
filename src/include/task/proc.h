@@ -16,36 +16,6 @@ register struct task_struct *__current_task __asm__("$28");
 #define current_task()  __current_task
 
 extern void* switch_to(struct context *from, struct context *to);
-// static inline void switch_to(struct context *from, struct context *to){
-//         __asm__ volatile (
-//             "sw $16,($4)/t/n
-//             sw $17,4($4)/t/n
-//             sw $18,8($4)/t/n
-//             sw $19,12($4)/t/n
-//             sw $20,16($4)/t/n
-//             sw $21,20($4)/t/n
-//             sw $22,24($4)/t/n
-//             sw $23,28($4)/t/n
-//             sw $29,32($4)/t/n
-//             sw $30,36($4)/t/n
-//             sw $31,40($4)/t/n
-
-//             lw $16,($4)/t/n
-//             lw $17,4($4)/t/n
-//             lw $18,8($4)/t/n
-//             lw $19,12($4)/t/n
-//             lw $20,16($4)/t/n
-//             lw $21,20($4)/t/n
-//             lw $22,24($4)/t/n
-//             lw $23,28($4)/t/n
-//             lw $29,32($4)/t/n
-//             lw $30,36($4)/t/n
-//             lw $31,40($4)/t/n"
-//             :
-//             :"r"(from) 
-//         );
-// }
-
 
 #define PROC_NAME_LEN               15
 #define MAX_PROCESS                 1024
