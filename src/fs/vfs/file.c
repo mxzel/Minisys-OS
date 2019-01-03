@@ -26,7 +26,7 @@ struct page *find_get_page(struct address_space *mapping, unsigned long index){
   struct list_head *next_node = mapping->pages.next;
   unsigned long current_index=0;
   struct page * ret=NULL;
-  while(next_node){
+  while(next_node!=&mapping->pages){
     ret = list_entry(next_node,struct page,list);
     if(current_index==index) return ret;
     current_index++;
@@ -155,14 +155,50 @@ int generic_file_read(struct file *filp, char  *buf, size_t count){
 //=====================================================
 
 /**
+grab_page - 获取需要的页并返回，如果没有则分配新页
+@parameter 文件对应的as
+@parameter 页的下标
+@return 指向需要的页的指针
+**/
+struct page * grab_page(struct address_space *mapping,unsigned long index){
+  struct list_head * current_page = mapping->pages.next;
+  unsigned long current_index=0;
+  while(current_page!=&mapping->pages){
+    if(current_index++ == index) return list_entry(current_page,struct page,list);
+    current_page = current_page->next;
+  }
+  char * new_page = kmalloc(0,PAGE_SIZE);
+  struct page * new_page_s = kmalloc(0,sizeof(struct page));
+  memset(new_page,0,PAGE_SIZE);
+  memset(new_page_s,0,sizeof(struct page));
+  new_page_s->address = new_page;
+  list_add_tail(&new_page_s->list,&mapping->pages);
+  return new_page_s;
+}
+
+/**
+copy_from_user - 从用户处拷贝到存储位置，返回已经拷贝的大小
+@parameter page 目的页
+@parameter offset 目的页内偏移位置
+@parameter buf 原位置
+@parameter bytes 长度
+@return 实际拷贝了多少
+ **/
+size_t inline copy_from_user(struct page *page, unsigned long offset,char *buf, size_t bytes){
+  memcopy(page->address + offset, buf, bytes);
+  return bytes;
+}
+
+
+/**
 generic_file_buffered_write - 实际的写操作函数
-@parameter file
-@parameter iov
-@parameter pos
-@parameter ppos
-@parameter count
-@parameter written
-@return
+@parameter file 要写的文件
+@parameter iov 记录缓冲区
+@parameter pos 要写的位置
+@parameter ppos 指向要写的位置的指针
+@parameter count 要写的长度
+@parameter written 已经写了的长度
+@return 一共写了的长度
  **/
 ssize_t generic_file_buffered_write(struct file *file, const struct iovec *iov, loff_t pos, loff_t *ppos,size_t count, ssize_t written)
 {
@@ -184,13 +220,11 @@ ssize_t generic_file_buffered_write(struct file *file, const struct iovec *iov, 
 		if (bytes > count)
 			bytes = count;
 
-
-        //TODO
         //按照index取出对应的页，如果不存在就新建
 		page = grab_page(mapping,index);
 
 		//status = a_ops->prepare_write(file, page, offset, offset+bytes);
-        //TODO
+
         //从用户处拷贝到存储位置，返回已经拷贝的大小
 	   copied = copy_from_user(page, offset,buf, bytes);
 
@@ -210,7 +244,7 @@ ssize_t generic_file_buffered_write(struct file *file, const struct iovec *iov, 
 	return written;
 }
 
-int __generic_file_write_nolock(const struct file* file,const struct iovec *iov, loff_t *ppos)
+int __generic_file_write_nolock(struct file* file,const struct iovec *iov, loff_t *ppos)
 {
 	size_t count=iov->iov_len;;		/* after file limit checks */
 	loff_t		pos=*ppos;
@@ -236,23 +270,12 @@ out:
    @return 成功0 ，失败-1
 **/
 int generic_file_write(struct file *file, const char *buf,size_t count){
-  struct address_space *mapping = file->mapping;
-  struct inode *inode = mapping->host;
   ssize_t	ret;
   struct iovec local_iov = { .iov_base = (void *)buf,
                              .iov_len = count };
 
   ret = __generic_file_write_nolock(file, &local_iov, &file->position);
 
-
-  //？？？
-  if (ret > 0 && ((file->f_flags & O_SYNC) || IS_SYNC(inode))) {
-    ssize_t err;
-
-    err = sync_page_range(inode, mapping, file->position - ret, ret);
-    if (err < 0)
-      ret = err;
-  }
   return ret;
 }
 

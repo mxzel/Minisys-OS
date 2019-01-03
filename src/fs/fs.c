@@ -119,3 +119,10 @@ int __read(int fd,char * buf,size_t len){
     return file->f_operations->read(file,buf,len);
   return -1;
 }
+
+int __write(int fd,char * buf,size_t len){
+  struct file* file = current->files[fd];
+  if(file&&file->f_operations->write)
+    return file->f_operations->write(file,buf,len);
+  return -1;
+}

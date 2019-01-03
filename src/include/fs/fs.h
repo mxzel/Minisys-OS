@@ -53,6 +53,19 @@ int __read(int fd,char * buf,size_t len);
 
 #define read(fd,type,var) __read(fd,&var,sizeof(type))
 
+/**
+   write - 读文件
+   @parameter fd 要写的文件的描述符
+   @parameter var 要读的变量
+   @parameter type 要读到的变量的类型
+   @return 0成功，-1失败
+**/
+int __write(int fd,char * buf,size_t len);
+
+#define write(fd,type,var) __write(fd,&var,sizeof(type))
+
+
+
 
 
 /**
