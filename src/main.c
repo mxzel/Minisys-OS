@@ -3,6 +3,7 @@
 #include <mm/mm_test.h>
 #include <mips/hal.h>
 #include <mips/m32tlb.h>
+#include <task/proc.h>
 //#include <stdio.h>
 #include <mips/cpu.h>
 #include <mips/m32c0.h>
@@ -11,7 +12,7 @@
  *  cd "c:\Comprehensive\OSX\src\" ; if ($?) { gcc main.c -o main -I ./include -I ./lib -I ./include/lib } ; if ($?) { .\main }
  * 
  */
-//int index_;
+
 void test_pmm(){
     /**
      * 开始时一共有28个空闲物理页
@@ -56,10 +57,12 @@ void test_vmm(){
 }
 
 int main(){
-  mm_init();
+    mm_init();
     // test_alloc_memory();
     // writeValTo7SegsDec(0);
-    test_rw_memory();
+   //test_rw_memory();
+    proc_init();
+    cpu_idle();
     while(1)writeValTo7SegsHex(0x66666666);
     // test_vmm();
     return 0;
@@ -68,7 +71,7 @@ int main(){
 // TODO: Software User's Manual 文档216页指出了软件初始化需要做的一些事情
 __attribute__ ((nomips16)) void _mips_handle_exception (struct gpctx *ctx, int exception)
 {
-    writeValTo7SegsHex(0xffffffff);
+   // writeValTo7SegsHex(0xffffffff);
     switch(exception){
         case EXC_SYS://system call
           writeValTo7SegsHex(0x11111111);
@@ -99,11 +102,13 @@ __attribute__ ((nomips16)) void _mips_handle_exception (struct gpctx *ctx, int e
             if(vpn % 2 == 0){
                 ppn = get_ppn_by_vpn(vpn);
                 mips32_set_c0(C0_ENTRYLO0, 7 | (ppn << 6));
-                mips32_set_c0(C0_ENTRYLO1, 1);
+                ppn = get_ppn_by_vpn(vpn + 1);
+                mips32_set_c0(C0_ENTRYLO1, 7 | (ppn << 6));
 
             }else{
+                ppn = get_ppn_by_vpn(vpn - 1);
+                mips32_set_c0(C0_ENTRYLO0, 7 | (ppn << 6));
                 ppn = get_ppn_by_vpn(vpn);
-                mips32_set_c0(C0_ENTRYLO0, 1);
                 mips32_set_c0(C0_ENTRYLO1, 7 | (ppn << 6));
             }
 

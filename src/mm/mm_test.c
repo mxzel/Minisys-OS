@@ -3,7 +3,7 @@
 pid_t pid = 0;
 int alloc_size[TEST_COUNT] = {33, 64, 128, 256, 512, 1024, 2048, 4096, 6144, 4096};
 // 0x80022000
-
+int index_ = 0;
 
 int test_alloc_memory(){
     int *addr_alloc[TEST_COUNT] = {NULL};
@@ -45,14 +45,23 @@ int test_alloc_memory(){
 int test_rw_memory(){
     // 用虚拟地址进行读写会触发TLB重填的异常
   // writeValTo7SegsDec(1);
-    int *addr = (int *)kmalloc(0, 64);
-
+    int *addr = (int *)kmalloc(0, 128);
+    int *addr1 = (int *)kmalloc(0, 4096);
     writeValTo7SegsHex(((uint32_t)addr));
+    writeValTo7SegsHex(((uint32_t)addr1));
+    *addr1 = 456;
+    writeValTo7SegsDec(*addr1);
     *addr = 123;
     writeValTo7SegsDec(*addr);
+    
     return 1;
 }
 
 int test_free_memory(){
     return 1;
+}
+
+void test_global_variable(){
+    index_ = 1;
+    index_++;
 }

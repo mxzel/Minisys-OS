@@ -72,6 +72,8 @@ void vmm_init(void);
 
 void set_ppn_to_pte(int ppn, pte_t *pte);
 
+void set_vpn_to_pte(int vpn, pte_t *pte);
+
 // 根据物理地址获得物理页号
 uint32_t get_ppn_from_page_addr(uint32_t phy_page_addr);
 

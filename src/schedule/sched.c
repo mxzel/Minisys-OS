@@ -4,8 +4,8 @@
 
 
 void wakeup_proc(struct task_struct *proc) {
-    if (proc->state != 1) {
-        proc->state = 1;
+    if (proc->state != 0) {
+        proc->state = 0;
     }
     else {
         //warn("wakeup runnable process.\n");
@@ -19,21 +19,34 @@ void schedule(void) {
     int32_t highest = 0;
     struct task_struct *next = NULL;
     struct task_struct *current_highest = NULL;
-    
-    current->need_resched = 0;
-    last = (current == idleproc) ? &proc_list : &(current->list_link);
+    if(current->pid!=0)
+    {
+        current->need_resched = 0;
+    }
+    last = &proc_list ;
     le = last;
     do {
-        if ((le = le->next) != &proc_list) {
+        
+        
+        if ((le = le->next) != &proc_list) {//如果当前遍历的le不是最后一个，就进if
             next = list_entry(le, struct task_struct,list_link);
-            if (next->state == 0) {
-                if(highest < next->priority){
+
+            if (next->state == 0) 
+            {
+                if(highest < next->priority)
+                {
                     highest = next->priority;
                     current_highest = next;
+                    
                 }
+                
             }
+            
         }
+       
     } while (le != last);
+    
+    writeValTo7SegsHex(current_highest->pid);
     if (current_highest == NULL || current_highest->state != 0) {
         current_highest = idleproc;
     }
