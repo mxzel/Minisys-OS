@@ -3,6 +3,7 @@
 #include <string.h>
 #include <assert.h>
 #include <task/proc.h>
+#include <debug.h>
 
 
 struct list_head proc_list;   
@@ -17,14 +18,19 @@ static int nr_process = 0; //进程数
 
 static struct task_struct * alloc_proc(pid_t pid){
     struct task_struct *proc =kmalloc(pid, sizeof(struct task_struct));
+    writeValTo7SegsHex(0x02166666);
     if(proc != NULL){
         proc->state = -1;
         proc->need_resched = 0;
         proc->kstack = 0;
         proc->parent = NULL;
+        writeValTo7SegsHex(0x02766666);
         memset(&(proc->context),0,sizeof(struct context));
+        writeValTo7SegsHex(0x02866666);
         memset(proc->name, 0, PROC_NAME_LEN);
+        writeValTo7SegsHex(0x03066666);
     }
+    writeValTo7SegsHex(0x03266666);
     return proc;
 
 }
@@ -114,15 +120,18 @@ static void test_main(void *arg){
 /*
 
 */
-int create_pro(int (*fn)(void *), void *arg, uint32_t priority){
+pid_t create_proc(int (*fn)(void *), void *arg, uint32_t priority){
     
     struct task_struct *proc;
     pid_t ret;
-    pid_t porc_id = get_pid(); 
+    pid_t porc_id = get_pid();
+    
     if(nr_process>MAX_PROCESS){
         goto fork_out;
     }
-    if((proc = alloc_proc(porc_id) == NULL)){
+    proc = alloc_proc(porc_id);
+    writeValTo7SegsHex(0x12866666);
+    if(proc== NULL){
         goto fork_out;
     }
 
@@ -131,11 +140,14 @@ int create_pro(int (*fn)(void *), void *arg, uint32_t priority){
 
     proc->pid = porc_id;
     setup_kstack(proc);
+    writeValTo7SegsHex(0x13866666);
     proc->context.reg31 = (uint32_t)fn; 
     proc->context.reg29 = proc->kstack + PAGE_SIZE - 1; //堆栈指针指向栈底
     list_add(&(proc->list_link),&proc_list);
+    writeValTo7SegsHex(0x14266666);
     nr_process ++;
     wakeup_proc(proc);
+    writeValTo7SegsHex(0x14566666);
     ret = proc->pid;
 
 fork_out:
@@ -144,23 +156,30 @@ fork_out:
 
 
 void proc_init(void){
-    int i;
+    //int i;
     
     init_list_head(&proc_list);
+    
     pid_t idle_pid = get_pid();
+    writeValTo7SegsHex(0x15366666);
     if((idleproc = alloc_proc(idle_pid)) == NULL){
         //panic("cannot alloc idleproc.\n");
     }
+    writeValTo7SegsHex(0x15766666);
     idleproc->pid = idle_pid;
     idleproc->state = 0;
+
     idleproc->need_resched = 1;
     setup_kstack(idleproc); 
+    writeValTo7SegsHex(0x16366666);
     set_proc_name(idleproc, "idle");
+    writeValTo7SegsHex(0x16566666);
     nr_process++;
     set_current(idleproc);
+    writeValTo7SegsHex(0x16866666);
     
-    int pid = create_pro(init_main,NULL,1);//创建init进程 
-    
+    pid_t pid = create_proc(init_main,NULL,1);//创建init进程 
+    writeValTo7SegsHex(0x17166666);
     if (pid <= 0) {
         //panic("create user_main failed.\n");
     }
@@ -169,6 +188,7 @@ void proc_init(void){
 
 
 void cpu_idle(void) {
+    writeValTo7SegsHex(0x66888866);
     while (1) {
         if (current->need_resched) {
             schedule();
