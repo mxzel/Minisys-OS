@@ -58,6 +58,21 @@ struct vfsmount {
   short count;
 };
 
+static inline struct vfsmount *mntget(struct vfsmount *mnt)
+{
+    if (mnt)
+        atomic_inc(&mnt->mnt_count);
+    return mnt;
+}
+static inline void mntput(struct vfsmount *mnt)
+{
+    if (mnt) {
+        if (atomic_dec_and_test(&mnt->mnt_count)){
+            struct super_block *sb = mnt->sb;
+            dput(mnt->root);
+        }
+    }
+}
 struct sb_mode{
   short mounted;//是否已经挂载
   bool readable;//1可0不可
@@ -254,7 +269,25 @@ static inline struct dentry *dget(struct dentry *dentry)
   return dentry;
 }
 
+
 struct path {
   struct vfsmount *mnt;
   struct dentry *dentry;
 };
+
+static inline int lookup_flags(unsigned int f)
+{
+    unsigned long retval = LOOKUP_FOLLOW;
+    
+    if (f & O_NOFOLLOW)
+        retval &= ~LOOKUP_FOLLOW;
+    
+    if ((f & (O_CREAT|O_EXCL)) == (O_CREAT|O_EXCL))
+        retval &= ~LOOKUP_FOLLOW;
+    
+    if (f & O_DIRECTORY)
+        retval |= LOOKUP_DIRECTORY;
+    
+    return retval;
+}
+
