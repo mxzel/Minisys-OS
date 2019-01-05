@@ -4,15 +4,55 @@ ifndef MIPS_ELF_ROOT
 $(error MIPS_ELF_ROOT must be set to point to toolkit installation root)
 endif
 
-CC=mips-mti-elf-gcc -I ./include -I ./lib -I ./include/lib
-LD=mips-mti-elf-gcc -I ./include -I ./lib -I ./include/lib
-OD=mips-mti-elf-objdump
-OC=mips-mti-elf-objcopy
-SZ=mips-mti-elf-size
+CC = mips-mti-elf-gcc
+LD = mips-mti-elf-gcc
+OD = mips-mti-elf-objdump
+OC = mips-mti-elf-objcopy
+SZ = mips-mti-elf-size
 
-CFLAGS = -O1 -g -EL -c -msoft-float -march=m14kc
-LDFLAGS = -EL -msoft-float -march=m14kc -Wl,-Map=FPGA_Ram_map.txt
+# Imagination CodeScape toolchain
+ifneq (,$(wildcard $(MIPS_ELF_ROOT)/bin/mips-mti-elf-gcc))
+    CC = $(MIPS_ELF_ROOT)/bin/mips-mti-elf-gcc
+    LD = $(MIPS_ELF_ROOT)/bin/mips-mti-elf-gcc
+    OD = $(MIPS_ELF_ROOT)/bin/mips-mti-elf-objdump
+    OC = $(MIPS_ELF_ROOT)/bin/mips-mti-elf-objcopy
+    SZ = $(MIPS_ELF_ROOT)/bin/mips-mti-elf-size
+endif
 
+# Mentor CodeSourcery toolchain
+ifneq (,$(wildcard $(MIPS_ELF_ROOT)/bin/mips-sde-elf-gcc))
+    CC = $(MIPS_ELF_ROOT)/bin/mips-sde-elf-gcc
+    LD = $(MIPS_ELF_ROOT)/bin/mips-sde-elf-gcc
+    OD = $(MIPS_ELF_ROOT)/bin/mips-sde-elf-objdump
+    OC = $(MIPS_ELF_ROOT)/bin/mips-sde-elf-objcopy
+    SZ = $(MIPS_ELF_ROOT)/bin/mips-sde-elf-size
+endif
+
+LIBFDCPATH="$(MIPS_ELF_ROOT)/share/mips/addons/libfdc/"
+
+
+CFLAGS  = -EL -g -march=m14kc -msoft-float -O1 -I$(LIBFDCPATH) -I ./include -I ./lib -I ./include/lib
+LDFLAGS = -EL -march=m14kc -msoft-float  -Wl,-Map=program.map -L$(LIBFDCPATH) -I ./include -I ./lib -I ./include/lib
+#-nostartfiles
+ifeq ($(TINY_MEMORY),1)
+# Set the stack to the top of the Code/Data RAM
+LDFLAGS += -Wl,--defsym,__stack=0x80000400
+# Define a small amount of heap for symbol purposes
+LDFLAGS += -Wl,--defsym,__memory_size=0x10
+else
+# Set the stack to the top of the Code/Data RAM
+LDFLAGS += -Wl,--defsym,__stack=0x80040000
+# Cautiously set the size of memory as the 2015.03 toolchain uses
+# this size as the amount of free memory between the end of the
+# program data and the lowest address that the stack will reach.
+#
+# Max 2K for stack (0x800)
+# Max 128K for program code/data (0x20000)
+# Leaving 126K heap (0x1f800)
+LDFLAGS += -Wl,--defsym,__memory_size=0x1f800
+endif
+
+# common LDFLAGS
 # Set up the link addresses for a bootable C program on MIPSfpga
 LDFLAGS += -T uhi32.ld
 # Place the boot code (physical address). The virtual address for
@@ -22,56 +62,66 @@ LDFLAGS += -Wl,--defsym,__flash_start=0xbfc00000
 LDFLAGS += -Wl,--defsym,__flash_app_start=0x80000000
 # Place the application code (virtual address)
 LDFLAGS += -Wl,--defsym,__app_start=0x80000000
-# Set the stack to the top of the Code/Data RAM
-LDFLAGS += -Wl,--defsym,__stack=0x80040000
-# Cautiously set the size of memory as the 2015.01 toolchain uses
-# this size as the amount of free memory between the end of the
-# program data and the lowest address that the stack will reach.
-#
-# Max 2K for stack (0x800)
-# Max 128K for program code/data (0x20000)
-# Leaving 126K heap (0x1f800)
-LDFLAGS += -Wl,--defsym,__memory_size=0x1f800
+# Disable reserving space for ISR vectors
+LDFLAGS += -Wl,--defsym,__isr_vec_count=0
 # Set the entry point to the true hard-reset address
 LDFLAGS += -Wl,-e,0xbfc00000
 
 ASOURCES= \
-boot/boot.S process/switch.S
+boot/dummy.S
+#boot.S \
+
+#exceptions.S \ 
+#crt0.S \
+
+
+
+# Build crt0.o so that it ends up in the .boot section
+# crt0.o : CFLAGS += -D_BOOTCODE
 
 CSOURCES= \
-<<<<<<< HEAD
-lib/string.c mm/pmm.c mm/vmm.c mm/mm.c main.c process/proc.c schedule/sched.c
-=======
-lib/string.c mm/pmm.c mm/vmm.c mm/mm.c debug.c mm/mm_test.c main.c
->>>>>>> origin/master
+debug.c \
+mm/pmm.c \
+mm/vmm.c \
+mm/mm.c \
+mm/mm_test.c \
+main.c
 
-all: FPGA_RAM
 
-COBJECTS=$(CSOURCES:.c=.o)
-AOBJECTS=$(ASOURCES:.S=.o)
+#lib/string.c \
 
-FPGA_RAM : $(AOBJECTS) $(COBJECTS) 
-	$(LD)  $(LDFLAGS) $(AOBJECTS) $(COBJECTS) -o FPGA_Ram.elf
-	$(SZ) FPGA_Ram.elf
-	$(OD) -D -S -l FPGA_Ram.elf > FPGA_Ram_dasm.txt
-	$(OD) -D FPGA_Ram.elf > FPGA_Ram_modelsim.txt
-	$(OC) FPGA_Ram.elf -O srec FPGA_Ram.rec
-	
+
+COBJECTS = $(CSOURCES:.c=.o)
+CASMS    = $(CSOURCES:.c=.s)
+AOBJECTS = $(ASOURCES:.S=.o)
+
+all: program.elf $(CASMS)
+
+program.elf : $(AOBJECTS) $(COBJECTS) 
+	#$(LD)  $(LDFLAGS) $(filter-out crt0.o,$(AOBJECTS)) $(COBJECTS) -lfdc -o program.elf
+	$(LD)  $(LDFLAGS) $(AOBJECTS) $(COBJECTS) -lfdc -o program.elf
+	#$(OC) --remove-section .MIPS.abiflags --remove-section .reginfo program.elf
+	$(SZ) program.elf
+	$(OD) -D -l -t program.elf > program.dis
+	$(OD) -D program.elf > program.txt
+	$(OC) program.elf -O srec program.rec
+
 .c.o:
-	$(CC) $(CFLAGS) $< -o $@
-	
+	$(CC) -c $(CFLAGS) $< -o $@
+
 .S.o:
-	$(CC) $(CFLAGS) $< -o $@
+	$(CC) -c $(CFLAGS) $< -o $@
+
+.c.s:
+	$(CC) -S $(CFLAGS) $< -o $@
 
 clean:
-	rm -f FPGA_Ram_dasm.txt
-	rm -f FPGA_Ram_modelsim.txt
-	rm -f FPGA_Ram_map.txt
-	rm -f FPGA_Ram.rec
-	rm -f FPGA_Ram.elf
+	rm -f main.s
+	rm -f *.o
 	rm -f lib/*.o
 	rm -f mm/*.o
-	rm -f *.o
-	rm -rf MemoryFiles
-
-	
+	rm -f program.elf
+	rm -f program.map
+	rm -f program.dis
+	rm -f program.rec
+	rm -f *.txt

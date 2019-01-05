@@ -61,3 +61,5 @@ src/GRTAGS
 src/GPATH
 *.h~
 *.c~
+*.c#
+*.h#

@@ -41,11 +41,7 @@ typedef enum bool {
 // // typedef          int       ssize_t;
 
 // 进程 PID
-<<<<<<< HEAD
-typedef uint32_t pid_t;
-=======
 // typedef int32_t pid_t;
->>>>>>> origin/master
 
 // 页表条目
 typedef uint64_t pte_t;
