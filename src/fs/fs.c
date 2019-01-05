@@ -20,10 +20,10 @@ struct nameidata{
     struct dentry  *dentry;     /*目录项对象的地址*/
     struct vfsmount  *mnt;      /*安装点的数据*/
     struct qstr  last;          /*路径中的最后一个component*/
-    unsigned int  flags;        /*查找标识*/
-    //int  last_type;             /*路径中的最后一个component的类型*/
-    unsigned  depth;            /*当前symbolic link的嵌套深度，不能大于6*/
-    char   *saved_names[MAX_NESTED_LINKS + 1];/
+    //unsigned int  flags;        /*查找标识*/
+    int  last_type;             /*路径中的最后一个component的类型*/
+    //unsigned  depth;            /*当前symbolic link的嵌套深度，不能大于6*/
+    //char   *saved_names[MAX_NESTED_LINKS + 1];/
     /*和嵌套symbolic link 相关的pathname*/
     //union {
     //    struct open_intent open; /*说明文件该如何访问*/
@@ -153,9 +153,7 @@ struct file* get_file(const char* filename,int mode){
     struct nameidata nd;
     error=open_namei(filename,mode,&nd);
     if(!error)
-        return dentry_open(nd.dentry,nd.mnt);
-    //打开失败
-    //已经被打开
+        return dentry_open(nd.dentry,nd.mnt,mode);
     return *error;
 }
 
@@ -164,69 +162,65 @@ struct file* get_file(const char* filename,int mode){
 //@parameter mode 读写权限
 //@parameter nd ...
 //@return
-int open_namei(const char *pathname,int flag,int mode,struct nameidata *nd){
-    int acc_mode,error=0;
+int open_namei(const char *pathname,int mode,struct nameidata *nd){
+    int error=0;
     struct dentry *dentry;
     struct dentry *dir;
     int count = 0;
-    
-    acc_mode = ACC_MODE(flag);
-    
-    // 这是打开文件最简单的一种情况 查找文件，保存在nd中
-    if (!(flag & O_CREAT)) {
-        error = path_lookup(pathname, lookup_flags(flag)|LOOKUP_OPEN, nd);
-        if (error)
-            return error;
+
+    error = path_lookup(pathname,nd);
+    if (error)
+        return error;
+    struct path last;//确定mnt和dentry
+    error = do_lookup(nd, &nd->last, &last);
+    if (error)
+        return error;
+    follow_mount(&last.mnt, &last.dentry);
+    inode = last.dentry->inode;
+    if(inode){// 这是打开文件最简单的一种情况 查找文件，保存在nd中
+        dput(nd->dentry);
+        nd->mnt = last.mnt;//更新nd
+        nd->dentry = last.dentry;
         goto ok;
     }
     //文件不存在,首先需要创建文件
-    error = path_lookup(pathname, LOOKUP_PARENT|LOOKUP_OPEN|LOOKUP_CREATE, nd);
-    if (error)
-        return error;
-
+    error = -EISDIR;
+    if (nd->last_type != 0)
+        goto exit
     dir = nd->dentry;
-    nd->flags &= ~LOOKUP_PARENT;
-    dentry=nd->dentry;
+    dentry = last->dentry;
 do_last:
     if (！dentry))
         goto exit;
-
     /* Negative dentry 文件不存在，需要创建inode*/
     if (!dentry->d_inode) {
-        error = vfs_create(dir->d_inode, dentry, mode, nd);
+        error = vfs_create(dir->inode, dentry, mode, nd);
         dput(nd->dentry);
         nd->dentry = dentry;
         if (error)
             goto exit;
-        /* Don't check for write permission, don't truncate */
-        acc_mode = 0;
-        flag &= ~O_TRUNC;
         goto ok;
     }
-    /*文件不存在*/
-    error = -EEXIST;//17 文件存在
-    if (flag & O_EXCL)
-        goto exit_dput;
-     /*检查是否一个mount点，如果是mount点需要切换到源mount点*/
-    if (dentry->mounted) {
-        error = -ELOOP;
-        if (flag & O_NOFOLLOW)
-            goto exit_dput;
-       // while (__follow_down(&nd->mnt,&dentry) && (dentry->mounted));
-    }
-    error = -ENOENT;
-    if (!dentry->d_inode)
-        goto exit_dput;
-    
+    /*文件存在*/
+//    error = -EEXIST;//17 文件存在
+//     /*检查是否一个mount点，如果是mount点需要切换到源mount点*/
+////    if (dentry->mounted) {
+////        error = -ELOOP;
+////       // while (__follow_down(&nd->mnt,&dentry) && (dentry->mounted));
+////    }
+//    error = -ENOENT;
+//    if (!dentry->d_inode)
+//        goto exit_dput;
+//
     dput(nd->dentry);
     nd->dentry = dentry;
-    error = -EISDIR;
-//    if (dentry->d_inode && S_ISDIR(dentry->d_inode->i_mode))
+//    error = -EISDIR;
+//    if (dentry->d_inode && S_ISDIR(dentry->d_inode->i_mode))//是目录则报错
 //        goto exit;
 ok://打开文件
-    error = may_open(nd, acc_mode, flag);
-    if (error)
-        goto exit;
+    //error = may_open(nd,mode);
+//    if (error)
+//        goto exit;
     return 0;
     
 exit_dput:
@@ -242,12 +236,9 @@ exit:
 //@parameter pathname 文件路径名(可以是全路径，也可以是相对路径名)
 //@parameter nd 此时不包含任何有用信息，用来返回查找结果
 //@return error
-int path_lookup(const char *name,unsigned int flags,struct nameidata *nd){
+int path_lookup(const char *name,struct nameidata *nd){
     int retval = 0；
-    nd->last_type = LAST_ROOT; /* if there are only slashes... */
-    nd->flags = flags;
-    nd->depth = 0;
-    unsigned int lookup_flags = nd->flags;
+    nd->last_type = 3; //最后一个分量是“/”（也就是整个路径名为“/”）
     
     if(*name=='/'){
         //文件名包含绝对路径，因此我们优先使用文件系统的根目录作为查找起始点
@@ -258,20 +249,17 @@ int path_lookup(const char *name,unsigned int flags,struct nameidata *nd){
         nd->mnt = mntget(current->fs->pwdmnt);//为进程文件系统的当前vfsmount对象
         nd->dentry = dget(current->fs->pwd);//进程文件系统的当前dentry
     }
-    current->total_link_count = 0;//初始化符号连接为0
     
     //开始查找
     struct path next;//确定mnt和dentry
     struct inode *inode;
-    //unsigned int lookup_flags = nd->flags;
     while (*name=='/')
         name++;
     if (!*name)
-        return retval;
+        return retval;//没有路径名
     
     inode = nd->dentry->inode;
-    if (nd->depth)
-        lookup_flags = LOOKUP_FOLLOW;
+
     for(;;) {
         struct qstr this;//存放目录项名称
         unsigned int c;
@@ -286,10 +274,9 @@ int path_lookup(const char *name,unsigned int flags,struct nameidata *nd){
         this.len = name - (const char *) this.name;
         /* remove trailing slashes? */
         if (!c)
-            goto last_component;
+            goto last_component;//最后一部分
         while (*++name == '/');
-        if (!*name)
-            goto last_with_slashes;
+        if (!*name) //打开的是目录而不是文件
         //处理.和..
         if (this.name[0] == '.') switch (this.len) {
             default:
@@ -325,7 +312,6 @@ int path_lookup(const char *name,unsigned int flags,struct nameidata *nd){
             case 1:
                 continue;
         }
-        nd->flags |= LOOKUP_CONTINUE;
         /* This does the actual lookups.. */
         retval = do_lookup(nd, &this, &next);//根据父目录项和当前路径名找出下一级的dentry
         if (retval)
@@ -345,78 +331,69 @@ int path_lookup(const char *name,unsigned int flags,struct nameidata *nd){
             break;
         continue;
         /* here ends the main loop */
-last_with_slashes:
-        lookup_flags |= LOOKUP_FOLLOW | LOOKUP_DIRECTORY;
 last_component:
-        nd->flags &= ~LOOKUP_CONTINUE;
-        if (lookup_flags & LOOKUP_PARENT)
-            goto lookup_parent;
-        if (this.name[0] == '.') switch (this.len) {
-            default:
-                break;
-            case 2:
-                if (this.name[1] != '.')
-                    break;
-                struct vfsmount *parent;//..
-                struct dentry *old = nd->dentry;
-                while(1){
-                    //如果当前所处的目录即为根目录则break
-                    if (nd->dentry == current->fs->root && nd->mnt == current->fs->rootmnt) break;
-                    ////如果当前所处的目录不为当前路径所属文件系统的根目录，也就是说可以直接向上退一级
-                    if(nd->dentry != nd->mnt->root){
-                        nd->dentry = dget(nd->dentry->parent);//当前的目录退到上一级
-                        dput(old);
-                        break;
-                    }
-                    //当前所处的目录为文件系统的根目录
-                    parent = nd->mnt->parent;//取父文件系统
-                    if (parent == nd->mnt) {//父文件系统即为本身，则表明没有父文件系统，直接break
-                        break;
-                    }
-                    mntget(parent);//增加父文件系统的引用计数
-                    nd->dentry = dget(nd->mnt->mountpoint);//取当前文件系统的挂载点，这样就退回到了父文件系统
-                    dput(old);
-                    mntput(nd->mnt);
-                    nd->mnt = parent;//设置当前路径的mnt为父文件系统
-                }
-                follow_mount(nd->mnt,nd->dentry);
-                inode = nd->dentry->inode;
-                /* fallthrough */
-            case 1:
-                goto return_base;
-            
-        }
-        retval = do_lookup(nd, &this, &next);
-        if (retval)
-            break;
-        follow_mount(&next.mnt, &next.dentry);
-        inode = next.dentry->d_inode;
-        dput(nd->dentry);
-        nd->mnt = next.mnt;
-        nd->dentry = next.dentry;
-       
-        retval = -ENOENT;/* No such file or directory */
-        if (!inode)
-            break;
-        if (lookup_flags & LOOKUP_DIRECTORY) {
-            retval = -ENOTDIR;/* Not a directory */
-            if (!inode->i_op || !inode->i_op->lookup)
-                break;
-        }
-        goto return_base;
-lookup_parent:
+//        //if (lookup_flags & LOOKUP_PARENT)
+//            goto lookup_parent;
+//        if (this.name[0] == '.') switch (this.len) {
+//            default:
+//                break;
+//            case 2:
+//                if (this.name[1] != '.')
+//                    break;
+//                struct vfsmount *parent;//..
+//                struct dentry *old = nd->dentry;
+//                while(1){
+//                    //如果当前所处的目录即为根目录则break
+//                    if (nd->dentry == current->fs->root && nd->mnt == current->fs->rootmnt) break;
+//                    ////如果当前所处的目录不为当前路径所属文件系统的根目录，也就是说可以直接向上退一级
+//                    if(nd->dentry != nd->mnt->root){
+//                        nd->dentry = dget(nd->dentry->parent);//当前的目录退到上一级
+//                        dput(old);
+//                        break;
+//                    }
+//                    //当前所处的目录为文件系统的根目录
+//                    parent = nd->mnt->parent;//取父文件系统
+//                    if (parent == nd->mnt) {//父文件系统即为本身，则表明没有父文件系统，直接break
+//                        break;
+//                    }
+//                    mntget(parent);//增加父文件系统的引用计数
+//                    nd->dentry = dget(nd->mnt->mountpoint);//取当前文件系统的挂载点，这样就退回到了父文件系统
+//                    dput(old);
+//                    mntput(nd->mnt);
+//                    nd->mnt = parent;//设置当前路径的mnt为父文件系统
+//                }
+//                follow_mount(nd->mnt,nd->dentry);
+//                inode = nd->dentry->inode;
+//                /* fallthrough */
+//            case 1:
+//                return 0；
+//
+//        }
+//        retval = do_lookup(nd, &this, &next);
+//        if (retval)
+//            break;
+//        follow_mount(&next.mnt, &next.dentry);
+//        inode = next.dentry->d_inode;
+//        dput(nd->dentry);
+//        nd->mnt = next.mnt;//更新nd
+//        nd->dentry = next.dentry;
+//
+//        retval = -ENOENT;/* No such file or directory */
+//        if (!inode)
+//            break;
+//        return 0；
+//lookup_parent:
         nd->last = this;
-        nd->last_type = LAST_NORM;
+        nd->last_type = 0;//最后一个分量是普通文件名
         if (this.name[0] != '.')
-            goto return_base;
+            return 0;
         if (this.len == 1)
-            nd->last_type = LAST_DOT;
+            nd->last_type = 1;//最后一个分量是“.”
         else if (this.len == 2 && this.name[1] == '.')
-            nd->last_type = LAST_DOTDOT;
+            nd->last_type = 2;//最后一个分量是“..”
         else
-            goto return_base;
-return_base:
-        return 0;
+            return 0;
+
 out_dput:
         dput(next.dentry);
         break;
@@ -450,10 +427,10 @@ static int do_lookup(struct nameidata *nd, struct qstr *name,
     }
     if(sub!=parent)
         dentry = sub;
-    if(!dentry){
+    if(!dentry){//新建dentry
         struct dentry * temp = alloc_dentry(parent, name);
         if (temp) {
-            dentry = dir->i_op->lookup(dir, temp, nd);
+            dentry = dir->i_operations->lookup(dir, temp, nd);
             if (dentry)
                 dput(temp);
             else
@@ -494,27 +471,49 @@ static int follow_mount(struct vfsmount **mnt, struct dentry **dentry)
     }
     return res;
 }
-struct file *dentry_open(struct dentry *dentry, struct vfsmount *mnt, int flags)
+
+int vfs_create(struct inode *dir, struct dentry *dentry, int mode,
+               struct nameidata *nd)
+{
+    if (child->d_inode)
+        error = -EEXIST;
+//    if (IS_DEADDIR(dir))
+//        error = -ENOENT;
+//    error = permission(dir,MAY_WRITE | MAY_EXEC, nd);
+    if (error)
+        return error;
+    
+    if (!dir->i_op || !dir->i_op->create)
+        return -EACCES;    /* shouldn't it be ENOSYS? */
+    error = dir->i_op->create(dir, dentry, mode, nd); //调用父目录文件索引节点操作方法创建inode
+    return error;
+}
+struct file *dentry_open(struct dentry *dentry, struct vfsmount *mnt, int mode)
 {
     struct file * f;
     struct inode *inode;
     int error;
     
     error = -ENFILE;
-    //f = get_empty_filp();
     memset(f, 0, sizeof(*f));
     f->count=1;
+    INIT_LIST_HEAD(&f->list);
     if (!f)
         goto cleanup_dentry;
     goto cleanup_file;
-    }
+    
+    inode=dentry->inode;
+    if(mode==OPEN_W||mode==OPEN_WR)
+        f->state.writeable = 1;
+    if(mode==OPEN_R||mode==OPEN_WR)
+        f->state.readable = 1;
     f->mapping = inode->mapping;
     f->dentry = dentry;
     f->vfsmnt = mnt;
     f->pos = 0;
-    //f->f_op = fops_get(inode->i_fop);
-    //file_move(f, &inode->sb->files);
-    
+    f->f_op=inode->i_fop;
+    if(inode->sb->files)
+        list_move(&f->list, &inode->sb->files);
     if (f->f_op && f->f_op->open) {
         error = f->f_op->open(inode,f);
         if (error)
@@ -523,11 +522,17 @@ struct file *dentry_open(struct dentry *dentry, struct vfsmount *mnt, int flags)
     return f;
     
 cleanup_all:
-    file_kill(f);
+    if (!list_empty(&f->list)) {
+        list_del_init(&f->list);
+    }
     f->dentry = NULL;
     f->vfsmnt = NULL;
 cleanup_file:
-    put_filp(f);
+    (f->count)--;
+    if(f->count)
+        if (!list_empty(&f->list)) {
+            list_del_init(&f->list);
+        }
 cleanup_dentry:
     dput(dentry);
     mntput(mnt);
