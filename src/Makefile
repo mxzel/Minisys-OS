@@ -125,6 +125,10 @@ clean:
 	rm -f lib/*.s
 	rm -f mm/*.o
 	rm -f mm/*.s
+	rm -f process/*.s
+	rm -f process/*.o
+	rm -f schedule/*.s
+	rm -f schedule/*.o
 	rm -f program.elf
 	rm -f program.map
 	rm -f program.dis
