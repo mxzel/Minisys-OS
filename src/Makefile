@@ -81,6 +81,11 @@ boot/dummy.S \
 # crt0.o : CFLAGS += -D_BOOTCODE
 
 CSOURCES= \
+fs/fs.c \
+fs/ramfs/ramfs.c \
+fs/vfs/alloc.c \
+fs/vfs/dentry.c \
+fs/vfs/file.c \
 debug.c \
 process/proc.c \
 schedule/sched.c \
@@ -89,7 +94,6 @@ mm/vmm.c \
 mm/mm.c \
 mm/mm_test.c \
 main.c
-
 
 #lib/string.c \
 
@@ -125,6 +129,16 @@ clean:
 	rm -f lib/*.s
 	rm -f mm/*.o
 	rm -f mm/*.s
+	rm -f process/*.s
+	rm -f process/*.o
+	rm -f schedule/*.s
+	rm -f schedule/*.o
+	rm -f fs/*.s
+	rm -f fs/*.o
+	rm -f fs/ramfs/*.s
+	rm -f fs/ramfs/*.o
+	rm -f fs/vfs/*.s
+	rm -f fs/vfs/*.o
 	rm -f program.elf
 	rm -f program.map
 	rm -f program.dis

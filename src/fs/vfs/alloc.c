@@ -20,12 +20,14 @@
 //以下是用来管理所有结构体变量的链表和统计信息
 
 //VFSMOUNT相关变量
-LIST_HEAD(mount_list);//所有已挂载的文件系统
+// LIST_HEAD(mount_list);//所有已挂载的文件系统
+struct vfsmount* only_mount;//不支持挂载，仅能在初始化时挂一个fs
+
 
 
 //INODE相关变量
 int nr_inodes;//inode数量
-LIST_HEAD(inode_list);//保存所有inode的链表
+// LIST_HEAD(inode_list);//保存所有inode的链表
 
 //DENTRY相关变量
 int nr_dentries;
@@ -39,14 +41,15 @@ int nr_dentries;
 //文件系统对应的函数调用alloc函数后再进行针对性的初始化。
 
 
+
 struct vfsmount * alloc_mount(){
   struct vfsmount * mnt;
   mnt = kmalloc(0,sizeof(struct vfsmount));
   memset(mnt,0,sizeof(struct vfsmount));
-  INIT_LIST_HEAD(&mnt->list);
-  INIT_LIST_HEAD(&mnt->mounts);
-  INIT_LIST_HEAD(&mnt->child);
-  mnt->count = 0;
+  // INIT_LIST_HEAD(&mnt->list);
+  // INIT_LIST_HEAD(&mnt->mounts);
+  // INIT_LIST_HEAD(&mnt->child);
+  // mnt->count = 0;
   return mnt;
 }
 
@@ -54,49 +57,49 @@ struct super_block * alloc_sb(){
   struct super_block * sb;
   sb = kmalloc(0,sizeof(struct super_block));
   memset(sb,0,sizeof(struct super_block));
-  INIT_LIST_HEAD(&sb->list);
+  // INIT_LIST_HEAD(&sb->list);
   INIT_LIST_HEAD(&sb->files);
   INIT_LIST_HEAD(&sb->inodes);
-  sb->mode.mounted=0;
+  //sb->mode.mounted=0;
   return sb;
 }
 
 
 struct inode* alloc_inode(struct super_block *sb){
-  static struct address_space_operations empty_aops;
-  static struct inode_operations empty_iops;
-  static struct file_operations empty_fops;
-  struct inode *inode;
-  static unsigned long last_ino;
+  // static struct address_space_operations empty_aops;
+  // static struct inode_operations empty_iops;
+  // static struct file_operations empty_fops;
 
+  static unsigned long last_ino=0;
 
-  inode=(struct inode*)kmalloc(0,sizeof(struct inode));
+  struct inode *inode=(struct inode*)kmalloc(0,sizeof(struct inode));
 
   if(inode){
-    struct address_space * const mapping = &inode->data;
+    struct address_space * mapping = &inode->data;
     inode->ino=last_ino++;
     inode->sb = sb;
-    atomic_set(&inode->count, 1);
-    inode->nlink=0;
-    inode->i_operations = &empty_iops;
-    inode->f_operations = &empty_fops;
-    inode->nlink = 1;
-    atomic_set(&inode->write_count, 0);
-    atomic_set(&inode->read_count, 0);
+    // atomic_set(&inode->count, 1);
+    // inode->nlink=0;
+    inode->i_operations = NULL;
+    inode->f_operations = NULL;
+    // inode->nlink = 1;
+    // atomic_set(&inode->write_count, 0);
+    // atomic_set(&inode->read_count, 0);
 
     inode->mode.size = 0;
-    inode->mode.state = I_NEW;
+    // inode->mode.state = I_NEW;
+    INIT_LIST_HEAD(&inode->d_list);
 
-    mapping->a_operations = &empty_aops;
+    mapping->a_operations = NULL;
     mapping->host = inode;
     mapping->nrpages = 0;
     INIT_LIST_HEAD(&mapping->pages);
     inode->mapping=mapping;
   }
-
-  list_add(&inode->i_list, &inode_list);
+  nr_inodes++;
+  // list_add(&inode->i_list, &inode_list);
+  list_add(&inode->i_list, &sb->inodes);
   return inode;
-
 }
 
 
@@ -107,34 +110,34 @@ struct dentry *alloc_dentry(struct dentry * parent, const struct qstr *name)
 
 	dentry = kmalloc(0,sizeof(struct dentry));
 
-    dname = kmalloc(0,name->len + 1);
+  dname = kmalloc(0,name->len + 1);
 
 	dentry->d_name.name = dname;
 	dentry->d_name.len = name->len;
 	memcpy(dname, name->name, name->len);
 	dname[name->len] = 0;
 
-	atomic_set(&dentry->count, 1);
+	// atomic_set(&dentry->count, 1);
 	dentry->inode = NULL;
 	dentry->parent = NULL;
 	dentry->sb = NULL;
-	dentry->operations = NULL;
-	dentry->mounted = 0;
+	// dentry->operations = NULL;
+	// dentry->mounted = 0;
 	INIT_LIST_HEAD(&dentry->subdirs);
 	INIT_LIST_HEAD(&dentry->alias);
 
 	if (parent) {
-      dentry->parent = dget(parent);
+      // dentry->parent = dget(parent);
+      dentry->parent = parent;
+      list_add(&dentry->child, &parent->subdirs);
       dentry->sb = parent->sb;
 	} else {
 	  INIT_LIST_HEAD(&dentry->child);
 	}
 
-	if (parent)
-		list_add(&dentry->child, &parent->subdirs);
 	nr_dentries++;
 
-    return dentry;
+  return dentry;
 }
 
 struct dentry * alloc_dentry_root(struct inode *root_inode){

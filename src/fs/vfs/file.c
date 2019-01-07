@@ -3,6 +3,14 @@
 #include <mm/mm.h>
 #include <string.h>
 
+//=====================================================
+//=vfs/file.c
+//=
+//=本文件中实现了与file_operation相关的通用函数
+//=主要实现了读写相关的通用函数
+//=
+//=====================================================
+
 
 /**
 copy_to_buffer - 将一段内存的内容复制到指定地方
@@ -185,7 +193,7 @@ copy_from_user - 从用户处拷贝到存储位置，返回已经拷贝的大小
 @return 实际拷贝了多少
  **/
 size_t inline copy_from_user(struct page *page, unsigned long offset,char *buf, size_t bytes){
-  memcopy(page->address + offset, buf, bytes);
+  memcpy(page->address + offset, buf, bytes);
   return bytes;
 }
 

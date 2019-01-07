@@ -1,22 +1,5 @@
-<<<<<<< HEAD
-/*
- * =====================================================================================
- *
- *       Filename:  pmm.c
- *
- *    Description:  页内存管理
- *
- * =====================================================================================
- */
-
-// #include "multiboot.h"
-// #include "common.h"
-// #include "debug.h"
-#include <include/mm/pmm.h>
-=======
 
 #include <mm/pmm.h>
->>>>>>> origin/minxue
 
 // 物理内存页面管理的栈
 uint32_t pmm_stack[PAGE_MAX_COUNT + 1];

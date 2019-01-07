@@ -15,11 +15,11 @@
 //dget - 为dentry增加一个引用
 //@parameter dentry 对应的dentry
 //@return 指向增加过引用的dentry的指针
-inline struct dentry *dget(struct dentry *dentry)
-{
-  atomic_inc(&dentry->count);
-  return dentry;
-}
+// inline struct dentry *dget(struct dentry *dentry)
+// {
+//   atomic_inc(&dentry->count);
+//   return dentry;
+// }
 
 /**
  * This turns negative dentries into productive full members
