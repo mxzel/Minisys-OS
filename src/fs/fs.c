@@ -47,7 +47,7 @@ int get_fd(){
     if (fd==OPEN_MAX) return -1;
     return fd;
 }
-struct file *dentry_open(struct dentry *dentry, struct vfsmount *mnt, int mode)
+struct file *dentry_open(struct dentry *dentry, struct vfsmount *mnt, int mode);
 struct file * get_file(const char* filename,int mode);
 int open(const char* filename,int mode){
     //struct file* file = current->files[xxx];
@@ -214,7 +214,7 @@ int do_lookup(struct nameidata *nd, struct qstr *name,
 int vfs_create(struct inode *dir, struct dentry *dentry, int mode,struct nameidata *nd)
 {
     int error = 0;
-    error = dir->i_operations->create(dir, dentry, nd); //调用父目录文件索引节点操作方法创建inode
+    dir->i_operations->create(dir, dentry, nd); //调用父目录文件索引节点操作方法创建inode
     return error;
 }
 struct file *dentry_open(struct dentry *dentry, struct vfsmount *mnt, int mode)
