@@ -3,7 +3,7 @@
 
 #include <task/proc.h>
 #include <list.h>
-void schedule(void);
+struct task_struct* schedule(void);
 void wakeup_proc(struct task_struct *proc);
 
 #endif /* !__KERN_SCHEDULE_SCHED_H__ */

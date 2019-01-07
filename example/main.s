@@ -815,14 +815,12 @@ _mips_handle_exception:
 	.ascii	"gpctx\000"
 .LASF17:
 	.ascii	"badinstr\000"
-.LASF30:
-	.ascii	"C:\\Users\\lzy05\\OneDrive\\Desktop\\CExample\000"
+.LASF27:
+	.ascii	"exception\000"
 .LASF14:
 	.ascii	"link\000"
 .LASF24:
 	.ascii	"float\000"
-.LASF27:
-	.ascii	"exception\000"
 .LASF10:
 	.ascii	"long long int\000"
 .LASF7:
@@ -832,6 +830,9 @@ _mips_handle_exception:
 .LASF28:
 	.ascii	"GNU C 4.9.2 -mel -march=m14kc -msoft-float -mplt -mips32"
 	.ascii	"r2 -msynci -mabi=32 -g -O1\000"
+.LASF30:
+	.ascii	"C:\\Users\\lzy05\\OneDrive\\18-19-Fall\\SCD\\git\\exampl"
+	.ascii	"e\000"
 .LASF4:
 	.ascii	"unsigned char\000"
 .LASF3:

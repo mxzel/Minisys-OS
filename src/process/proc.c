@@ -22,7 +22,7 @@ static struct task_struct * alloc_proc(pid_t pid){
     //writeValTo7SegsHex(0x02166666);
     if(proc != NULL){
         proc->state = -1;
-        proc->need_resched = 0;
+        //proc->need_resched = 0;
         proc->kstack = 0;
         proc->parent = NULL;
         // writeValTo7SegsHex(0x02766666);
@@ -59,47 +59,122 @@ void set_current(struct task_struct * proc){
 // proc_run - make process "proc" running on cpu
 // NOTE: before call switch_to, should load  base addr of "proc"'s new PDT
 
-void proc_run(struct task_struct *proc) {
+// void proc_run(struct task_struct *proc) {
     
-    if (proc != current) {
-        bool intr_flag;
-        struct task_struct *prev = current, *next = proc;
-        set_current(proc);
-        writeValTo7SegsHex(proc->context.reg31);
+//     if (proc != current) {
+//         struct task_struct *prev = current, *next = proc;
+//         set_current(proc);
+//         //writeValTo7SegsHex(proc->context.reg31);
         
-        writeValTo7SegsHex(0x14766666);
+//         writeValTo7SegsHex(0x50000000);
          
     
-        writeValTo7SegsHex(proc->context.reg29);
-        switch_to(&(prev->context), &(next->context));
-       writeValTo7SegsHex(0x07566666);
-       set_current(prev);
+//         //writeValTo7SegsHex();
 
-    }
-}
+//         switch_to(&(prev->context), &(next->context));
+        
+
+//        writeValTo7SegsHex(0x60000000);
+
+//        //switch_to(&(next->context), &(prev->context));
+//        set_current(prev);
+
+//     }
+// }
 
 // 给内核栈分配PAGE_SIZE大小的页，kstack指向栈最大处
 static int setup_kstack(struct task_struct *proc) {
     proc->kstack = (uint32_t) kmalloc(proc->pid,PAGE_SIZE);
 }
+static inline void sys_create_proc(void (*fn)(void *), void *arg, uint32_t priority){
+    asm ( "li $2,0x2");
+    asm ( "syscall");
+    writeValTo7SegsHex(0x33333333);
+}
+
+unsigned int catOutput(unsigned int pid,unsigned int priority)
+{
+    return pid*10000+priority;
+   
+}
+
+static void test2(void *arg){
+    //亮灯TODO:
+   
+    writeValTo7SegsDec(catOutput(current->pid,current->priority));
+}
+static void test3(void *arg){
+    //亮灯TODO:
+    writeValTo7SegsDec(catOutput(current->pid,current->priority));
+}
+static void test4(void *arg){
+    //亮灯TODO:
+   writeValTo7SegsDec(catOutput(current->pid,current->priority));
+}
+
+int keyboard_input(){
+    static int i=5;
+    return i++;
+}
 
 //init进程，用于接受用户输入并创建相应进程
 static void init_main(void *arg){
     //调用creat_pro创建进程TODO:
-    //*(int *)arg=10;
-    writeValTo7SegsHex(0x55555555);
+    // *(int *)arg=10;
+   /* writeValTo7SegsHex(0x44444444);
+    pid_t p=create_proc(test_main,NULL,5);
+    writeValTo7SegsDec(p);
+    p=create_proc(test_main2,NULL,7);
+    writeValTo7SegsDec(p);
+    */
+   int i=0;
+   int inputValue[3]={};
+   int outputValue[3]={};
+   while(i<3)
+   {
+    inputValue[i]=keyboard_input();
+    i++;
+   }
+    unsigned p=create_proc(test2,NULL,inputValue[0]); 
+    outputValue[0]=catOutput(p,inputValue[0]);
+
+    p=create_proc(test3,NULL,inputValue[1]); 
+    outputValue[1]=catOutput(p,inputValue[1]);
+
+    p=create_proc(test4,NULL,inputValue[2]);
+    outputValue[2]=catOutput(p,inputValue[2]);
+
+
+    i=0;
+    while(i<3)
+    {
+        writeValTo7SegsDec(outputValue[i]);
+        i++;
+    }
+
+    
+
+
 }
 
-static void test_main(void *arg){
-    //亮灯TODO:
+
+
+
+static inline void sys_schedule(){
+    asm ( "li $2,0x1");
+    asm ( "syscall");
+    writeValTo7SegsHex(0x33333333);
 }
 
-
+static inline void do_exit(){
+    writeValTo7SegsHex(0x66666666);
+    current->state=1;
+    sys_schedule();
+}
 
 
 //根据fn、优先级创建进程
 /*
-
 */
 pid_t create_proc(void (*fn)(void *), void *arg, uint32_t priority){
 
@@ -123,9 +198,11 @@ pid_t create_proc(void (*fn)(void *), void *arg, uint32_t priority){
     proc->pid = porc_id;
     setup_kstack(proc);
    //writeValTo7SegsHex(0x14366666);
-    proc->context.reg31 = (uint32_t)fn;
+    proc->context.pc=((uint32_t)fn)-4;
+    proc->context.args=(uint32_t)arg;
+    proc->context.reg31 = (uint32_t)do_exit;
     proc->context.reg29 = proc->kstack + PAGE_SIZE; //堆栈指针指向栈底
-    //*(int *)proc->context.reg29=12;
+
 
     list_add(&(proc->list_link),&proc_list);
     
@@ -134,8 +211,7 @@ pid_t create_proc(void (*fn)(void *), void *arg, uint32_t priority){
     wakeup_proc(proc);
     //writeValTo7SegsHex(0x15066666);
     ret = proc->pid;
-
-fork_out:
+    fork_out:
     return ret;
 }
 
@@ -152,22 +228,13 @@ void proc_init(void){
     idleproc->pid = idle_pid;
     idleproc->state = 0;
     idleproc->priority=0;
-    idleproc->need_resched = 1;
-    writeValTo7SegsHex(0x99999999);
-    writeValTo7SegsHex(idleproc);
     //setup_kstack(idleproc); //0号进程就用内核栈，没毛病弟弟
     set_proc_name(idleproc, "idle");
     nr_process++;
     set_current(idleproc);
-    writeValTo7SegsHex(current);
-    writeValTo7SegsHex(0x14266666);
+
     pid_t pid = create_proc(init_main,NULL,1);//创建init进程
-    //writeValTo7SegsHex(0x17166666);
-    if (pid <= 0) {
-        //panic("create user_main failed.\n");
-    }
-    writeValTo7SegsHex(current);
-    writeValTo7SegsHex(current->need_resched);
+
 
 }
 
@@ -175,10 +242,7 @@ void proc_init(void){
 void cpu_idle(void) {
     
     while (1) {
-        if (current->need_resched) {
-            writeValTo7SegsHex(0x11112266);
-            schedule();
-        }
-         writeValTo7SegsHex(0x16412266);
+        sys_schedule();
+        writeValTo7SegsHex(0x55550000);
     }
 }

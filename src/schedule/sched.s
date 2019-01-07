@@ -48,113 +48,74 @@ wakeup_proc:
 	.ent	schedule
 	.type	schedule, @function
 schedule:
-	.frame	$sp,24,$31		# vars= 0, regs= 2/0, args= 16, gp= 0
-	.mask	0x80010000,-4
+	.frame	$sp,0,$31		# vars= 0, regs= 0/0, args= 0, gp= 0
+	.mask	0x00000000,0
 	.fmask	0x00000000,0
 	.set	noreorder
 	.set	nomacro
-	addiu	$sp,$sp,-24
-	.cfi_def_cfa_offset 24
-	sw	$31,20($sp)
-	sw	$16,16($sp)
-	.cfi_offset 31, -4
-	.cfi_offset 16, -8
 .LVL1 = .
-	.loc 1 22 0
-	lw	$2,%gp_rel(current)($28)
-	lw	$3,0($2)
-	bnel	$3,$0,.L5
-	sw	$0,32($2)
-
-.L5:
-.LVL2 = .
 	.loc 1 21 0
-	move	$16,$0
+	move	$2,$0
 	.loc 1 19 0
-	move	$6,$0
-	.loc 1 27 0
-	addiu	$2,$28,%gp_rel(proc_list)
-	.loc 1 31 0
-	move	$5,$2
+	move	$7,$0
+	.loc 1 23 0
+	addiu	$3,$28,%gp_rel(proc_list)
+	.loc 1 25 0
+	move	$5,$3
+.LVL2 = .
+.L10:
+	lw	$3,0($3)
 .LVL3 = .
-.L12:
-	lw	$2,0($2)
-.LVL4 = .
-.L16:
-	beq	$2,$5,.L6
+.L13:
+	beq	$3,$5,.L5
 	nop
 
+.LVL4 = .
+	.loc 1 28 0
+	lw	$4,-80($3)
+	bnel	$4,$0,.L13
+	lw	$3,0($3)
+
+	.loc 1 30 0
+	lw	$4,-84($3)
+	slt	$6,$7,$4
+	beql	$6,$0,.L13
+	lw	$3,0($3)
+
+	.loc 1 26 0
+	addiu	$2,$3,-88
 .LVL5 = .
-	.loc 1 34 0
-	lw	$3,-76($2)
-	bnel	$3,$0,.L16
-	lw	$2,0($2)
-
-	.loc 1 36 0
-	lw	$3,-80($2)
-	slt	$4,$6,$3
-	beql	$4,$0,.L16
-	lw	$2,0($2)
-
 	.loc 1 32 0
-	addiu	$16,$2,-84
+	b	.L10
+	move	$7,$4
+
 .LVL6 = .
-	.loc 1 38 0
-	b	.L12
-	move	$6,$3
+.L12:
+	.loc 1 44 0 discriminator 1
+	beq	$3,$0,.L14
+	nop
 
-.LVL7 = .
-.L13:
-	.loc 1 50 0 discriminator 1
-	beq	$2,$0,.L17
-	lw	$2,%gp_rel(current)($28)
-
-	.loc 1 51 0
-	lw	$16,%gp_rel(idleproc)($28)
-.LVL8 = .
 .L8:
-	.loc 1 54 0
-	lw	$2,%gp_rel(current)($28)
-.L17:
-	beql	$16,$2,.L4
-	lw	$31,20($sp)
+.LVL7 = .
+	.loc 1 45 0
+	jr	$31
+	lw	$2,%gp_rel(idleproc)($28)
 
-.LBB2 = .
-	.loc 1 55 0
-	jal	proc_run
-	move	$4,$16
-
-.LVL9 = .
-.LBE2 = .
-	.loc 1 58 0
-	b	.L15
-	lw	$31,20($sp)
-
-.LVL10 = .
-.L6:
-	.loc 1 49 0
-	jal	writeValTo7SegsHex
-	lw	$4,0($16)
-
-.LVL11 = .
-	.loc 1 50 0
-	bnel	$16,$0,.L13
-	lw	$2,8($16)
+.LVL8 = .
+.L5:
+	.loc 1 44 0
+	bnel	$2,$0,.L12
+	lw	$3,8($2)
 
 	b	.L8
-	lw	$16,%gp_rel(idleproc)($28)
+	nop
 
-.L4:
-.L15:
-	.loc 1 58 0
-	lw	$16,16($sp)
-.LVL12 = .
+.LVL9 = .
+.L14:
+	.loc 1 49 0
 	jr	$31
-	addiu	$sp,$sp,24
+	nop
 
-	.cfi_def_cfa_offset 0
-	.cfi_restore 16
-	.cfi_restore 31
 	.set	macro
 	.set	reorder
 	.end	schedule
@@ -167,18 +128,17 @@ schedule:
 	.file 4 "c:\\progra~1\\imagin~1\\toolch~1\\mips-mti-elf\\2016.05-03\\mips-mti-elf\\include\\sys\\types.h"
 	.file 5 "./include/types.h"
 	.file 6 "./include/task/proc.h"
-	.file 7 "./include/debug.h"
 	.section	.debug_info,"",@progbits
 .Ldebug_info0:
-	.4byte	0x381
+	.4byte	0x32a
 	.2byte	0x4
 	.4byte	.Ldebug_abbrev0
 	.byte	0x4
 	.uleb128 0x1
-	.4byte	.LASF59
+	.4byte	.LASF55
 	.byte	0x1
-	.4byte	.LASF60
-	.4byte	.LASF61
+	.4byte	.LASF56
+	.4byte	.LASF57
 	.4byte	.Ltext0
 	.4byte	.Letext0-.Ltext0
 	.4byte	.Ldebug_line0
@@ -312,204 +272,209 @@ schedule:
 	.4byte	0xf2
 	.uleb128 0x9
 	.4byte	.LASF24
-	.byte	0x2c
+	.byte	0x34
 	.byte	0x6
 	.byte	0x7
-	.4byte	0x1ae
+	.4byte	0x1c5
+	.uleb128 0xc
+	.ascii	"pc\000"
+	.byte	0x6
+	.byte	0x8
+	.4byte	0x8c
+	.byte	0
 	.uleb128 0xa
 	.4byte	.LASF25
 	.byte	0x6
 	.byte	0x9
 	.4byte	0x8c
-	.byte	0
+	.byte	0x4
 	.uleb128 0xa
 	.4byte	.LASF26
 	.byte	0x6
 	.byte	0xa
 	.4byte	0x8c
-	.byte	0x4
+	.byte	0x8
 	.uleb128 0xa
 	.4byte	.LASF27
 	.byte	0x6
-	.byte	0xa
-	.4byte	0x8c
-	.byte	0x8
-	.uleb128 0xa
-	.4byte	.LASF28
-	.byte	0x6
-	.byte	0xa
+	.byte	0xb
 	.4byte	0x8c
 	.byte	0xc
 	.uleb128 0xa
-	.4byte	.LASF29
+	.4byte	.LASF28
 	.byte	0x6
-	.byte	0xa
+	.byte	0xb
 	.4byte	0x8c
 	.byte	0x10
 	.uleb128 0xa
-	.4byte	.LASF30
+	.4byte	.LASF29
 	.byte	0x6
-	.byte	0xa
+	.byte	0xb
 	.4byte	0x8c
 	.byte	0x14
 	.uleb128 0xa
-	.4byte	.LASF31
+	.4byte	.LASF30
 	.byte	0x6
-	.byte	0xa
+	.byte	0xb
 	.4byte	0x8c
 	.byte	0x18
 	.uleb128 0xa
-	.4byte	.LASF32
+	.4byte	.LASF31
 	.byte	0x6
-	.byte	0xa
+	.byte	0xb
 	.4byte	0x8c
 	.byte	0x1c
+	.uleb128 0xa
+	.4byte	.LASF32
+	.byte	0x6
+	.byte	0xb
+	.4byte	0x8c
+	.byte	0x20
 	.uleb128 0xa
 	.4byte	.LASF33
 	.byte	0x6
 	.byte	0xb
 	.4byte	0x8c
-	.byte	0x20
+	.byte	0x24
 	.uleb128 0xa
 	.4byte	.LASF34
 	.byte	0x6
-	.byte	0xb
+	.byte	0xc
 	.4byte	0x8c
-	.byte	0x24
+	.byte	0x28
 	.uleb128 0xa
 	.4byte	.LASF35
 	.byte	0x6
-	.byte	0xb
+	.byte	0xc
 	.4byte	0x8c
-	.byte	0x28
+	.byte	0x2c
+	.uleb128 0xa
+	.4byte	.LASF36
+	.byte	0x6
+	.byte	0xc
+	.4byte	0x8c
+	.byte	0x30
 	.byte	0
 	.uleb128 0x9
-	.4byte	.LASF36
-	.byte	0x68
+	.4byte	.LASF37
+	.byte	0x6c
 	.byte	0x6
-	.byte	0x1a
-	.4byte	0x24a
+	.byte	0x1b
+	.4byte	0x255
 	.uleb128 0xc
 	.ascii	"pid\000"
 	.byte	0x6
-	.byte	0x1c
+	.byte	0x1d
 	.4byte	0xc3
 	.byte	0
-	.uleb128 0xa
-	.4byte	.LASF37
-	.byte	0x6
-	.byte	0x1e
-	.4byte	0x81
-	.byte	0x4
 	.uleb128 0xa
 	.4byte	.LASF38
 	.byte	0x6
 	.byte	0x1f
 	.4byte	0x81
-	.byte	0x8
+	.byte	0x4
 	.uleb128 0xa
 	.4byte	.LASF39
 	.byte	0x6
 	.byte	0x20
-	.4byte	0x9e
-	.byte	0xc
+	.4byte	0x81
+	.byte	0x8
 	.uleb128 0xa
 	.4byte	.LASF40
 	.byte	0x6
 	.byte	0x21
-	.4byte	0x8c
-	.byte	0x1c
+	.4byte	0x9e
+	.byte	0xc
 	.uleb128 0xa
 	.4byte	.LASF41
 	.byte	0x6
 	.byte	0x22
-	.4byte	0x24a
-	.byte	0x20
+	.4byte	0x8c
+	.byte	0x1c
 	.uleb128 0xa
 	.4byte	.LASF42
 	.byte	0x6
-	.byte	0x23
-	.4byte	0x24f
 	.byte	0x24
+	.4byte	0x255
+	.byte	0x20
 	.uleb128 0xa
 	.4byte	.LASF24
 	.byte	0x6
-	.byte	0x24
+	.byte	0x25
 	.4byte	0x11d
-	.byte	0x28
+	.byte	0x24
 	.uleb128 0xa
 	.4byte	.LASF43
 	.byte	0x6
-	.byte	0x26
+	.byte	0x27
 	.4byte	0xf2
-	.byte	0x54
+	.byte	0x58
 	.uleb128 0xc
 	.ascii	"fs\000"
 	.byte	0x6
-	.byte	0x27
-	.4byte	0x25a
-	.byte	0x5c
+	.byte	0x28
+	.4byte	0x260
+	.byte	0x60
 	.uleb128 0xa
 	.4byte	.LASF44
 	.byte	0x6
-	.byte	0x28
-	.4byte	0x265
-	.byte	0x60
+	.byte	0x29
+	.4byte	0x26b
+	.byte	0x64
 	.uleb128 0xa
 	.4byte	.LASF45
 	.byte	0x6
-	.byte	0x29
-	.4byte	0x270
-	.byte	0x64
+	.byte	0x2a
+	.4byte	0x276
+	.byte	0x68
 	.byte	0
-	.uleb128 0xd
-	.4byte	0xe7
 	.uleb128 0xb
 	.byte	0x4
-	.4byte	0x1ae
-	.uleb128 0xe
+	.4byte	0x1c5
+	.uleb128 0xd
 	.4byte	.LASF46
 	.uleb128 0xb
 	.byte	0x4
-	.4byte	0x255
-	.uleb128 0xe
+	.4byte	0x25b
+	.uleb128 0xd
 	.4byte	.LASF47
 	.uleb128 0xb
 	.byte	0x4
-	.4byte	0x260
-	.uleb128 0xe
+	.4byte	0x266
+	.uleb128 0xd
 	.4byte	.LASF45
 	.uleb128 0xb
 	.byte	0x4
-	.4byte	0x26b
-	.uleb128 0xf
-	.4byte	.LASF48
+	.4byte	0x271
+	.uleb128 0xe
+	.4byte	.LASF58
 	.byte	0x1
 	.byte	0x6
 	.4byte	.LFB24
 	.4byte	.LFE24-.LFB24
 	.uleb128 0x1
 	.byte	0x9c
-	.4byte	0x299
-	.uleb128 0x10
-	.4byte	.LASF62
+	.4byte	0x29f
+	.uleb128 0xf
+	.4byte	.LASF59
 	.byte	0x1
 	.byte	0x6
-	.4byte	0x24f
+	.4byte	0x255
 	.uleb128 0x1
 	.byte	0x54
 	.byte	0
-	.uleb128 0xf
-	.4byte	.LASF49
+	.uleb128 0x10
+	.4byte	.LASF60
 	.byte	0x1
 	.byte	0x10
+	.4byte	0x255
 	.4byte	.LFB25
 	.4byte	.LFE25-.LFB25
 	.uleb128 0x1
 	.byte	0x9c
-	.4byte	0x338
+	.4byte	0x30a
 	.uleb128 0x11
-	.4byte	.LASF50
+	.4byte	.LASF48
 	.byte	0x1
 	.byte	0x11
 	.4byte	0xe7
@@ -520,12 +485,12 @@ schedule:
 	.4byte	0x117
 	.4byte	.LLST0
 	.uleb128 0x11
-	.4byte	.LASF51
+	.4byte	.LASF49
 	.byte	0x1
 	.byte	0x12
 	.4byte	0x117
 	.uleb128 0x13
-	.4byte	.LASF52
+	.4byte	.LASF50
 	.byte	0x1
 	.byte	0x13
 	.4byte	0x81
@@ -534,78 +499,32 @@ schedule:
 	.4byte	.LASF21
 	.byte	0x1
 	.byte	0x14
-	.4byte	0x24f
+	.4byte	0x255
 	.4byte	.LLST2
 	.uleb128 0x13
-	.4byte	.LASF53
+	.4byte	.LASF51
 	.byte	0x1
 	.byte	0x15
-	.4byte	0x24f
+	.4byte	0x255
 	.4byte	.LLST3
+	.byte	0
 	.uleb128 0x14
-	.4byte	.LBB2
-	.4byte	.LBE2-.LBB2
-	.4byte	0x32e
-	.uleb128 0x15
-	.4byte	.LASF58
-	.byte	0x1
-	.byte	0x37
-	.4byte	0x3a
-	.4byte	0x31d
-	.uleb128 0x16
-	.byte	0
-	.uleb128 0x17
-	.4byte	.LVL9
-	.4byte	0x366
-	.uleb128 0x18
-	.uleb128 0x1
-	.byte	0x54
-	.uleb128 0x2
-	.byte	0x80
-	.sleb128 0
-	.byte	0
-	.byte	0
-	.uleb128 0x19
-	.4byte	.LVL11
-	.4byte	0x377
-	.byte	0
-	.uleb128 0x1a
-	.4byte	.LASF54
+	.4byte	.LASF52
 	.byte	0x6
-	.byte	0xf
-	.4byte	0x24f
+	.byte	0x10
+	.4byte	0x255
 	.uleb128 0x1
 	.byte	0x6c
-	.uleb128 0x1b
-	.4byte	.LASF55
-	.byte	0x6
-	.byte	0x18
-	.4byte	0xf2
-	.uleb128 0x1b
-	.4byte	.LASF56
-	.byte	0x6
-	.byte	0x3b
-	.4byte	0x24f
-	.uleb128 0x1b
-	.4byte	.LASF57
-	.byte	0x6
-	.byte	0x3b
-	.4byte	0x24f
 	.uleb128 0x15
-	.4byte	.LASF58
-	.byte	0x1
-	.byte	0x37
-	.4byte	0x3a
-	.4byte	0x377
-	.uleb128 0x16
-	.byte	0
-	.uleb128 0x1c
-	.4byte	.LASF63
-	.byte	0x7
-	.byte	0xe
-	.uleb128 0x1d
-	.4byte	0x2c
-	.byte	0
+	.4byte	.LASF53
+	.byte	0x6
+	.byte	0x19
+	.4byte	0xf2
+	.uleb128 0x15
+	.4byte	.LASF54
+	.byte	0x6
+	.byte	0x3c
+	.4byte	0x255
 	.byte	0
 	.section	.debug_abbrev,"",@progbits
 .Ldebug_abbrev0:
@@ -760,13 +679,6 @@ schedule:
 	.byte	0
 	.byte	0
 	.uleb128 0xd
-	.uleb128 0x35
-	.byte	0
-	.uleb128 0x49
-	.uleb128 0x13
-	.byte	0
-	.byte	0
-	.uleb128 0xe
 	.uleb128 0x13
 	.byte	0
 	.uleb128 0x3
@@ -775,7 +687,7 @@ schedule:
 	.uleb128 0x19
 	.byte	0
 	.byte	0
-	.uleb128 0xf
+	.uleb128 0xe
 	.uleb128 0x2e
 	.byte	0x1
 	.uleb128 0x3f
@@ -800,7 +712,7 @@ schedule:
 	.uleb128 0x13
 	.byte	0
 	.byte	0
-	.uleb128 0x10
+	.uleb128 0xf
 	.uleb128 0x5
 	.byte	0
 	.uleb128 0x3
@@ -813,6 +725,33 @@ schedule:
 	.uleb128 0x13
 	.uleb128 0x2
 	.uleb128 0x18
+	.byte	0
+	.byte	0
+	.uleb128 0x10
+	.uleb128 0x2e
+	.byte	0x1
+	.uleb128 0x3f
+	.uleb128 0x19
+	.uleb128 0x3
+	.uleb128 0xe
+	.uleb128 0x3a
+	.uleb128 0xb
+	.uleb128 0x3b
+	.uleb128 0xb
+	.uleb128 0x27
+	.uleb128 0x19
+	.uleb128 0x49
+	.uleb128 0x13
+	.uleb128 0x11
+	.uleb128 0x1
+	.uleb128 0x12
+	.uleb128 0x6
+	.uleb128 0x40
+	.uleb128 0x18
+	.uleb128 0x2117
+	.uleb128 0x19
+	.uleb128 0x1
+	.uleb128 0x13
 	.byte	0
 	.byte	0
 	.uleb128 0x11
@@ -859,85 +798,23 @@ schedule:
 	.byte	0
 	.byte	0
 	.uleb128 0x14
+	.uleb128 0x34
+	.byte	0
+	.uleb128 0x3
+	.uleb128 0xe
+	.uleb128 0x3a
 	.uleb128 0xb
-	.byte	0x1
-	.uleb128 0x11
-	.uleb128 0x1
-	.uleb128 0x12
-	.uleb128 0x6
-	.uleb128 0x1
+	.uleb128 0x3b
+	.uleb128 0xb
+	.uleb128 0x49
 	.uleb128 0x13
+	.uleb128 0x3f
+	.uleb128 0x19
+	.uleb128 0x2
+	.uleb128 0x18
 	.byte	0
 	.byte	0
 	.uleb128 0x15
-	.uleb128 0x2e
-	.byte	0x1
-	.uleb128 0x3f
-	.uleb128 0x19
-	.uleb128 0x3
-	.uleb128 0xe
-	.uleb128 0x3a
-	.uleb128 0xb
-	.uleb128 0x3b
-	.uleb128 0xb
-	.uleb128 0x49
-	.uleb128 0x13
-	.uleb128 0x3c
-	.uleb128 0x19
-	.uleb128 0x1
-	.uleb128 0x13
-	.byte	0
-	.byte	0
-	.uleb128 0x16
-	.uleb128 0x18
-	.byte	0
-	.byte	0
-	.byte	0
-	.uleb128 0x17
-	.uleb128 0x4109
-	.byte	0x1
-	.uleb128 0x11
-	.uleb128 0x1
-	.uleb128 0x31
-	.uleb128 0x13
-	.byte	0
-	.byte	0
-	.uleb128 0x18
-	.uleb128 0x410a
-	.byte	0
-	.uleb128 0x2
-	.uleb128 0x18
-	.uleb128 0x2111
-	.uleb128 0x18
-	.byte	0
-	.byte	0
-	.uleb128 0x19
-	.uleb128 0x4109
-	.byte	0
-	.uleb128 0x11
-	.uleb128 0x1
-	.uleb128 0x31
-	.uleb128 0x13
-	.byte	0
-	.byte	0
-	.uleb128 0x1a
-	.uleb128 0x34
-	.byte	0
-	.uleb128 0x3
-	.uleb128 0xe
-	.uleb128 0x3a
-	.uleb128 0xb
-	.uleb128 0x3b
-	.uleb128 0xb
-	.uleb128 0x49
-	.uleb128 0x13
-	.uleb128 0x3f
-	.uleb128 0x19
-	.uleb128 0x2
-	.uleb128 0x18
-	.byte	0
-	.byte	0
-	.uleb128 0x1b
 	.uleb128 0x34
 	.byte	0
 	.uleb128 0x3
@@ -952,86 +829,62 @@ schedule:
 	.uleb128 0x19
 	.uleb128 0x3c
 	.uleb128 0x19
-	.byte	0
-	.byte	0
-	.uleb128 0x1c
-	.uleb128 0x2e
-	.byte	0x1
-	.uleb128 0x3f
-	.uleb128 0x19
-	.uleb128 0x3
-	.uleb128 0xe
-	.uleb128 0x3a
-	.uleb128 0xb
-	.uleb128 0x3b
-	.uleb128 0xb
-	.uleb128 0x27
-	.uleb128 0x19
-	.uleb128 0x3c
-	.uleb128 0x19
-	.byte	0
-	.byte	0
-	.uleb128 0x1d
-	.uleb128 0x5
-	.byte	0
-	.uleb128 0x49
-	.uleb128 0x13
 	.byte	0
 	.byte	0
 	.byte	0
 	.section	.debug_loc,"",@progbits
 .Ldebug_loc0:
 .LLST0:
-	.4byte	.LVL3-.Ltext0
-	.4byte	.LVL7-.Ltext0
-	.2byte	0x1
-	.byte	0x52
-	.4byte	.LVL10-.Ltext0
-	.4byte	.LVL11-1-.Ltext0
-	.2byte	0x1
-	.byte	0x52
-	.4byte	0
-	.4byte	0
-.LLST1:
-	.4byte	.LVL1-.Ltext0
-	.4byte	.LVL3-.Ltext0
-	.2byte	0x2
-	.byte	0x30
-	.byte	0x9f
+	.4byte	.LVL2-.Ltext0
 	.4byte	.LVL6-.Ltext0
-	.4byte	.LVL7-.Ltext0
+	.2byte	0x1
+	.byte	0x53
+	.4byte	.LVL8-.Ltext0
+	.4byte	.LVL9-.Ltext0
 	.2byte	0x1
 	.byte	0x53
 	.4byte	0
 	.4byte	0
-.LLST2:
+.LLST1:
 	.4byte	.LVL1-.Ltext0
-	.4byte	.LVL3-.Ltext0
+	.4byte	.LVL2-.Ltext0
 	.2byte	0x2
 	.byte	0x30
 	.byte	0x9f
 	.4byte	.LVL5-.Ltext0
 	.4byte	.LVL6-.Ltext0
-	.2byte	0x4
-	.byte	0x72
-	.sleb128 -84
-	.byte	0x9f
-	.4byte	.LVL6-.Ltext0
-	.4byte	.LVL7-.Ltext0
 	.2byte	0x1
-	.byte	0x60
+	.byte	0x54
+	.4byte	0
+	.4byte	0
+.LLST2:
+	.4byte	.LVL1-.Ltext0
+	.4byte	.LVL2-.Ltext0
+	.2byte	0x2
+	.byte	0x30
+	.byte	0x9f
+	.4byte	.LVL4-.Ltext0
+	.4byte	.LVL5-.Ltext0
+	.2byte	0x4
+	.byte	0x73
+	.sleb128 -88
+	.byte	0x9f
+	.4byte	.LVL5-.Ltext0
+	.4byte	.LVL6-.Ltext0
+	.2byte	0x1
+	.byte	0x52
 	.4byte	0
 	.4byte	0
 .LLST3:
 	.4byte	.LVL1-.Ltext0
-	.4byte	.LVL3-.Ltext0
+	.4byte	.LVL2-.Ltext0
 	.2byte	0x2
 	.byte	0x30
 	.byte	0x9f
-	.4byte	.LVL3-.Ltext0
-	.4byte	.LVL12-.Ltext0
+	.4byte	.LVL2-.Ltext0
+	.4byte	.LFE25-.Ltext0
 	.2byte	0x1
-	.byte	0x60
+	.byte	0x52
 	.4byte	0
 	.4byte	0
 	.section	.debug_aranges,"",@progbits
@@ -1049,13 +902,13 @@ schedule:
 	.section	.debug_line,"",@progbits
 .Ldebug_line0:
 	.section	.debug_str,"MS",@progbits,1
-.LASF56:
+.LASF54:
 	.ascii	"idleproc\000"
-.LASF50:
+.LASF48:
 	.ascii	"intr_flag\000"
 .LASF22:
 	.ascii	"prev\000"
-.LASF54:
+.LASF52:
 	.ascii	"__current_task\000"
 .LASF2:
 	.ascii	"long long unsigned int\000"
@@ -1067,81 +920,75 @@ schedule:
 	.ascii	"signed char\000"
 .LASF42:
 	.ascii	"parent\000"
-.LASF38:
+.LASF39:
 	.ascii	"state\000"
 .LASF7:
 	.ascii	"long int\000"
-.LASF25:
-	.ascii	"reg16\000"
 .LASF26:
-	.ascii	"reg17\000"
+	.ascii	"reg16\000"
 .LASF27:
-	.ascii	"reg18\000"
+	.ascii	"reg17\000"
 .LASF28:
+	.ascii	"reg18\000"
+.LASF29:
 	.ascii	"reg19\000"
 .LASF15:
 	.ascii	"double\000"
-.LASF60:
+.LASF56:
 	.ascii	"schedule/sched.c\000"
-.LASF53:
+.LASF51:
 	.ascii	"current_highest\000"
-.LASF55:
+.LASF53:
 	.ascii	"proc_list\000"
 .LASF9:
 	.ascii	"__uint32_t\000"
-.LASF52:
+.LASF50:
 	.ascii	"highest\000"
 .LASF1:
 	.ascii	"unsigned int\000"
-.LASF29:
-	.ascii	"reg20\000"
 .LASF30:
-	.ascii	"reg21\000"
+	.ascii	"reg20\000"
 .LASF31:
-	.ascii	"reg22\000"
+	.ascii	"reg21\000"
 .LASF32:
+	.ascii	"reg22\000"
+.LASF33:
 	.ascii	"reg23\000"
 .LASF0:
 	.ascii	"long unsigned int\000"
-.LASF33:
+.LASF34:
 	.ascii	"reg29\000"
-.LASF49:
+.LASF60:
 	.ascii	"schedule\000"
-.LASF39:
+.LASF40:
 	.ascii	"name\000"
 .LASF6:
 	.ascii	"short unsigned int\000"
-.LASF51:
+.LASF49:
 	.ascii	"last\000"
-.LASF37:
+.LASF38:
 	.ascii	"priority\000"
 .LASF20:
 	.ascii	"bool\000"
-.LASF41:
-	.ascii	"need_resched\000"
-.LASF61:
+.LASF57:
 	.ascii	"C:\\Users\\lzy05\\OneDrive\\18-19-Fall\\SCD\\git\\src\000"
-.LASF63:
-	.ascii	"writeValTo7SegsHex\000"
 .LASF46:
 	.ascii	"fs_struct\000"
 .LASF45:
 	.ascii	"namespace\000"
-.LASF34:
-	.ascii	"reg30\000"
 .LASF35:
+	.ascii	"reg30\000"
+.LASF36:
 	.ascii	"reg31\000"
 .LASF13:
 	.ascii	"sizetype\000"
 .LASF43:
 	.ascii	"list_link\000"
-.LASF62:
+.LASF59:
 	.ascii	"proc\000"
-.LASF57:
-	.ascii	"current\000"
 .LASF16:
 	.ascii	"float\000"
-.LASF40:
+.LASF41:
 	.ascii	"kstack\000"
 .LASF11:
 	.ascii	"int32_t\000"
@@ -1157,23 +1004,23 @@ schedule:
 	.ascii	"char\000"
 .LASF23:
 	.ascii	"list_head\000"
-.LASF58:
-	.ascii	"proc_run\000"
 .LASF8:
 	.ascii	"__int32_t\000"
 .LASF24:
 	.ascii	"context\000"
 .LASF47:
 	.ascii	"files_struct\000"
-.LASF36:
+.LASF37:
 	.ascii	"task_struct\000"
-.LASF59:
+.LASF55:
 	.ascii	"GNU C 4.9.2 -mel -march=m14kc -msoft-float -mplt -mips32"
 	.ascii	"r2 -msynci -mabi=32 -g -O1\000"
-.LASF48:
+.LASF58:
 	.ascii	"wakeup_proc\000"
 .LASF17:
 	.ascii	"pid_t\000"
+.LASF25:
+	.ascii	"args\000"
 .LASF44:
 	.ascii	"files\000"
 .LASF19:

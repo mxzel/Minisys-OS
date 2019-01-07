@@ -69,7 +69,7 @@ LDFLAGS += -Wl,-e,0xbfc00000
 
 ASOURCES= \
 boot/dummy.S \
-process/switch.S
+#process/switch.S
 #boot.S \
 
 #exceptions.S \ 

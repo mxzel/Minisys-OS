@@ -60,7 +60,8 @@ int main(){
     mm_init();
     // test_alloc_memory();
     // writeValTo7SegsDec(0);
-   //test_rw_memory();
+//    test_rw_memory();
+
     proc_init();
     cpu_idle();
     while(1)writeValTo7SegsHex(0x66666666);
@@ -74,7 +75,49 @@ __attribute__ ((nomips16)) void _mips_handle_exception (struct gpctx *ctx, int e
    // writeValTo7SegsHex(0xffffffff);
     switch(exception){
         case EXC_SYS://system call
-          writeValTo7SegsHex(0x11111111);
+            writeValTo7SegsHex(0x11111111);
+            if(ctx->r[1]==1){
+                // current->context.args = ctx->
+                current->context.reg16 = ctx->r[15];
+                current->context.reg17 = ctx->r[16];
+                current->context.reg18 = ctx->r[17];
+                current->context.reg19 = ctx->r[18];
+                current->context.reg20 = ctx->r[19];
+                current->context.reg21 = ctx->r[20];
+                current->context.reg22 = ctx->r[21];
+                current->context.reg23 = ctx->r[22];
+                current->context.reg29 = ctx->r[28];
+                current->context.reg30 = ctx->r[29];
+                current->context.reg31 = ctx->r[30];
+                current->context.pc = ctx->epc;
+
+                struct task_struct * next_task=schedule();
+                
+                ctx->r[3]=next_task->context.args;
+                ctx->r[15]=next_task->context.reg16;
+                ctx->r[16]=next_task->context.reg17;
+                ctx->r[17]=next_task->context.reg18;
+                ctx->r[18]=next_task->context.reg19;
+                ctx->r[19]=next_task->context.reg20;
+                ctx->r[20]=next_task->context.reg21;
+                ctx->r[21]=next_task->context.reg22;
+                ctx->r[22]=next_task->context.reg23;
+
+                //ctx->r[28]=next_task->context.reg29;
+                
+                ctx->r[29]=next_task->context.reg30;
+                ctx->r[30]=next_task->context.reg31;
+                ctx->epc=next_task->context.pc+4;
+
+                set_current(next_task);
+
+            }else if(ctx->r[1]==2){
+                writeValTo7SegsHex(0x02020202);
+                pid_t p=create_proc(ctx->r[3],ctx->r[4],ctx->r[5]);
+                writeValTo7SegsDec(p);
+
+                ctx->epc=ctx->epc+4;
+            }
             break;
         case EXC_MOD:
             writeValTo7SegsHex(0x02020202);
@@ -95,7 +138,7 @@ __attribute__ ((nomips16)) void _mips_handle_exception (struct gpctx *ctx, int e
 
             uint32_t badvaddr = ctx->badvaddr;
             uint32_t vpn = badvaddr >> 12;
-            writeValTo7SegsHex(badvaddr);
+            //writeValTo7SegsHex(badvaddr);
 
             // EntryLo0 和 EntryLo1
             uint32_t ppn;
@@ -103,15 +146,15 @@ __attribute__ ((nomips16)) void _mips_handle_exception (struct gpctx *ctx, int e
                 ppn = get_ppn_by_vpn(vpn);
                 mips32_set_c0(C0_ENTRYLO0, 7 | (ppn << 6));
                 ppn = get_ppn_by_vpn(vpn + 1);
-                mips32_set_c0(C0_ENTRYLO1, 7 | (ppn << 6));
+                mips32_set_c0(C0_ENTRYLO1, 5 | (ppn << 6));
 
             }else{
                 ppn = get_ppn_by_vpn(vpn - 1);
-                mips32_set_c0(C0_ENTRYLO0, 7 | (ppn << 6));
+                mips32_set_c0(C0_ENTRYLO0, 5 | (ppn << 6));
                 ppn = get_ppn_by_vpn(vpn);
                 mips32_set_c0(C0_ENTRYLO1, 7 | (ppn << 6));
             }
-
+            //writeValTo7SegsHex(get_ppn_by_vpn(vpn)<<12);
             // EntryHI
             mips32_set_c0(C0_ENTRYHI, vpn << 12);
 

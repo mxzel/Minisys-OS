@@ -12,47 +12,38 @@ void wakeup_proc(struct task_struct *proc) {
     }
 
 }
-//TODO:优先级调度，遍历查找需要运行的进程中优先级最高的
-void schedule(void) {
+//优先级调度，遍历查找需要运行的进程中优先级最高的
+struct task_struct* schedule(void) {
     bool intr_flag;
     struct list_head *le, *last;
     int32_t highest = 0;
     struct task_struct *next = NULL;
     struct task_struct *current_highest = NULL;
-    if(current->pid!=0)
-    {
-        current->need_resched = 0;
-    }
     last = &proc_list ;
     le = last;
     do {
-        
-        
         if ((le = le->next) != &proc_list) {//如果当前遍历的le不是最后一个，就进if
             next = list_entry(le, struct task_struct,list_link);
 
-            if (next->state == 0) 
+            if (next->state == 0)
             {
                 if(highest < next->priority)
                 {
                     highest = next->priority;
                     current_highest = next;
-                    
+
                 }
-                
+
             }
-            
+
         }
-       
+
     } while (le != last);
+
     
-    writeValTo7SegsHex(current_highest->pid);
     if (current_highest == NULL || current_highest->state != 0) {
         current_highest = idleproc;
     }
-    
-    if (current_highest != current) {
-        proc_run(current_highest);
-    }
-
+    //writeValTo7SegsHex(current_highest->pid);
+    return current_highest;
 }

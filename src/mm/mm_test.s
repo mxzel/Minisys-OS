@@ -209,74 +209,101 @@ test_alloc_memory:
 	.ent	test_rw_memory
 	.type	test_rw_memory, @function
 test_rw_memory:
-	.frame	$sp,32,$31		# vars= 0, regs= 3/0, args= 16, gp= 0
-	.mask	0x80030000,-4
+	.frame	$sp,32,$31		# vars= 0, regs= 4/0, args= 16, gp= 0
+	.mask	0x80070000,-4
 	.fmask	0x00000000,0
 	.set	noreorder
 	.set	nomacro
 	addiu	$sp,$sp,-32
 	.cfi_def_cfa_offset 32
 	sw	$31,28($sp)
-	sw	$17,24($sp)
-	sw	$16,20($sp)
+	sw	$18,24($sp)
+	sw	$17,20($sp)
+	sw	$16,16($sp)
 	.cfi_offset 31, -4
-	.cfi_offset 17, -8
-	.cfi_offset 16, -12
+	.cfi_offset 18, -8
+	.cfi_offset 17, -12
+	.cfi_offset 16, -16
 	.loc 1 48 0
 	move	$4,$0
 	jal	kmalloc
 	li	$5,128			# 0x80
 
 .LVL12 = .
-	move	$16,$2
+	move	$18,$2
 .LVL13 = .
 	.loc 1 49 0
-	move	$4,$0
+	li	$4,1			# 0x1
 	jal	kmalloc
-	li	$5,4096			# 0x1000
+	li	$5,128			# 0x80
 
 .LVL14 = .
 	move	$17,$2
 .LVL15 = .
 	.loc 1 50 0
-	jal	writeValTo7SegsHex
-	move	$4,$16
+	li	$4,1			# 0x1
+	jal	kmalloc
+	li	$5,4096			# 0x1000
 
 .LVL16 = .
-	.loc 1 51 0
+	move	$16,$2
+.LVL17 = .
+	.loc 1 52 0
+	jal	writeValTo7SegsHex
+	move	$4,$18
+
+.LVL18 = .
+	.loc 1 53 0
 	jal	writeValTo7SegsHex
 	move	$4,$17
 
-.LVL17 = .
-	.loc 1 52 0
-	li	$2,456			# 0x1c8
-	sw	$2,0($17)
-	.loc 1 53 0
-	jal	writeValTo7SegsDec
-	li	$4,456			# 0x1c8
-
-.LVL18 = .
+.LVL19 = .
 	.loc 1 54 0
+	jal	writeValTo7SegsHex
+	move	$4,$16
+
+.LVL20 = .
+	.loc 1 57 0
+	li	$16,131072			# 0x20000
+.LVL21 = .
 	li	$2,123			# 0x7b
-	sw	$2,0($16)
-	.loc 1 55 0
+	sw	$2,11400($16)
+	.loc 1 58 0
 	jal	writeValTo7SegsDec
 	li	$4,123			# 0x7b
 
-.LVL19 = .
-	.loc 1 58 0
+.LVL22 = .
+	.loc 1 59 0
+	li	$2,456			# 0x1c8
+	sw	$2,15496($16)
+	.loc 1 60 0
+	jal	writeValTo7SegsDec
+	li	$4,456			# 0x1c8
+
+.LVL23 = .
+	.loc 1 61 0
+	li	$2,987			# 0x3db
+	sw	$2,20476($16)
+	.loc 1 62 0
+	jal	writeValTo7SegsDec
+	li	$4,987			# 0x3db
+
+.LVL24 = .
+	.loc 1 65 0
 	li	$2,1			# 0x1
 	lw	$31,28($sp)
-	lw	$17,24($sp)
-.LVL20 = .
-	lw	$16,20($sp)
-.LVL21 = .
+	lw	$18,24($sp)
+.LVL25 = .
+	lw	$17,20($sp)
+.LVL26 = .
+	lw	$16,16($sp)
 	jr	$31
 	addiu	$sp,$sp,32
 
 	.cfi_def_cfa_offset 0
 	.cfi_restore 16
 	.cfi_restore 17
+	.cfi_restore 18
 	.cfi_restore 31
 	.set	macro
 	.set	reorder
@@ -287,7 +314,7 @@ test_rw_memory:
 	.align	2
 	.globl	test_free_memory
 .LFB16 = .
-	.loc 1 60 0
+	.loc 1 67 0
 	.cfi_startproc
 	.set	nomips16
 	.set	nomicromips
@@ -299,7 +326,7 @@ test_free_memory:
 	.fmask	0x00000000,0
 	.set	noreorder
 	.set	nomacro
-	.loc 1 62 0
+	.loc 1 69 0
 	jr	$31
 	li	$2,1			# 0x1
 
@@ -312,7 +339,7 @@ test_free_memory:
 	.align	2
 	.globl	test_global_variable
 .LFB17 = .
-	.loc 1 64 0
+	.loc 1 71 0
 	.cfi_startproc
 	.set	nomips16
 	.set	nomicromips
@@ -324,7 +351,7 @@ test_global_variable:
 	.fmask	0x00000000,0
 	.set	noreorder
 	.set	nomacro
-	.loc 1 66 0
+	.loc 1 73 0
 	li	$2,2			# 0x2
 	jr	$31
 	sw	$2,%gp_rel(index_)($28)
@@ -379,15 +406,15 @@ pid:
 	.file 9 "./include/debug.h"
 	.section	.debug_info,"",@progbits
 .Ldebug_info0:
-	.4byte	0x33a
+	.4byte	0x38b
 	.2byte	0x4
 	.4byte	.Ldebug_abbrev0
 	.byte	0x4
 	.uleb128 0x1
-	.4byte	.LASF31
-	.byte	0x1
 	.4byte	.LASF32
+	.byte	0x1
 	.4byte	.LASF33
+	.4byte	.LASF34
 	.4byte	.Ltext0
 	.4byte	.Letext0-.Ltext0
 	.4byte	.Ldebug_line0
@@ -495,7 +522,7 @@ pid:
 	.byte	0x9c
 	.4byte	0x1a2
 	.uleb128 0x7
-	.4byte	.LASF34
+	.4byte	.LASF35
 	.byte	0x1
 	.byte	0x9
 	.4byte	0x1a2
@@ -523,10 +550,10 @@ pid:
 	.4byte	.LLST0
 	.uleb128 0xa
 	.4byte	.LVL3
-	.4byte	0x2f0
+	.4byte	0x341
 	.uleb128 0xb
 	.4byte	.LVL4
-	.4byte	0x30a
+	.4byte	0x35b
 	.4byte	0x142
 	.uleb128 0xc
 	.uleb128 0x1
@@ -537,7 +564,7 @@ pid:
 	.byte	0
 	.uleb128 0xb
 	.4byte	.LVL5
-	.4byte	0x31f
+	.4byte	0x370
 	.4byte	0x156
 	.uleb128 0xc
 	.uleb128 0x1
@@ -548,7 +575,7 @@ pid:
 	.byte	0
 	.uleb128 0xb
 	.4byte	.LVL6
-	.4byte	0x31f
+	.4byte	0x370
 	.4byte	0x16a
 	.uleb128 0xc
 	.uleb128 0x1
@@ -559,7 +586,7 @@ pid:
 	.byte	0
 	.uleb128 0xb
 	.4byte	.LVL7
-	.4byte	0x330
+	.4byte	0x381
 	.4byte	0x17e
 	.uleb128 0xc
 	.uleb128 0x1
@@ -570,7 +597,7 @@ pid:
 	.byte	0
 	.uleb128 0xb
 	.4byte	.LVL8
-	.4byte	0x31f
+	.4byte	0x370
 	.4byte	0x192
 	.uleb128 0xc
 	.uleb128 0x1
@@ -581,7 +608,7 @@ pid:
 	.byte	0
 	.uleb128 0xd
 	.4byte	.LVL10
-	.4byte	0x31f
+	.4byte	0x370
 	.uleb128 0xc
 	.uleb128 0x1
 	.byte	0x54
@@ -615,7 +642,7 @@ pid:
 	.4byte	.LFE15-.LFB15
 	.uleb128 0x1
 	.byte	0x9c
-	.4byte	0x280
+	.4byte	0x2d1
 	.uleb128 0x11
 	.4byte	.LASF24
 	.byte	0x1
@@ -628,10 +655,16 @@ pid:
 	.byte	0x31
 	.4byte	0x1b2
 	.4byte	.LLST2
+	.uleb128 0x11
+	.4byte	.LASF26
+	.byte	0x1
+	.byte	0x32
+	.4byte	0x1b2
+	.4byte	.LLST3
 	.uleb128 0xb
 	.4byte	.LVL12
-	.4byte	0x2f0
-	.4byte	0x218
+	.4byte	0x341
+	.4byte	0x227
 	.uleb128 0xc
 	.uleb128 0x1
 	.byte	0x55
@@ -646,8 +679,24 @@ pid:
 	.byte	0
 	.uleb128 0xb
 	.4byte	.LVL14
-	.4byte	0x2f0
-	.4byte	0x232
+	.4byte	0x341
+	.4byte	0x240
+	.uleb128 0xc
+	.uleb128 0x1
+	.byte	0x55
+	.uleb128 0x2
+	.byte	0x8
+	.byte	0x80
+	.uleb128 0xc
+	.uleb128 0x1
+	.byte	0x54
+	.uleb128 0x1
+	.byte	0x31
+	.byte	0
+	.uleb128 0xb
+	.4byte	.LVL16
+	.4byte	0x341
+	.4byte	0x25a
 	.uleb128 0xc
 	.uleb128 0x1
 	.byte	0x55
@@ -658,23 +707,23 @@ pid:
 	.uleb128 0x1
 	.byte	0x54
 	.uleb128 0x1
-	.byte	0x30
+	.byte	0x31
 	.byte	0
 	.uleb128 0xb
-	.4byte	.LVL16
-	.4byte	0x31f
-	.4byte	0x246
+	.4byte	.LVL18
+	.4byte	0x370
+	.4byte	0x26e
 	.uleb128 0xc
 	.uleb128 0x1
 	.byte	0x54
 	.uleb128 0x2
-	.byte	0x80
+	.byte	0x82
 	.sleb128 0
 	.byte	0
 	.uleb128 0xb
-	.4byte	.LVL17
-	.4byte	0x31f
-	.4byte	0x25a
+	.4byte	.LVL19
+	.4byte	0x370
+	.4byte	0x282
 	.uleb128 0xc
 	.uleb128 0x1
 	.byte	0x54
@@ -683,9 +732,31 @@ pid:
 	.sleb128 0
 	.byte	0
 	.uleb128 0xb
-	.4byte	.LVL18
-	.4byte	0x330
-	.4byte	0x26f
+	.4byte	.LVL20
+	.4byte	0x370
+	.4byte	0x296
+	.uleb128 0xc
+	.uleb128 0x1
+	.byte	0x54
+	.uleb128 0x2
+	.byte	0x80
+	.sleb128 0
+	.byte	0
+	.uleb128 0xb
+	.4byte	.LVL22
+	.4byte	0x381
+	.4byte	0x2aa
+	.uleb128 0xc
+	.uleb128 0x1
+	.byte	0x54
+	.uleb128 0x2
+	.byte	0x8
+	.byte	0x7b
+	.byte	0
+	.uleb128 0xb
+	.4byte	.LVL23
+	.4byte	0x381
+	.4byte	0x2bf
 	.uleb128 0xc
 	.uleb128 0x1
 	.byte	0x54
@@ -694,38 +765,38 @@ pid:
 	.2byte	0x1c8
 	.byte	0
 	.uleb128 0xd
-	.4byte	.LVL19
-	.4byte	0x330
+	.4byte	.LVL24
+	.4byte	0x381
 	.uleb128 0xc
 	.uleb128 0x1
 	.byte	0x54
-	.uleb128 0x2
-	.byte	0x8
-	.byte	0x7b
+	.uleb128 0x3
+	.byte	0xa
+	.2byte	0x3db
 	.byte	0
 	.byte	0
 	.uleb128 0x12
-	.4byte	.LASF35
+	.4byte	.LASF36
 	.byte	0x1
-	.byte	0x3c
+	.byte	0x43
 	.4byte	0x3a
 	.4byte	.LFB16
 	.4byte	.LFE16-.LFB16
 	.uleb128 0x1
 	.byte	0x9c
 	.uleb128 0x13
-	.4byte	.LASF36
+	.4byte	.LASF37
 	.byte	0x1
-	.byte	0x40
+	.byte	0x47
 	.4byte	.LFB17
 	.4byte	.LFE17-.LFB17
 	.uleb128 0x1
 	.byte	0x9c
 	.uleb128 0x14
-	.4byte	.LASF26
+	.4byte	.LASF27
 	.byte	0x7
 	.byte	0x12
-	.4byte	0x2b7
+	.4byte	0x308
 	.uleb128 0x5
 	.byte	0x3
 	.4byte	pte_p
@@ -741,7 +812,7 @@ pid:
 	.byte	0x3
 	.4byte	pid
 	.uleb128 0x14
-	.4byte	.LASF27
+	.4byte	.LASF28
 	.byte	0x1
 	.byte	0x4
 	.4byte	0x1b8
@@ -749,7 +820,7 @@ pid:
 	.byte	0x3
 	.4byte	alloc_size
 	.uleb128 0x14
-	.4byte	.LASF28
+	.4byte	.LASF29
 	.byte	0x1
 	.byte	0x6
 	.4byte	0x3a
@@ -757,35 +828,35 @@ pid:
 	.byte	0x3
 	.4byte	index_
 	.uleb128 0x16
-	.4byte	.LASF29
+	.4byte	.LASF30
 	.byte	0x8
 	.byte	0x16
 	.4byte	0xbe
-	.4byte	0x30a
+	.4byte	0x35b
 	.uleb128 0x17
 	.4byte	0xc0
 	.uleb128 0x17
 	.4byte	0xb3
 	.byte	0
 	.uleb128 0x16
-	.4byte	.LASF30
+	.4byte	.LASF31
 	.byte	0x7
 	.byte	0x6f
 	.4byte	0x3a
-	.4byte	0x31f
+	.4byte	0x370
 	.uleb128 0x17
 	.4byte	0x81
 	.byte	0
 	.uleb128 0x18
-	.4byte	.LASF37
+	.4byte	.LASF38
 	.byte	0x9
 	.byte	0xe
-	.4byte	0x330
+	.4byte	0x381
 	.uleb128 0x17
 	.4byte	0x2c
 	.byte	0
 	.uleb128 0x19
-	.4byte	.LASF38
+	.4byte	.LASF39
 	.byte	0x9
 	.byte	0xc
 	.uleb128 0x17
@@ -1166,9 +1237,9 @@ pid:
 	.2byte	0x1
 	.byte	0x52
 	.4byte	.LVL14-1-.Ltext0
-	.4byte	.LVL21-.Ltext0
+	.4byte	.LVL25-.Ltext0
 	.2byte	0x1
-	.byte	0x60
+	.byte	0x62
 	.4byte	0
 	.4byte	0
 .LLST2:
@@ -1177,9 +1248,20 @@ pid:
 	.2byte	0x1
 	.byte	0x52
 	.4byte	.LVL16-1-.Ltext0
-	.4byte	.LVL20-.Ltext0
+	.4byte	.LVL26-.Ltext0
 	.2byte	0x1
 	.byte	0x61
+	.4byte	0
+	.4byte	0
+.LLST3:
+	.4byte	.LVL17-.Ltext0
+	.4byte	.LVL18-1-.Ltext0
+	.2byte	0x1
+	.byte	0x52
+	.4byte	.LVL18-1-.Ltext0
+	.4byte	.LVL21-.Ltext0
+	.2byte	0x1
+	.byte	0x60
 	.4byte	0
 	.4byte	0
 	.section	.debug_aranges,"",@progbits
@@ -1197,15 +1279,15 @@ pid:
 	.section	.debug_line,"",@progbits
 .Ldebug_line0:
 	.section	.debug_str,"MS",@progbits,1
-.LASF37:
+.LASF38:
 	.ascii	"writeValTo7SegsHex\000"
-.LASF35:
+.LASF36:
 	.ascii	"test_free_memory\000"
 .LASF20:
 	.ascii	"addr_true_int\000"
 .LASF17:
 	.ascii	"size_t\000"
-.LASF30:
+.LASF31:
 	.ascii	"get_page_status\000"
 .LASF6:
 	.ascii	"short unsigned int\000"
@@ -1215,7 +1297,7 @@ pid:
 	.ascii	"uint64_t\000"
 .LASF18:
 	.ascii	"pid_t\000"
-.LASF34:
+.LASF35:
 	.ascii	"addr_alloc\000"
 .LASF16:
 	.ascii	"float\000"
@@ -1223,34 +1305,34 @@ pid:
 	.ascii	"unsigned char\000"
 .LASF0:
 	.ascii	"long unsigned int\000"
-.LASF32:
+.LASF33:
 	.ascii	"mm/mm_test.c\000"
 .LASF24:
 	.ascii	"addr\000"
-.LASF29:
+.LASF30:
 	.ascii	"kmalloc\000"
 .LASF21:
 	.ascii	"addr_true\000"
-.LASF28:
+.LASF29:
 	.ascii	"index_\000"
-.LASF38:
+.LASF39:
 	.ascii	"writeValTo7SegsDec\000"
 .LASF9:
 	.ascii	"__uint32_t\000"
-.LASF33:
+.LASF34:
 	.ascii	"C:\\Users\\lzy05\\OneDrive\\18-19-Fall\\SCD\\git\\src\000"
 .LASF23:
 	.ascii	"test_rw_memory\000"
-.LASF31:
+.LASF32:
 	.ascii	"GNU C 4.9.2 -mel -march=m14kc -msoft-float -mplt -mips32"
 	.ascii	"r2 -msynci -mabi=32 -g -O1\000"
 .LASF1:
 	.ascii	"unsigned int\000"
-.LASF36:
+.LASF37:
 	.ascii	"test_global_variable\000"
 .LASF2:
 	.ascii	"long long unsigned int\000"
-.LASF27:
+.LASF28:
 	.ascii	"alloc_size\000"
 .LASF13:
 	.ascii	"sizetype\000"
@@ -1262,7 +1344,7 @@ pid:
 	.ascii	"short int\000"
 .LASF10:
 	.ascii	"__uint64_t\000"
-.LASF26:
+.LASF27:
 	.ascii	"pte_p\000"
 .LASF11:
 	.ascii	"uint32_t\000"
@@ -1276,4 +1358,6 @@ pid:
 	.ascii	"signed char\000"
 .LASF25:
 	.ascii	"addr1\000"
+.LASF26:
+	.ascii	"addr2\000"
 	.ident	"GCC: (Codescape GNU Tools 2016.05-03 for MIPS MTI Bare Metal) 4.9.2"

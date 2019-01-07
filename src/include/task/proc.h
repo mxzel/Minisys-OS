@@ -5,7 +5,8 @@
 
 // 上下文，需要保存的寄存器
 struct context{
-
+    uint32_t pc;
+    uint32_t args;
     uint32_t reg16;
     uint32_t reg17, reg18, reg19, reg20, reg21, reg22, reg23;//16~23号寄存器为子程序寄存器变量
     uint32_t reg29, reg30, reg31;//29号寄存器：堆栈指针； 30号：帧指针；31号：子程序返回地址
@@ -31,7 +32,7 @@ struct task_struct
     int32_t state;                              // -1 unrunable, 0 runnable, 1 stopped
     char name[PROC_NAME_LEN + 1];               // 进程名                 
     uint32_t kstack;                            // 内核栈
-    volatile bool need_resched;                 // 是否需要调度以释放CPU
+    // volatile bool need_resched;                 // 是否需要调度以释放CPU
     struct task_struct *parent;                 // 父进程
     struct context context;                     // 进程上下文
     //list_head children;                       // 链表的头部，链表的所有元素都是children的子进程
