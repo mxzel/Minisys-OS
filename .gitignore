@@ -65,3 +65,7 @@ src/GPATH
 *.c~
 *.c#
 *.h#
+
+#make temp files
+*.o
+
