@@ -21,6 +21,9 @@
 #define INODE_DIR 1
 #define INODE_FILE 2
 
+#define OPEN_W 1
+#define OPEN_R 2
+#define OPEN_WR 3
 
 
 struct qstr {
