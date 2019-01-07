@@ -35,6 +35,8 @@
 // 页框 0x80022000
 
 // 最多支持的物理页面个数
+#define RESERVED_NUM 34
+// #define PAGE_MAX_COUNT ((RAM_STOP - PTE_ADDR - PAGE_TABLE_SIZE) / PMM_PAGE_SIZE + RESERVED_NUM)
 #define PAGE_MAX_COUNT ((RAM_STOP - PTE_ADDR - PAGE_TABLE_SIZE) / PMM_PAGE_SIZE)
 
 #include <types.h>

@@ -1,13 +1,17 @@
+#ifndef INCLUDE_MM_MM_H_
+#define INCLUDE_MM_MM_H_
 
 #include <mm/pmm.h>
 #include <mm/vmm.h>
 
-#ifndef INCLUDE_MM_MM_H_
-#define INCLUDE_MM_MM_H_
+
+
+#define PAGE_SIZE 4096
 
 extern uint32_t page_alloc_addrs[64];
 extern uint8_t page_alloc_counts[64];
 extern int idx;
+
 
 // 地址转换为指针
 void *addr_to_ptr(uint32_t addr);

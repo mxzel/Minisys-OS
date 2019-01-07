@@ -15,4 +15,6 @@ int test_rw_memory();
 
 int test_free_memory();
 
+void test_global_variable();
+
 #endif // INCLUDE_MM_MM_TEST_H_

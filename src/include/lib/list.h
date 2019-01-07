@@ -13,10 +13,14 @@
 
 #define __offsetof(TYPE, MEMBER) ((unsigned int) &((TYPE *)0)->MEMBER)
 
-#define INIT_LIST_HEAD(name) { &(name), &(name); }
+#define LIST_HEAD_INIT(name) { &(name), &(name) }
 
 #define LIST_HEAD(name) \
         struct list_head name = LIST_HEAD_INIT(name)
+
+#define INIT_LIST_HEAD(ptr) do {                \
+    (ptr)->next = (ptr); (ptr)->prev = (ptr);   \
+  } while (0)
 
 static inline void init_list_head (struct list_head *list) {
         list->next = list;

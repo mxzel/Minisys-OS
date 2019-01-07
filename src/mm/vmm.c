@@ -17,9 +17,16 @@ uint32_t vmm_page_addr = PTE_ADDR + PAGE_TABLE_SIZE - 0x80000000;
 void vmm_init(void){
 
     /* 设置页表中的有效页为未分配，无效页为保留 */
+    // int cnt = 0, ppn = 0x00;
     int cnt = 0, ppn = 0x22;
     for (pte_p = PAGE_TABLE_P; pte_p < PAGE_TABLE_P + PAGE_TABLE_SIZE; pte_p++, cnt++)
     {
+        // if(cnt < RESERVED_NUM){
+        //     *pte_p = 2 << 4;
+        //     set_ppn_to_pte(ppn, pte_p);
+        //     set_vpn_to_pte(ppn, pte_p);
+        //     ppn += 0x01;
+        // }
         if(cnt < PTE_COUNT){
             *pte_p = 0;
             set_ppn_to_pte(ppn, pte_p);
@@ -93,6 +100,11 @@ void vmm_init(void){
 void set_ppn_to_pte(int ppn, pte_t *pte){
     uint64_t mask = 0x00000000fc000000;
     *pte = ((*pte) & (~mask)) | (ppn << 26);
+}
+
+void set_vpn_to_pte(int vpn, pte_t *pte){
+    uint64_t mask = 0x0000000003fffc0;
+    *pte = ((*pte) & (~mask)) | (vpn << 6);
 }
 
 uint32_t get_ppn_from_page_addr(uint32_t phy_page_addr){
