@@ -177,8 +177,6 @@ struct inode{
   //TODO 可能有其他inode list
 };
 
-//TODO
-struct nameidata{};
 
 //inode的操作
 struct inode_operations{
@@ -188,7 +186,7 @@ struct inode_operations{
   int (*rmdir) (struct inode *,struct dentry *);//删除dentry下对应的inode的子dentry
   int (*rename)(struct inode *, struct dentry *, struct inode *, struct dentry *);//将old_dir目录下的文件 old_dentry移到new_dir目录下，新文件名包含在 new_dentry指向的目录项中
   //int (*setattr) (struct dentry *, struct iattr *);//设置dentry属性
-   int (*getattr) (const struct path *, struct kstat *, u32, unsigned int);
+   //int (*getattr) (const struct path *, struct kstat *, u32, unsigned int);
   void (*mknod)(struct inode *dir, struct dentry *dentry, int mode);
 };
 
