@@ -216,6 +216,26 @@ int get_page_status(uint32_t vir_page_addr){
     return -1;
 }
 
+int get_block_status(uint32_t block_addr){
+    uint32_t page_addr = block_addr & PAGE_MASK;
+    pte_p = get_pte_by_page_addr(page_addr);
+
+    if(get_page_status(page_addr) != 1)
+        return -1;
+    
+    uint32_t pte_block_flag = (uint32_t)((*pte_p) >> 32;
+    if(is_split_block(pte_block_flag) == false)
+        return 1;
+    
+    int idx = BLOCK_NUM_PER_PAGE - 1;
+    int offset = block_addr - page_addr;
+    while(idx >= 0 && block_offset[idx] != offset)
+        --idx;
+    if((pte_block_flag & block_flag[idx]) != 0)
+        return 1;
+    return 0;
+}
+
 bool is_split_block(uint32_t pte_block_flag){
     // 判断是否以block为粒度来分配
     // 这里有bug 0与0的结果是0，0和0比较出来是错的？
@@ -294,15 +314,9 @@ uint32_t find_block(pid_t pid, size_t size){
         if(get_pid_from_pte(*pte_p) == pid && get_page_status_from_pte(*pte_p) == 1 \
                 && is_split_block((uint32_t)((*pte_p) >> 32)) == true){
             int block_idx = get_suitable_block_from_pte(*pte_p, size);
-            // writeValTo7SegsDec(block_idx);
-            // delay();
             if(block_idx == -1)
                 continue;
             uint32_t block_addr = (get_vpn_from_pte(*pte_p) << 12) + block_offset[block_idx];
-            // writeValTo7SegsHex(get_vpn_from_pte(*pte_p));
-            // delay();
-            // writeValTo7SegsHex(block_offset[block_idx]);
-            // delay();
             return block_addr;
         }
     }

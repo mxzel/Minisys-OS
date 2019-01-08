@@ -110,6 +110,8 @@ int get_page_status_from_pte(pte_t pte);
 
 int get_page_status(uint32_t vir_page_addr);
 
+int get_block_status(uint32_t block_addr);
+
 // 从 pte 中获得满足 size 大小的合适的 block
 int get_suitable_block_from_pte(pte_t pte, size_t size);
 
