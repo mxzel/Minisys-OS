@@ -3,6 +3,7 @@
 #include <mm/mm.h>
 #include <types.h>
 #include <string.h>
+#include <debug.h>
 
 
 extern int generic_file_write(struct file *file, const char *buf,size_t count);
@@ -32,11 +33,16 @@ struct fs_type ramfs_fs_type={
 static struct super_block * ramfs_alloc_sb(){
   struct super_block * sb;
   sb = alloc_sb();
+  led_red(2);
+  writeValTo7SegsHex(sb);
   sb->sb_operations=&ramfs_super_ops;
   sb->fs = &ramfs_fs_type;
   //sb->d_operations=&ramfs_dops;
   struct inode * inode = ramfs_alloc_inode(sb,INODE_DIR);
+  led_red(4);
+  writeValTo7SegsHex(inode);
   struct dentry * root= alloc_dentry_root(inode);
+  
 
   // if (inode) {
   //   inode->i_operations = &ramfs_inode_ops_dir;
@@ -47,6 +53,8 @@ static struct super_block * ramfs_alloc_sb(){
   // }
 
   sb->root = root;
+  led_red(8);
+  writeValTo7SegsHex(sb->root);
   return sb;
 }
 // void ramfs_kill_sb (struct super_block * sb){
@@ -114,6 +122,8 @@ static void ramfs_mknod(struct inode *dir, struct dentry *dentry, int mode)
   struct inode * inode = ramfs_alloc_inode(dir->sb, mode);//获取一个inode
 
   d_instantiate(dentry, inode);//把dentry和inode关联起来
+  led_red(32);
+  writeValTo7SegsHex(inode);
   // dget(dentry);	/* Extra count - pin the dentry in core */
 }
 
@@ -125,7 +135,7 @@ static inline void ramfs_mkdir(struct inode * dir, struct dentry * dentry, int m
 }
 
 //ramfs_create - 创建dentry对应的inode(文件）
-static inline void ramfs_create(struct inode *dir, struct dentry *dentry, int mode, struct nameidata *nd){
+static inline void ramfs_create(struct inode *dir, struct dentry *dentry, struct nameidata *nd){
   ramfs_mknod(dir, dentry, INODE_FILE);
 }
 

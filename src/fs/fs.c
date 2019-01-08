@@ -2,6 +2,8 @@
 #include <fs/vfs.h>
 #include <list.h>
 #include <task/current.h>
+#include <mm/mm.h>
+#include <debug.h>
 
 //=====================================================
 //=fs.c
@@ -20,13 +22,19 @@ extern struct vfsmount* only_mount;
 
 void mount_init(struct fs_type *fs_type){
     //   INIT_LIST_HEAD(&mount_list);
-    struct vfsmount *only_mount= alloc_mount();//新建一个挂载
-    
+    only_mount= alloc_mount();//新建一个挂载
+    led_red(1);
+    writeValTo7SegsHex(only_mount);
     //   list_add(&mnt->list,&mount_list);//加入链表
     //设置参数
     //   mnt->parent = mnt;
-    only_mount->sb=fs_type->alloc_sb();//建立对应的sb
-    only_mount->root = only_mount->sb->root;
+    struct super_block * sb =fs_type->alloc_sb();
+    only_mount->sb=sb;//建立对应的sb
+    led_red(16384);
+    writeValTo7SegsHex(sb->root);
+
+    only_mount->root = sb->root;
+    
     //   only_mount->root = dget(only_mount->sb->root);
     //   mnt->mountpoint = mnt->sb->root;
     //   mnt->parent = mnt;
@@ -50,15 +58,23 @@ int get_fd(){
 struct file *dentry_open(struct dentry *dentry, struct vfsmount *mnt, int mode);
 struct file * get_file(const char* filename,int mode);
 int open(const char* filename,int mode){
-    //struct file* file = current->files[xxx];
     int fd = get_fd();
     if(fd>=0){
-        struct file *f ;
+        struct file *f;
         f = get_file(filename,mode);
+        led_red(128);
+        writeValTo7SegsHex(f->dentry);
+        led_red(256);
+        writeValTo7SegsHex(f->inode);
+        led_red(512);
+        writeValTo7SegsHex(&(f->inode->data));
+        led_red(1024);
+        writeValTo7SegsHex(f->mapping);
         current->files[fd]=f;
     }
     return fd;
 }
+
 int close(int fd){
     current->files[fd]=NULL;
 }
@@ -70,64 +86,27 @@ int close(int fd){
  @return 指向构建的file结构体的指针
  **/
 struct file * get_file(const char* filename,int mode){
-    fs_init();
     //TODO
     int error=0;
-    struct nameidata *nd;
+    struct nameidata nd;
+    
     error=open_namei(filename,mode,&nd);
     if(!error)
-        return dentry_open(nd->dentry,nd->mnt,mode);
+        return dentry_open(nd.dentry,nd.mnt,mode);
     return NULL;
 }
 
-//根据路径名解析
-//@parameter pathname 文件路径名(可以是全路径，也可以是相对路径名)
-//@parameter mode 读写权限
-//@parameter nd ...
-//@return
-int open_namei(const char *pathname,int mode,struct nameidata *nd){
-    int error=0;
-    struct dentry *dentry;
-    struct dentry *dir;
-    nd->last.len=0;
-    
-    error = path_lookup(pathname,nd);
-    if (error)
-        return error;
-    struct path last;//确定mnt和dentry
-    error = do_lookup(nd, &nd->last, &last);
-    if (error)
-        return error;
-    struct inode *inode = last.dentry->inode;
-    if(inode){// 这是打开文件最简单的一种情况 查找文件，保存在nd中
-        nd->mnt = last.mnt;//更新nd
-        nd->dentry = last.dentry;
-        return 0;
-    }
-    //文件不存在,首先需要创建文件
-    dir = nd->dentry;
-    dentry = last.dentry;
-    /* Negative dentry 文件不存在，需要创建inode*/
-    error = vfs_create(dir->inode, dentry, mode, nd);
-    nd->dentry = dentry;
-    if (error)
-        return error;
-    return 0;
-}
-
-//路径查找
+//path_lookup - 路径查找,找到最后一级的目录，存在nd
 //@parameter pathname 文件路径名(可以是全路径，也可以是相对路径名)
 //@parameter nd 此时不包含任何有用信息，用来返回查找结果
-//@return error
+//@return 0正确，-1错误
 int path_lookup(const char *name,struct nameidata *nd){
     int error = 0;
     //nd->last_type = 3; //最后一个分量是“/”（也就是整个路径名为“/”）
+    //文件名包含绝对路径，因此我们优先使用文件系统的根目录作为查找起始点
+    nd->mnt = only_mount;//当前进程文件系统的根vfsmount对象
+    nd->dentry = only_mount->root;//当前进程文件系统的根dentry
     
-    if(*name=='/'){
-        //文件名包含绝对路径，因此我们优先使用文件系统的根目录作为查找起始点
-        nd->mnt = only_mount;//当前进程文件系统的根vfsmount对象
-        nd->dentry = only_mount->root;//当前进程文件系统的根dentry
-    }
     //开始查找
     struct path next;//确定mnt和dentry
     struct inode *inode;
@@ -135,7 +114,7 @@ int path_lookup(const char *name,struct nameidata *nd){
         name++;
     if (!*name)
         return -1;//没有路径名
-    
+
     for(;;) {
         struct qstr this;//存放目录项名称
         unsigned int c;
@@ -154,10 +133,10 @@ int path_lookup(const char *name,struct nameidata *nd){
         while (*++name == '/');
         
         /* This does the actual lookups.. */
+        
         error = do_lookup(nd, &this, &next);//根据父目录项和当前路径名找出下一级的dentry
         if (error)
             break;
-        
         inode = next.dentry->inode;
         if (!inode)
             return -1;//没有对应的目录
@@ -170,13 +149,54 @@ int path_lookup(const char *name,struct nameidata *nd){
     return -1;
 }
 
+
+
+//根据路径名解析
+//@parameter pathname 文件路径名(可以是全路径，也可以是相对路径名)
+//@parameter mode 读写权限
+//@parameter nd ...
+//@return
+int open_namei(const char *pathname,int mode,struct nameidata *nd){
+
+    int error=0;
+    struct dentry *dentry;
+    struct dentry *dir;
+    nd->last.len=0;
+    nd->last.name=NULL;
+ 
+    error = path_lookup(pathname,nd);
+
+    if (error)
+        return error;
+    struct path last;//确定mnt和dentry
+
+    error = do_lookup(nd, &nd->last, &last);
+    if (error)
+        return error;
+    struct inode *inode = last.dentry->inode;
+    if(inode){// 这是打开文件最简单的一种情况 查找文件，保存在nd中
+        nd->mnt = last.mnt;//更新nd
+        nd->dentry = last.dentry;
+        return 0;
+    }
+    //文件不存在,首先需要创建文件
+    dir = nd->dentry;
+    dentry = last.dentry;
+    /* Negative dentry 文件不存在，需要创建inode*/
+
+    error = vfs_create(dir->inode, dentry, mode, nd);
+    nd->dentry = dentry;
+    if (error)
+        return error;
+    return 0;
+}
+
+
 //获取dentry
 //@parameter nd 是输入参数，这个结构指定了查找的父目录项以及它所在的vfsmount
 //@parameter name 输入参数，指定了路径分量名称。
 //@parameter path 输出参数，保存查找结果。
-int do_lookup(struct nameidata *nd, struct qstr *name,
-              struct path *path)
-{
+int do_lookup(struct nameidata *nd, struct qstr *name,struct path *path){
     struct vfsmount *mnt = nd->mnt;
     struct dentry *parent = nd->dentry;
     unsigned int len = name->len;
@@ -186,6 +206,7 @@ int do_lookup(struct nameidata *nd, struct qstr *name,
     struct list_head *head = &(parent->subdirs);
     struct list_head *next = head->next;
     struct dentry* sub;
+    
     while(next!=head){
         sub = list_entry(next, struct dentry, child);
         int i = 0;
@@ -203,10 +224,13 @@ int do_lookup(struct nameidata *nd, struct qstr *name,
     if(!dentry&&nd->last.len==0)return -1;
     if(!dentry){//新建dentry
         struct dentry * temp = alloc_dentry(parent, name);
+        led_red(16);
+        writeValTo7SegsHex(temp);
+        dentry = temp;
     }
     path->mnt = mnt;
-    path->dentry = dentry;
-    if(!dentry) return 1;
+    path->dentry = dentry; 
+    if(!dentry) return -1;
     return 0;
 }
 
@@ -217,13 +241,15 @@ int vfs_create(struct inode *dir, struct dentry *dentry, int mode,struct nameida
     dir->i_operations->create(dir, dentry, nd); //调用父目录文件索引节点操作方法创建inode
     return error;
 }
-struct file *dentry_open(struct dentry *dentry, struct vfsmount *mnt, int mode)
-{
-    struct file *f;
+
+struct file* alloc_file();
+struct file *dentry_open(struct dentry *dentry, struct vfsmount *mnt, int mode){
+    struct file *f =alloc_file();
+    led_red(64);
+    writeValTo7SegsHex(f);
     struct inode *inode;
     int error;
     
-    INIT_LIST_HEAD(&f->list);
     if (!f)
         return NULL;
     
@@ -241,11 +267,11 @@ struct file *dentry_open(struct dentry *dentry, struct vfsmount *mnt, int mode)
     if(&inode->sb->files){
         list_add(&f->list, &inode->sb->files);
     }
-    if (f->f_operations && f->f_operations->open) {
-        error = f->f_operations->open(inode,f);
-        if (error)
-            return NULL;
-    }
+    // if (f->f_operations && f->f_operations->open) {
+    //     error = f->f_operations->open(inode,f);
+    //     if (error)
+    //         return NULL;
+    // }
     return f;
 }
 

@@ -233,7 +233,11 @@ int get_suitable_block_from_pte(pte_t pte, size_t size){
     if(is_split_block(pte_block_flag) == false)
         return -1;
     // 大小不满足条件，或者是满足大小的block已分配的情况下 继续寻找
+    // writeValTo7SegsHex(pte_block_flag);    
     while(block_size[idx] < size || (pte_block_flag & block_flag[idx]) != 0){
+        // led_red(block_flag[idx]);
+        // led_red(0);
+        // writeValTo7SegsHex(block_flag[idx]);
         --idx;
         if(idx == -1)
             return -1;
@@ -267,8 +271,9 @@ void alloc_block(uint32_t block_addr){
         if(block_offset[idx] == offset)
             break;
     }
+    // writeValTo7SegsHex((uint32_t)((*pte_p) >> 32));
     *pte_p |= ((uint64_t)block_flag[idx]) << 32;
-    // writeValTo7SegsHex(block_flag[idx]);
+    // writeValTo7SegsHex((uint32_t)((*pte_p) >> 32));
 }
 
 void free_block(uint32_t block_addr){
@@ -299,10 +304,7 @@ uint32_t find_block(pid_t pid, size_t size){
             if(block_idx == -1)
                 continue;
             uint32_t block_addr = (get_vpn_from_pte(*pte_p) << 12) + block_offset[block_idx];
-            // writeValTo7SegsHex(get_vpn_from_pte(*pte_p));
-            // delay();
-            // writeValTo7SegsHex(block_offset[block_idx]);
-            // delay();
+            
             return block_addr;
         }
     }

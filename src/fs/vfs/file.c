@@ -175,8 +175,8 @@ struct page * grab_page(struct address_space *mapping,unsigned long index){
     if(current_index++ == index) return list_entry(current_page,struct page,list);
     current_page = current_page->next;
   }
-  char * new_page = kmalloc(0,PAGE_SIZE);
-  struct page * new_page_s = kmalloc(0,sizeof(struct page));
+  char * new_page = kmalloc(8,PAGE_SIZE);
+  struct page * new_page_s = kmalloc(8,sizeof(struct page));
   memset(new_page,0,PAGE_SIZE);
   memset(new_page_s,0,sizeof(struct page));
   new_page_s->address = new_page;

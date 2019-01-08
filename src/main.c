@@ -4,9 +4,9 @@
 #include <mips/hal.h>
 #include <mips/m32tlb.h>
 #include <task/proc.h>
-//#include <stdio.h>
 #include <mips/cpu.h>
 #include <mips/m32c0.h>
+#include <fs/fs.h>
 /**
  * 
  *  cd "c:\Comprehensive\OSX\src\" ; if ($?) { gcc main.c -o main -I ./include -I ./lib -I ./include/lib } ; if ($?) { .\main }
@@ -19,13 +19,13 @@ void test_pmm(){
      * 第一次分配的物理页地址为 0x0003E000（物理地址）
      * 最后一次分配的物理页地址为 0x00022000（物理地址）
      */
- pmm_init();
-int i = 0;
-for (i = 0; i < 35; ++i){
-   uint32_t phy_page_addr = pmm_alloc_page();
-       writeValTo7SegsHex(phy_page_addr);
-     delay();
-}
+    pmm_init();
+    int i = 0;
+    for (i = 0; i < 35; ++i){
+        uint32_t phy_page_addr = pmm_alloc_page();
+        writeValTo7SegsHex(phy_page_addr);
+        delay();
+    }
     // pmm_init();
     // uint32_t phy_page_addr = ?mm_alloc_page();
     // int32_t ret = get_pmm_stack_top();
@@ -59,11 +59,15 @@ void test_vmm(){
 int main(){
     mm_init();
     // test_alloc_memory();
-    // writeValTo7SegsDec(0);
-//    test_rw_memory();
-
     proc_init();
-    cpu_idle();
+    fs_init();
+    // test_rw_memory();
+
+    // writeValTo7SegsHex(0x55555555);
+    // //cpu_idle();
+    int fd=open("/a",OPEN_WR);
+
+    led_red(fd+1);
     while(1)writeValTo7SegsHex(0x66666666);
     // test_vmm();
     return 0;
@@ -138,7 +142,7 @@ __attribute__ ((nomips16)) void _mips_handle_exception (struct gpctx *ctx, int e
 
             uint32_t badvaddr = ctx->badvaddr;
             uint32_t vpn = badvaddr >> 12;
-            //writeValTo7SegsHex(badvaddr);
+            writeValTo7SegsHex(badvaddr);
 
             // EntryLo0 和 EntryLo1
             uint32_t ppn;

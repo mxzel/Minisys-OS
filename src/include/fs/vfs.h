@@ -21,9 +21,7 @@
 #define INODE_DIR 1
 #define INODE_FILE 2
 
-#define OPEN_W 1
-#define OPEN_R 2
-#define OPEN_WR 3
+
 
 
 struct qstr {
@@ -272,7 +270,7 @@ struct nameidata{
     struct vfsmount  *mnt;      /*安装点的数据*/
     struct qstr  last;          /*路径中的最后一个component*/
     //unsigned int  flags;        /*查找标识*/
-    int  last_type;             /*路径中的最后一个component的类型*/
+    // int  last_type;             /*路径中的最后一个component的类型*/
     //unsigned  depth;            /*当前symbolic link的嵌套深度，不能大于6*/
     //char   *saved_names[MAX_NESTED_LINKS + 1];/
     /*和嵌套symbolic link 相关的pathname*/

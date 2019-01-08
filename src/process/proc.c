@@ -29,6 +29,7 @@ static struct task_struct * alloc_proc(pid_t pid){
         memset(&(proc->context),0,sizeof(struct context));
         // writeValTo7SegsHex(0x02866666);
         memset(proc->name, 0, PROC_NAME_LEN);
+        memset(proc->files, 0, sizeof(struct file*)*5);
         // writeValTo7SegsHex(0x03066666);
     }
     //writeValTo7SegsHex(0x03266666);

@@ -43,8 +43,7 @@ int nr_dentries;
 
 
 struct vfsmount * alloc_mount(){
-  struct vfsmount * mnt;
-  mnt = kmalloc(0,sizeof(struct vfsmount));
+  struct vfsmount * mnt= kmalloc(8,sizeof(struct vfsmount));
   memset(mnt,0,sizeof(struct vfsmount));
   // INIT_LIST_HEAD(&mnt->list);
   // INIT_LIST_HEAD(&mnt->mounts);
@@ -55,7 +54,7 @@ struct vfsmount * alloc_mount(){
 
 struct super_block * alloc_sb(){
   struct super_block * sb;
-  sb = kmalloc(0,sizeof(struct super_block));
+  sb = kmalloc(8,sizeof(struct super_block));
   memset(sb,0,sizeof(struct super_block));
   // INIT_LIST_HEAD(&sb->list);
   INIT_LIST_HEAD(&sb->files);
@@ -72,7 +71,7 @@ struct inode* alloc_inode(struct super_block *sb){
 
   static unsigned long last_ino=0;
 
-  struct inode *inode=(struct inode*)kmalloc(0,sizeof(struct inode));
+  struct inode *inode=(struct inode*)kmalloc(8,sizeof(struct inode));
 
   if(inode){
     struct address_space * mapping = &inode->data;
@@ -108,9 +107,9 @@ struct dentry *alloc_dentry(struct dentry * parent, const struct qstr *name)
 	struct dentry *dentry;
 	char *dname;
 
-	dentry = kmalloc(0,sizeof(struct dentry));
+	dentry = kmalloc(8,sizeof(struct dentry));
 
-  dname = kmalloc(0,name->len + 1);
+  dname = kmalloc(8,name->len + 1);
 
 	dentry->d_name.name = dname;
 	dentry->d_name.len = name->len;
@@ -151,14 +150,13 @@ struct dentry * alloc_dentry_root(struct inode *root_inode){
     res->parent = res;
     list_add(&res->alias, &root_inode->d_list);
     res->inode = root_inode;
+    
   }
   return res;
 }
 
 struct file* alloc_file(){
-  struct file* f = kmalloc(0,sizeof(struct file));
+  struct file* f = kmalloc(8,sizeof(struct file));
   memset(f,0,sizeof(struct file));
   INIT_LIST_HEAD(&f->list);
-
-
 }
