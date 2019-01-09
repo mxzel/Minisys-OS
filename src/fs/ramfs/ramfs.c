@@ -118,8 +118,8 @@ static void ramfs_mknod(struct inode *dir, struct dentry *dentry, int mode)
   struct inode * inode = ramfs_alloc_inode(dir->sb, mode);//获取一个inode
 
   d_instantiate(dentry, inode);//把dentry和inode关联起来
-  led_red(32);
-  writeValTo7SegsHex(inode);
+  // led_red(32);
+  // writeValTo7SegsHex(inode);
   // dget(dentry);	/* Extra count - pin the dentry in core */
 }
 

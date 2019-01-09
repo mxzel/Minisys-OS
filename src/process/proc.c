@@ -1,9 +1,9 @@
 
 #include <mm/mm.h>
 #include <string.h>
-#include <assert.h>
 #include <task/proc.h>
 #include <debug.h>
+#include <fs/fs.h>
 
 
 struct list_head proc_list;
@@ -242,8 +242,23 @@ void proc_init(void){
 
 void cpu_idle(void) {
     
-    while (1) {
-        sys_schedule();
-        writeValTo7SegsHex(0x55550000);
-    }
+    // while (1) {
+    //     sys_schedule();
+    //     writeValTo7SegsHex(0x55550000);
+    // }
+    int fd=open("/a",OPEN_WR);
+    //led_red(fd+1);
+    int i = 0x00001234;
+
+    writeValTo7SegsHex(0x55555555);
+    writeValTo7SegsHex(sys_write(fd,int,i));
+    i=3;
+    close(fd);
+    fd=open("/a",OPEN_WR);
+    // led_red(fd+2);
+    writeValTo7SegsHex(i);
+    writeValTo7SegsHex(0x77777777);
+    writeValTo7SegsHex(sys_read(fd,int,i));
+    writeValTo7SegsHex(i);
+
 }

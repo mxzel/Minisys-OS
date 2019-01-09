@@ -58,21 +58,14 @@ void test_vmm(){
 
 int main(){
     mm_init();
-    // test_alloc_memory();
     proc_init();
     fs_init();
     // test_rw_memory();
 
-    // writeValTo7SegsHex(0x55555555);
-    // //cpu_idle();
-    int fd=open("/a",OPEN_WR);
-    led_red(fd+1);
-    close(fd);
-    writeValTo7SegsHex(0x66666666);
-    fd=open("/a",OPEN_WR);
-    led_red(fd+1);
+    cpu_idle();
+
+
     while(1)writeValTo7SegsHex(0x66666666);
-    // test_vmm();
     return 0;
 }
 

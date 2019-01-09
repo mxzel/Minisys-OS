@@ -227,8 +227,8 @@ int do_lookup(struct nameidata *nd, struct qstr *name,struct path *path){
     if(!dentry&&nd->last.len==0)return -1;
     if(!dentry){//新建dentry
         struct dentry * temp = alloc_dentry(parent, name);
-        led_red(16);
-        writeValTo7SegsHex(temp);
+        // led_red(16);
+        // writeValTo7SegsHex(temp);
         dentry = temp;
     }
     path->mnt = mnt;
@@ -291,5 +291,10 @@ int __write(int fd,char * buf,size_t len){
     struct file* file = current->files[fd];
     if(file&&file->f_operations&&file->f_operations->write)
         return file->f_operations->write(file,buf,len);
+        // file->f_operations->write(file,buf,len);
+        // led_red(8);
+        // struct page* p= list_entry(file->inode->data.pages.next,struct page,list);
+        // int * i =(int *)p->address;
+        // writeValTo7SegsHex(*i);
     return -1;
 }

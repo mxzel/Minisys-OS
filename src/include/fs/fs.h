@@ -5,10 +5,6 @@
 
 //文件读写操作
 
-creat
-
-close
-
 lseek
 
 //文件系统操作

@@ -2,6 +2,7 @@
 #include <list.h>
 #include <mm/mm.h>
 #include <string.h>
+#include <debug.h>
 
 //=====================================================
 //=vfs/file.c
@@ -113,10 +114,13 @@ void do_generic_mapping_read(struct address_space *mapping,struct file *filp,lof
 
 		nr = PAGE_SIZE;//当前页需要读的大小
 		if (index >= end_index) {//最后一页了
-          if (index > end_index)//读多了，非法
-            return;
+          if (index > end_index){//读多了，非法
+            desc->error=-1;
+			return;
+		  }
           nr = ((isize - 1) & ~PAGE_MASK) + 1;
           if (nr <= offset) {//要读的位置比文件结尾还往后了，报错
+		  	desc->error=-1;
             return;
           }
           //desc->error = 0;//其他情况，无错
@@ -152,9 +156,9 @@ generic_file_read - 读文件函数
 int generic_file_read(struct file *filp, char  *buf, size_t count){
   struct iovec iov = { .iov_base = buf, .iov_len = count };
   //ssize_t retval=0;
-  read_descriptor_t desc={.written = 0, .arg.buf = iov.iov_base, .count = iov.iov_len,.error = -1};
+  read_descriptor_t desc={.written = 0, .arg.buf = iov.iov_base, .count = iov.iov_len,.error = 0};
   if(filp->state.readable)
-  do_generic_mapping_read(filp->mapping,filp,&filp->position,&desc);
+  	do_generic_mapping_read(filp->mapping,filp,&filp->position,&desc);
 
   //retval += desc.written;
   return desc.error;
@@ -259,9 +263,10 @@ int __generic_file_write_nolock(struct file* file,const struct iovec *iov, loff_
 	ssize_t		written=0;
 
     //检查一些可能的错误
-	if (file->state.writeable||count == 0)
+	if (!file->state.writeable||count == 0)
       goto out;
 
+	
     //写，返回实际写了多少字节
 	written = generic_file_buffered_write(file, iov,pos, ppos, count, written);
 out:
@@ -284,7 +289,7 @@ int generic_file_write(struct file *file, const char *buf,size_t count){
 
   ret = __generic_file_write_nolock(file, &local_iov, &file->position);
 
-  return ret;
+  return ret? 0:-1;
 }
 
 
