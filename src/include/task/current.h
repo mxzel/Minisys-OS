@@ -3,15 +3,7 @@
 
 #include<task/proc.h>
 
-static inline struct task_struct* get_current(){
-    return current_task();
-}
-
-
-
-#define current get_current()
-
-
+extern struct task_struct *current;
 
 
 #endif /* _ASM_CURRENT_H */

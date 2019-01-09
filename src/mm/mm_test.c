@@ -45,21 +45,33 @@ int test_alloc_memory(){
 int test_rw_memory(){
     // 用虚拟地址进行读写会触发TLB重填的异常
   // writeValTo7SegsDec(1);
-    int *addr = (int *)kmalloc(0, 128);
-    int *addr1 = (int *)kmalloc(1, 128);
-    int *addr2 = (int *)kmalloc(1, 4096);
-    // int *addr3 = (int *)kmalloc(0, 4096);
-    writeValTo7SegsHex(((uint32_t)addr));
+    // writeValTo7SegsHex(0x11111111);
+    int *addr1 = (int *)kmalloc(0, 32);
+    // writeValTo7SegsHex(0x11111111);
+    int *addr2 = (int *)kmalloc(0, 32);
+    // writeValTo7SegsHex(0x11111111);
+    int *addr3 = (int *)kmalloc(0, 32);
+    // writeValTo7SegsHex(0x11111111);
+    int *addr4 = (int *)kmalloc(0, 32);
+    // writeValTo7SegsHex(0x11111111);
     writeValTo7SegsHex(((uint32_t)addr1));
+    // writeValTo7SegsHex(0x11111111);
     writeValTo7SegsHex(((uint32_t)addr2));
+    // writeValTo7SegsHex(0x11111111);
+    writeValTo7SegsHex(((uint32_t)addr3));
+    // writeValTo7SegsHex(0x11111111);
+    writeValTo7SegsHex(((uint32_t)addr4));
 
-    // *addr = 123;
-    *((int *)0x00022c88) = 123;
-    writeValTo7SegsDec(*((int *)0x00022c88));
-    *((int *)0x00023c88) = 456;
-    writeValTo7SegsDec(*((int *)0x00023c88));
-    *((int *)0x00024FFC) = 987;
-    writeValTo7SegsDec(*((int *)0x00024FFC));
+    // *((int *)addr1) = 123;
+    // *((int *)addr2) = 456;
+    // *((int *)addr3) = 987;
+    // *((int *)addr4) = 555;
+    // writeValTo7SegsDec(*((int *)addr1));
+    
+    // writeValTo7SegsDec(*((int *)addr2));
+    
+    // writeValTo7SegsDec(*((int *)addr3));
+    // writeValTo7SegsDec(*((int *)addr4));
     
     return 1;
 }

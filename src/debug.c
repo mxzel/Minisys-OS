@@ -70,9 +70,15 @@ void writeValTo7SegsHex1(unsigned int high, unsigned int low){
 void led_red(int value){
     volatile int *IO_LEDR = (int*)0xbf800000;
     *IO_LEDR = value;
+    delay();
 }
 
 void delay() {
     volatile unsigned int j;
     for (j = 0; j < (7000000); j++) ;	// delay
+}
+
+void led_no_delay(int value){
+    volatile int *IO_LEDR = (int*)0xbf800000;
+    *IO_LEDR = value;
 }

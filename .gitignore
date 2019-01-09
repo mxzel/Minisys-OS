@@ -57,12 +57,13 @@ Module.symvers
 Mkfile.old
 dkms.conf
 
+
 # temp files
-src/GTAGS
-src/GRTAGS
 src/GPATH
-*.h~
+src/GRTAGS
+src/GTAGS
 *.c~
+*.h~
 *.c#
 *.h#
 

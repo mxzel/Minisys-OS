@@ -140,7 +140,7 @@ static inline void list_cut_position(struct list_head *list,
                         (head->next != entry && head != entry))
                 return;
         if (entry == head)
-                INIT_LIST_HEAD(list);
+          INIT_LIST_HEAD(list);
         if (entry != head)
                 __list_cut_position(list, head, entry);
 }

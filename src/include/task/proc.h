@@ -12,9 +12,7 @@ struct context{
     uint32_t reg29, reg30, reg31;//29号寄存器：堆栈指针； 30号：帧指针；31号：子程序返回地址
 };
 
-//28号寄存器是全局指针，用于存储当前运行的进程
-register struct task_struct *__current_task __asm__("$28");
-#define current_task()  __current_task
+
 
 extern void* switch_to(struct context *from, struct context *to);
 
@@ -37,9 +35,7 @@ struct task_struct
     struct context context;                     // 进程上下文
     //list_head children;                       // 链表的头部，链表的所有元素都是children的子进程
     struct list_head list_link;                      // 指向proc list
-    struct fs_struct * fs;//TODO:
-    struct files_struct *files;//TODO:
-    struct namespace *namespace;//TODO:
+    struct file*  files[5];
 };
 
 /* Return the offset of 'member' relative to the beginning of a struct type */

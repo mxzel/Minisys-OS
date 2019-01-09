@@ -19,4 +19,6 @@ void led_red(int value);
 
 void delay();
 
+void led_no_delay(int value);
+
 #endif
