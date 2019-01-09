@@ -23,15 +23,16 @@ extern struct vfsmount* only_mount;
 void mount_init(struct fs_type *fs_type){
     //   INIT_LIST_HEAD(&mount_list);
     only_mount= alloc_mount();//新建一个挂载
-    led_red(1);
-    writeValTo7SegsHex(only_mount);
+    // led_red(1);
+    // writeValTo7SegsHex(only_mount);
     //   list_add(&mnt->list,&mount_list);//加入链表
     //设置参数
     //   mnt->parent = mnt;
     struct super_block * sb =fs_type->alloc_sb();
+    // if(sb->fs==fs_type)
+    //     writeValTo7SegsHex(0x77777777);
+
     only_mount->sb=sb;//建立对应的sb
-    led_red(16384);
-    writeValTo7SegsHex(sb->root);
 
     only_mount->root = sb->root;
     
@@ -62,14 +63,15 @@ int open(const char* filename,int mode){
     if(fd>=0){
         struct file *f;
         f = get_file(filename,mode);
-        led_red(128);
-        writeValTo7SegsHex(f->dentry);
-        led_red(256);
-        writeValTo7SegsHex(f->inode);
-        led_red(512);
-        writeValTo7SegsHex(&(f->inode->data));
-        led_red(1024);
-        writeValTo7SegsHex(f->mapping);
+        // led_red(128);
+        // writeValTo7SegsHex(f->dentry->parent);
+        // led_red(256);
+        // writeValTo7SegsHex(f->inode);
+        // led_red(512);
+        // writeValTo7SegsHex(&(f->inode->data));
+        // led_red(1024);
+        // writeValTo7SegsHex(f->mapping);
+
         current->files[fd]=f;
     }
     return fd;
@@ -77,6 +79,7 @@ int open(const char* filename,int mode){
 
 int close(int fd){
     current->files[fd]=NULL;
+    return 0;
 }
 
 /**
@@ -214,7 +217,7 @@ int do_lookup(struct nameidata *nd, struct qstr *name,struct path *path){
             next = next->next;
             continue;
         }
-        while(sub->d_name.name[i] == str[i]) i++;
+        while(sub->d_name.name[i] == str[i]&&i<len) i++;
         if(i==len)
             break;
         next = next->next;
@@ -245,8 +248,8 @@ int vfs_create(struct inode *dir, struct dentry *dentry, int mode,struct nameida
 struct file* alloc_file();
 struct file *dentry_open(struct dentry *dentry, struct vfsmount *mnt, int mode){
     struct file *f =alloc_file();
-    led_red(64);
-    writeValTo7SegsHex(f);
+    // led_red(64);
+    // writeValTo7SegsHex(f);
     struct inode *inode;
     int error;
     

@@ -31,30 +31,26 @@ struct fs_type ramfs_fs_type={
 };
 
 static struct super_block * ramfs_alloc_sb(){
+  // writeValTo7SegsHex(0x77777777);
   struct super_block * sb;
   sb = alloc_sb();
-  led_red(2);
-  writeValTo7SegsHex(sb);
+  // led_red(2);
+  // writeValTo7SegsHex(sb);
   sb->sb_operations=&ramfs_super_ops;
   sb->fs = &ramfs_fs_type;
   //sb->d_operations=&ramfs_dops;
   struct inode * inode = ramfs_alloc_inode(sb,INODE_DIR);
-  led_red(4);
-  writeValTo7SegsHex(inode);
+  // led_red(4);
+  // writeValTo7SegsHex(inode);
   struct dentry * root= alloc_dentry_root(inode);
-  
-
-  // if (inode) {
-  //   inode->i_operations = &ramfs_inode_ops_dir;
-  //   //inode->f_operations = &ramfs_file_ops_dir;
-  //   inode->f_operations = NULL;
-  //   /* directory inodes start off with i_nlink == 2 (for "." entry) */
-  //   //inode->nlink++;
-  // }
 
   sb->root = root;
-  led_red(8);
-  writeValTo7SegsHex(sb->root);
+
+  led_no_delay(0x80000000);//玄学bug，不加sb->root就是0
+  // volatile int abc = 1;
+  // if(sb->root==0x00025E80)
+  //   writeValTo7SegsHex(0x77777777);
+  
   return sb;
 }
 // void ramfs_kill_sb (struct super_block * sb){

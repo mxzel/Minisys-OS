@@ -66,7 +66,10 @@ int main(){
     // writeValTo7SegsHex(0x55555555);
     // //cpu_idle();
     int fd=open("/a",OPEN_WR);
-
+    led_red(fd+1);
+    close(fd);
+    writeValTo7SegsHex(0x66666666);
+    fd=open("/a",OPEN_WR);
     led_red(fd+1);
     while(1)writeValTo7SegsHex(0x66666666);
     // test_vmm();
@@ -134,7 +137,7 @@ __attribute__ ((nomips16)) void _mips_handle_exception (struct gpctx *ctx, int e
             // writeValTo7SegsHex(0x03030303);
             // break;
         case EXC_TLBS://store tld miss
-            writeValTo7SegsHex(0x01010101);
+            //writeValTo7SegsHex(0x01010101);
 
             // TLB size 为 16
             // PageMask
@@ -142,7 +145,7 @@ __attribute__ ((nomips16)) void _mips_handle_exception (struct gpctx *ctx, int e
 
             uint32_t badvaddr = ctx->badvaddr;
             uint32_t vpn = badvaddr >> 12;
-            writeValTo7SegsHex(badvaddr);
+            //writeValTo7SegsHex(badvaddr);
 
             // EntryLo0 和 EntryLo1
             uint32_t ppn;

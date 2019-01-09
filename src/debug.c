@@ -77,3 +77,8 @@ void delay() {
     volatile unsigned int j;
     for (j = 0; j < (7000000); j++) ;	// delay
 }
+
+void led_no_delay(int value){
+    volatile int *IO_LEDR = (int*)0xbf800000;
+    *IO_LEDR = value;
+}
