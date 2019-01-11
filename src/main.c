@@ -75,7 +75,7 @@ __attribute__ ((nomips16)) void _mips_handle_exception (struct gpctx *ctx, int e
    // writeValTo7SegsHex(0xffffffff);
     switch(exception){
         case EXC_SYS://system call
-            writeValTo7SegsHex(0x11111111);
+           // writeValTo7SegsHex(0x11111111);
             if(ctx->r[1]==1){
                 // current->context.args = ctx->
                 current->context.reg16 = ctx->r[15];

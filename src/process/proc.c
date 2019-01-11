@@ -120,7 +120,7 @@ int keyboard_input(){
 
 //init进程，用于接受用户输入并创建相应进程
 static void init_main(void *arg){
-    //调用creat_pro创建进程TODO:
+    //调用creat_pro创建进程
     // *(int *)arg=10;
    /* writeValTo7SegsHex(0x44444444);
     pid_t p=create_proc(test_main,NULL,5);
@@ -128,14 +128,15 @@ static void init_main(void *arg){
     p=create_proc(test_main2,NULL,7);
     writeValTo7SegsDec(p);
     */
+    writeValTo7SegsDec(catOutput(current->pid,current->priority));
    int i=0;
-   int inputValue[3]={};
+   int inputValue[3]={7,6,5};
    int outputValue[3]={};
-   while(i<3)
-   {
-    inputValue[i]=keyboard_input();
-    i++;
-   }
+//    while(i<3)
+//    {
+//     inputValue[i]=keyboard_input();
+//     i++;
+//    }
     unsigned p=create_proc(test2,NULL,inputValue[0]); 
     outputValue[0]=catOutput(p,inputValue[0]);
 
@@ -153,22 +154,20 @@ static void init_main(void *arg){
         i++;
     }
 
-    
-
-
 }
 
 
 
 
 static inline void sys_schedule(){
+    writeValTo7SegsHex(0x5C);
     asm ( "li $2,0x1");
     asm ( "syscall");
-    writeValTo7SegsHex(0x33333333);
+    //
 }
 
 static inline void do_exit(){
-    writeValTo7SegsHex(0x66666666);
+    //writeValTo7SegsHex(0x66666666);
     current->state=1;
     sys_schedule();
 }
@@ -228,13 +227,13 @@ void proc_init(void){
     }
     idleproc->pid = idle_pid;
     idleproc->state = 0;
-    idleproc->priority=0;
+    idleproc->priority=1;
     //setup_kstack(idleproc); //0号进程就用内核栈，没毛病弟弟
     set_proc_name(idleproc, "idle");
     nr_process++;
     set_current(idleproc);
 
-    pid_t pid = create_proc(init_main,NULL,1);//创建init进程
+    pid_t pid = create_proc(init_main,NULL,2);//创建init进程
 
 
 }
@@ -243,22 +242,24 @@ void proc_init(void){
 void cpu_idle(void) {
     
     // while (1) {
+    //     writeValTo7SegsHex(catOutput(current->pid,current->priority));
     //     sys_schedule();
-    //     writeValTo7SegsHex(0x55550000);
     // }
-    int fd=open("/a",OPEN_WR);
-    //led_red(fd+1);
+
     int i = 0x00001234;
 
-    writeValTo7SegsHex(0x55555555);
-    writeValTo7SegsHex(sys_write(fd,int,i));
-    i=3;
-    close(fd);
-    fd=open("/a",OPEN_WR);
-    // led_red(fd+2);
-    writeValTo7SegsHex(i);
-    writeValTo7SegsHex(0x77777777);
-    writeValTo7SegsHex(sys_read(fd,int,i));
-    writeValTo7SegsHex(i);
+    int fd=open("/b/a",OPEN_WR);
+    writeValTo7SegsHex(fd);
+
+    // writeValTo7SegsHex(sys_write(fd,int,i));
+    // close(fd);
+    
+    // i=3;
+    // writeValTo7SegsHex(i);
+    // fd=open("/a",OPEN_W);
+    // writeValTo7SegsDec(fd);
+
+    // writeValTo7SegsHex(sys_read(fd,int,i));
+    // writeValTo7SegsHex(i);
 
 }

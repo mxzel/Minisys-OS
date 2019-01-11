@@ -71,8 +71,9 @@ int open(const char* filename,int mode){
         // writeValTo7SegsHex(&(f->inode->data));
         // led_red(1024);
         // writeValTo7SegsHex(f->mapping);
-
         current->files[fd]=f;
+        if(f==NULL)
+            return -1;
     }
     return fd;
 }
