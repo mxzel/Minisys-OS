@@ -177,7 +177,7 @@ __attribute__ ((nomips16)) void _mips_handle_exception (struct gpctx *ctx, int e
             // writeValTo7SegsHex(lo0);
             // writeValTo7SegsHex(lo1);
             // writeValTo7SegsHex(msk);
-            
+
             break;
         default:
             __exception_handle(ctx, exception);
