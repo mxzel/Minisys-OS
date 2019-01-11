@@ -163,12 +163,8 @@ __attribute__ ((nomips16)) void _mips_handle_exception (struct gpctx *ctx, int e
                 mips32_get_c0(C0_ENTRYHI),
                 mips32_get_c0(C0_ENTRYLO0),
                 mips32_get_c0(C0_ENTRYLO1),
-<<<<<<< HEAD
-                mips32_get_c0(C0_PAGEMASK), 
-=======
                 mips32_get_c0(C0_PAGEMASK),
                 1
->>>>>>> master
             );
 
             // uint32_t hi, lo0, lo1, msk;
