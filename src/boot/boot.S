@@ -54,7 +54,7 @@ OF SUCH DAMAGE.
 
     # The first function, __reset_vector, just loads the address of the __cpu_init function
     # and jumps to it. This does 2 things; First it will jump to a KSEG1 address which is a
-    # mirror of the BEV’s KSEG0 address but cacheable. Second it will do a mode switch to
+    # mirror of the BEVï¿½s KSEG0 address but cacheable. Second it will do a mode switch to
     # enable micromips mode.
 
 /**************************************************************************************

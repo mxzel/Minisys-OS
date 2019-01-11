@@ -1,6 +1,6 @@
 /*
  * 一些类型的定义
- * TRUE FALSE bool uint64_t 
+ * TRUE FALSE bool uint64_t
  * time_t pid_t pgd_t pte_t
  * atomic_t list_head
  */
@@ -55,6 +55,17 @@ typedef struct {
 struct list_head {
     struct list_head *next;
     struct list_head *prev;
+};
+
+//TODO 互斥锁实现
+//struct mutex;
+
+typedef long long loff_t;
+
+
+struct page{
+  struct list_head list;
+  void* address;
 };
 
 #endif  // _INCLUDE_TYPES_H

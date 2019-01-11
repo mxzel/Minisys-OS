@@ -73,8 +73,9 @@ void *kmalloc(pid_t pid, size_t size){
                 return NULL;
             }
 
-            alloc_block(new_block_addr);
+            
         }
+        alloc_block(new_block_addr);
 
         return addr_to_ptr(new_block_addr);
     }else{
