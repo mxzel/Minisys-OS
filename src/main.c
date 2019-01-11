@@ -159,7 +159,7 @@ __attribute__ ((nomips16)) void _mips_handle_exception (struct gpctx *ctx, int e
             mips32_set_c0(C0_ENTRYHI, vpn << 12);
 
             // TLBWR
-            mips_tlbwr2(
+            mips_tlbwi2(
                 mips32_get_c0(C0_ENTRYHI),
                 mips32_get_c0(C0_ENTRYLO0),
                 mips32_get_c0(C0_ENTRYLO1),
