@@ -54,3 +54,48 @@ int test_rw_memory(){
 int test_free_memory(){
     return 1;
 }
+
+
+/**
+ * 测试kmalloc与kfree函数
+ * 首先申请两块内存，可以看到这两块内存的地址是不相同的
+ * 然后释放第二块内存，再次申请，会得到相同的地址
+ */
+bool test_alloc_free(){
+    int *addr = (int *)kmalloc(0, 32);
+    writeValTo7SegsHex(((uint32_t)addr));
+    addr = (int *)kmalloc(0, 32);
+    writeValTo7SegsHex(((uint32_t)addr));
+    kfree(addr);
+    addr = (int *)kmalloc(0, 32);
+    writeValTo7SegsHex(((uint32_t)addr));
+}
+
+/**
+ * 大小为1024的block位于页面的最低端，申请该大小的内存块返回的会是页的地址
+ */
+bool test_alloc_page_block(){
+    int *addr = (int *)kmalloc(0, 4096);
+    writeValTo7SegsHex(((uint32_t)addr));
+    addr = (int *)kmalloc(0, 1024);
+    writeValTo7SegsHex(((uint32_t)addr));
+}
+
+/**
+ * 不同进程之间可以申请到的block相互隔离
+ */
+bool test_alloc_block(){
+    int *addr = (int *)kmalloc(0, 32);
+    writeValTo7SegsHex(((uint32_t)addr));
+    addr = (int *)kmalloc(1, 32);
+    writeValTo7SegsHex(((uint32_t)addr));
+}
+
+/**
+ * 测试读写内存
+ */
+bool test_rw_block(){
+    int *addr = (int *)kmalloc(0, 32);
+    *addr = 123;
+    writeValTo7SegsHex(*addr);
+}

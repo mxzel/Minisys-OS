@@ -15,4 +15,12 @@ int test_rw_memory();
 
 int test_free_memory();
 
+bool test_alloc_free();
+
+bool test_alloc_page_block();
+
+bool test_alloc_block();
+
+bool test_rw_block();
+
 #endif // INCLUDE_MM_MM_TEST_H_
