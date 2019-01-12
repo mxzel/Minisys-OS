@@ -1,4 +1,4 @@
-# 综合课程设计 课题二 - 操作系统的实现
+<!-- # 综合课程设计 课题二 - 操作系统的实现
 
 ## 可能需要学的知识
 
@@ -40,18 +40,7 @@ GitHub 是通过 Git 进行版本控制的软件源代码托管服务。
 ##### GitHub 配置
 
 暂略，网上有很多教程可以参考
-<!-- 
-### Makefile
 
-我们使用 Makefile 的规则是：
-
-1. 如果这个工程没有编译过，那么我们的所有c文件都要编译并被链接。
-2. 如果这个工程的某几个c文件被修改，那么我们只编译被修改的c文件，并链接目标程序。
-3. 如果这个工程的头文件被改变了，那么我们需要编译引用了这几个头文件的c文件，并链接目标程序。
-
-make 命令会自动智能地根据当前的文件修改的情况来确定哪些文件需要重编译，从而自己编译所需要的文件和链接目标程序。 -->
-
-<!-- ### [gdb](https://chyyuu.gitbooks.io/ucore_os_docs/content/lab0/lab0_2_3_3_gdb.html) -->
 
 ### shell
 
@@ -147,4 +136,7 @@ make 命令会自动智能地根据当前的文件修改的情况来确定哪些
 1. [ucore_os_lab](https://github.com/chyyuu/ucore_os_lab) [gitbook](https://chyyuu.gitbooks.io/ucore_os_docs/content/)  
 os kernel labs for operating systems course in Tsinghua University.
 2. [https://github.com/hurley25/hurlex-doc](https://github.com/hurley25/hurlex-doc)
-3. [https://github.com/hurley25/Hurlex-II](https://github.com/hurley25/Hurlex-II)
+3. [https://github.com/hurley25/Hurlex-II](https://github.com/hurley25/Hurlex-II) -->
+
+
+# 综合课程设计 操作系统的实现

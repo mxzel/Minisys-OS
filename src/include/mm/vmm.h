@@ -72,6 +72,8 @@ void vmm_init(void);
 
 void set_ppn_to_pte(int ppn, pte_t *pte);
 
+void set_vpn_to_pte(int vpn, pte_t *pte);
+
 // 根据物理地址获得物理页号
 uint32_t get_ppn_from_page_addr(uint32_t phy_page_addr);
 
@@ -107,6 +109,8 @@ bool is_split_block(uint32_t pte_block_flag);
 int get_page_status_from_pte(pte_t pte);
 
 int get_page_status(uint32_t vir_page_addr);
+
+int get_block_status(uint32_t block_addr);
 
 // 从 pte 中获得满足 size 大小的合适的 block
 int get_suitable_block_from_pte(pte_t pte, size_t size);

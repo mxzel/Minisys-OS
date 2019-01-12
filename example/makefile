@@ -31,9 +31,9 @@ endif
 LIBFDCPATH="$(MIPS_ELF_ROOT)/share/mips/addons/libfdc/"
 
 
-CFLAGS  = -EL -g -march=m14kc -msoft-float -O1 -I$(LIBFDCPATH) -I ./include -I ./lib -I ./include/lib
-LDFLAGS = -EL -march=m14kc -msoft-float  -Wl,-Map=program.map -L$(LIBFDCPATH) -I ./include -I ./lib -I ./include/lib
-#-nostartfiles
+CFLAGS  = -EL -g -march=m14kc -msoft-float -O1 -I$(LIBFDCPATH)
+LDFLAGS = -EL -march=m14kc -msoft-float -nostartfiles -Wl,-Map=program.map -L$(LIBFDCPATH)
+#
 ifeq ($(TINY_MEMORY),1)
 # Set the stack to the top of the Code/Data RAM
 LDFLAGS += -Wl,--defsym,__stack=0x80000400
@@ -68,35 +68,18 @@ LDFLAGS += -Wl,--defsym,__isr_vec_count=0
 LDFLAGS += -Wl,-e,0xbfc00000
 
 ASOURCES= \
-boot/dummy.S \
-#process/switch.S
-#boot.S \
-
-#exceptions.S \ 
-#crt0.S \
+boot.S \
+exceptions.S \
+crt0.S \
+dummy.S
 
 
 
 # Build crt0.o so that it ends up in the .boot section
-# crt0.o : CFLAGS += -D_BOOTCODE
+crt0.o : CFLAGS += -D_BOOTCODE
 
 CSOURCES= \
-fs/fs.c \
-fs/ramfs/ramfs.c \
-fs/vfs/alloc.c \
-fs/vfs/dentry.c \
-fs/vfs/file.c \
-debug.c \
-process/proc.c \
-schedule/sched.c \
-mm/pmm.c \
-mm/vmm.c \
-mm/mm.c \
-mm/mm_test.c \
 main.c
-
-#lib/string.c \
-
 
 COBJECTS = $(CSOURCES:.c=.o)
 CASMS    = $(CSOURCES:.c=.s)
@@ -105,9 +88,9 @@ AOBJECTS = $(ASOURCES:.S=.o)
 all: program.elf $(CASMS)
 
 program.elf : $(AOBJECTS) $(COBJECTS) 
-	#$(LD)  $(LDFLAGS) $(filter-out crt0.o,$(AOBJECTS)) $(COBJECTS) -lfdc -o program.elf
-	$(LD)  $(LDFLAGS) $(AOBJECTS) $(COBJECTS) -lfdc -o program.elf
-	#$(OC) --remove-section .MIPS.abiflags --remove-section .reginfo program.elf
+	$(LD)  $(LDFLAGS) $(filter-out crt0.o,$(AOBJECTS)) $(COBJECTS) -lfdc -o program.elf
+	#$(LD)  $(LDFLAGS) $(AOBJECTS) $(COBJECTS) -lfdc -o program.elf
+	$(OC) --remove-section .MIPS.abiflags --remove-section .reginfo program.elf
 	$(SZ) program.elf
 	$(OD) -D -l -t program.elf > program.dis
 	$(OD) -D program.elf > program.txt
@@ -123,22 +106,8 @@ program.elf : $(AOBJECTS) $(COBJECTS)
 	$(CC) -S $(CFLAGS) $< -o $@
 
 clean:
-	rm -f *.s
+	rm -f main.s
 	rm -f *.o
-	rm -f lib/*.o
-	rm -f lib/*.s
-	rm -f mm/*.o
-	rm -f mm/*.s
-	rm -f process/*.s
-	rm -f process/*.o
-	rm -f schedule/*.s
-	rm -f schedule/*.o
-	rm -f fs/*.s
-	rm -f fs/*.o
-	rm -f fs/ramfs/*.s
-	rm -f fs/ramfs/*.o
-	rm -f fs/vfs/*.s
-	rm -f fs/vfs/*.o
 	rm -f program.elf
 	rm -f program.map
 	rm -f program.dis

@@ -56,3 +56,17 @@ modules.order
 Module.symvers
 Mkfile.old
 dkms.conf
+
+
+# temp files
+src/GPATH
+src/GRTAGS
+src/GTAGS
+*.c~
+*.h~
+*.c#
+*.h#
+
+#make temp files
+*.o
+

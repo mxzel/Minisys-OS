@@ -17,9 +17,16 @@ uint32_t vmm_page_addr = PTE_ADDR + PAGE_TABLE_SIZE - 0x80000000;
 void vmm_init(void){
 
     /* 设置页表中的有效页为未分配，无效页为保留 */
+    // int cnt = 0, ppn = 0x00;
     int cnt = 0, ppn = 0x22;
     for (pte_p = PAGE_TABLE_P; pte_p < PAGE_TABLE_P + PAGE_TABLE_SIZE; pte_p++, cnt++)
     {
+        // if(cnt < RESERVED_NUM){
+        //     *pte_p = 2 << 4;
+        //     set_ppn_to_pte(ppn, pte_p);
+        //     set_vpn_to_pte(ppn, pte_p);
+        //     ppn += 0x01;
+        // }
         if(cnt < PTE_COUNT){
             *pte_p = 0;
             set_ppn_to_pte(ppn, pte_p);
@@ -93,6 +100,11 @@ void vmm_init(void){
 void set_ppn_to_pte(int ppn, pte_t *pte){
     uint64_t mask = 0x00000000fc000000;
     *pte = ((*pte) & (~mask)) | (ppn << 26);
+}
+
+void set_vpn_to_pte(int vpn, pte_t *pte){
+    uint64_t mask = 0x0000000003fffc0;
+    *pte = ((*pte) & (~mask)) | (vpn << 6);
 }
 
 uint32_t get_ppn_from_page_addr(uint32_t phy_page_addr){
@@ -204,6 +216,26 @@ int get_page_status(uint32_t vir_page_addr){
     return -1;
 }
 
+int get_block_status(uint32_t block_addr){
+    uint32_t page_addr = block_addr & PAGE_MASK;
+    pte_p = get_pte_by_page_addr(page_addr);
+
+    if(get_page_status(page_addr) != 1)
+        return -1;
+    
+    uint32_t pte_block_flag = (uint32_t)((*pte_p) >> 32;
+    if(is_split_block(pte_block_flag) == false)
+        return 1;
+    
+    int idx = BLOCK_NUM_PER_PAGE - 1;
+    int offset = block_addr - page_addr;
+    while(idx >= 0 && block_offset[idx] != offset)
+        --idx;
+    if((pte_block_flag & block_flag[idx]) != 0)
+        return 1;
+    return 0;
+}
+
 bool is_split_block(uint32_t pte_block_flag){
     // 判断是否以block为粒度来分配
     // 这里有bug 0与0的结果是0，0和0比较出来是错的？
@@ -221,7 +253,11 @@ int get_suitable_block_from_pte(pte_t pte, size_t size){
     if(is_split_block(pte_block_flag) == false)
         return -1;
     // 大小不满足条件，或者是满足大小的block已分配的情况下 继续寻找
+    // writeValTo7SegsHex(pte_block_flag);    
     while(block_size[idx] < size || (pte_block_flag & block_flag[idx]) != 0){
+        // led_red(block_flag[idx]);
+        // led_red(0);
+        // writeValTo7SegsHex(block_flag[idx]);
         --idx;
         if(idx == -1)
             return -1;
@@ -255,8 +291,9 @@ void alloc_block(uint32_t block_addr){
         if(block_offset[idx] == offset)
             break;
     }
+    // writeValTo7SegsHex((uint32_t)((*pte_p) >> 32));
     *pte_p |= ((uint64_t)block_flag[idx]) << 32;
-    // writeValTo7SegsHex(block_flag[idx]);
+    // writeValTo7SegsHex((uint32_t)((*pte_p) >> 32));
 }
 
 void free_block(uint32_t block_addr){
@@ -282,15 +319,9 @@ uint32_t find_block(pid_t pid, size_t size){
         if(get_pid_from_pte(*pte_p) == pid && get_page_status_from_pte(*pte_p) == 1 \
                 && is_split_block((uint32_t)((*pte_p) >> 32)) == true){
             int block_idx = get_suitable_block_from_pte(*pte_p, size);
-            // writeValTo7SegsDec(block_idx);
-            // delay();
             if(block_idx == -1)
                 continue;
             uint32_t block_addr = (get_vpn_from_pte(*pte_p) << 12) + block_offset[block_idx];
-            // writeValTo7SegsHex(get_vpn_from_pte(*pte_p));
-            // delay();
-            // writeValTo7SegsHex(block_offset[block_idx]);
-            // delay();
             return block_addr;
         }
     }
