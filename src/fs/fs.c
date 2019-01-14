@@ -130,6 +130,7 @@ int path_lookup(const char *name,struct nameidata *nd){
         error = do_lookup(nd, &this, &next);//根据父目录项和当前路径名找出下一级的dentry
         if (error)
             break;
+        nd->dentry=next.dentry;
         inode = next.dentry->inode;
         if (!inode)
             return -1;//没有对应的目录
