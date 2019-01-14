@@ -6,6 +6,16 @@
 #include <debug.h>
 
 
+//=====================================================
+//=ramfs.c
+//=
+//=本文件是ramfs的具体实现
+//=定义了ramfs中vfs结构体应做的各种行为
+//=可以是自己实现的函数，也可以是借用通用的函数
+//
+//=====================================================
+
+
 extern int generic_file_write(struct file *file, const char *buf,size_t count);
 extern int generic_file_read(struct file *filp, char  *buf, size_t count);
 
@@ -31,26 +41,18 @@ struct fs_type ramfs_fs_type={
 };
 
 static struct super_block * ramfs_alloc_sb(){
-  // writeValTo7SegsHex(0x77777777);
   struct super_block * sb;
   sb = alloc_sb();
-  // led_red(2);
-  // writeValTo7SegsHex(sb);
   sb->sb_operations=&ramfs_super_ops;
   sb->fs = &ramfs_fs_type;
   //sb->d_operations=&ramfs_dops;
   struct inode * inode = ramfs_alloc_inode(sb,INODE_DIR);
-  // led_red(4);
-  // writeValTo7SegsHex(inode);
   struct dentry * root= alloc_dentry_root(inode);
 
   sb->root = root;
 
   led_no_delay(0x80000000);//玄学bug，不加sb->root就是0
-  // volatile int abc = 1;
-  // if(sb->root==0x00025E80)
-  //   writeValTo7SegsHex(0x77777777);
-  
+
   return sb;
 }
 // void ramfs_kill_sb (struct super_block * sb){
@@ -200,7 +202,7 @@ simple_prepare_write -
 @return
  **/
 //如果from-to不够一页，就把一页中除了from-to以外的地方清零
-// //TODO 没啥意义
+// //没啥意义
 // int simple_prepare_write(struct file *file, struct page* page,
 //                          unsigned from, unsigned to)
 // {
@@ -261,7 +263,7 @@ struct file_operations ramfs_file_ops_file = {
 };
 
 
-//考虑不实现，如果对文件file的操作没重用的话就不写，因为体现不出来
+//不实现，如果对文件file的操作没重用的话就不写，因为体现不出来
 //每个打开的目录也会分配对应的fd和struct file,可以通过file进行如下操作：
 // struct file_operations ramfs_file_ops_dir = {
 //   .open		= dcache_dir_open,

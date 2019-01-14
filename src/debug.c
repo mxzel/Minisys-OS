@@ -78,6 +78,41 @@ void delay() {
     for (j = 0; j < (7000000); j++) ;	// delay
 }
 
+
+int keyboard_input(){
+volatile int *IO_KEYBOARD = (int*)0xbf80000c;
+volatile unsigned int keyboard;
+int i =0;
+  while (1) {
+    // led_red(i);
+    // i=!i;    
+    keyboard = *IO_KEYBOARD;
+	if(keyboard & 0x00000010){
+       // writeValTo7SegsHex(keyboard & 0x0000000F);
+		return keyboard & 0x0000000F;
+	}
+  }
+}
+int keyboard_value()
+{
+  writeValTo7SegsHex(0);
+unsigned value=0;
+unsigned input=0;
+int hasChanged=0;
+while(input=keyboard_input(),1)
+{
+    if(hasChanged==0&&input==0xF)
+    {
+        continue;
+    }
+    if(input!=0xF&&input<0xA){
+        value=value*10+input;
+        writeValTo7SegsDec(value);
+        hasChanged=1;
+    }
+    else return value;
+}
+}
 void led_no_delay(int value){
     volatile int *IO_LEDR = (int*)0xbf800000;
     *IO_LEDR = value;

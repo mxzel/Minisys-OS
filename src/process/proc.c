@@ -113,30 +113,21 @@ static void test4(void *arg){
    writeValTo7SegsDec(catOutput(current->pid,current->priority));
 }
 
-int keyboard_input(){
-    static int i=5;
-    return i++;
-}
+
 
 //init进程，用于接受用户输入并创建相应进程
 static void init_main(void *arg){
     //调用creat_pro创建进程
-    // *(int *)arg=10;
-   /* writeValTo7SegsHex(0x44444444);
-    pid_t p=create_proc(test_main,NULL,5);
-    writeValTo7SegsDec(p);
-    p=create_proc(test_main2,NULL,7);
-    writeValTo7SegsDec(p);
-    */
+  
     writeValTo7SegsDec(catOutput(current->pid,current->priority));
    int i=0;
-   int inputValue[3]={7,6,5};
+   int inputValue[3]={};
    int outputValue[3]={};
-//    while(i<3)
-//    {
-//     inputValue[i]=keyboard_input();
-//     i++;
-//    }
+   while(i<3)
+   {
+    inputValue[i]=keyboard_value();
+    i++;
+   }
     unsigned p=create_proc(test2,NULL,inputValue[0]); 
     outputValue[0]=catOutput(p,inputValue[0]);
 
@@ -246,20 +237,24 @@ void cpu_idle(void) {
     //     sys_schedule();
     // }
 
-    int i = 0x00001234;
 
-    int fd=open("/b/a",OPEN_WR);
+
+    int i = keyboard_value();
+
+    int fd=open("/a",OPEN_WR);
     writeValTo7SegsHex(fd);
 
-    // writeValTo7SegsHex(sys_write(fd,int,i));
-    // close(fd);
+    writeValTo7SegsHex(sys_write(fd,int,i));
+    close(fd);
     
-    // i=3;
-    // writeValTo7SegsHex(i);
-    // fd=open("/a",OPEN_W);
-    // writeValTo7SegsDec(fd);
+    i=3;
+    writeValTo7SegsHex(i);
+    fd=open("/a",OPEN_WR);
+    writeValTo7SegsDec(fd);
 
-    // writeValTo7SegsHex(sys_read(fd,int,i));
-    // writeValTo7SegsHex(i);
+    writeValTo7SegsHex(sys_read(fd,int,i));
+    writeValTo7SegsDec(i);
+
+
 
 }
