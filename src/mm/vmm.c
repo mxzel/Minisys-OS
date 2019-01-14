@@ -223,7 +223,7 @@ int get_block_status(uint32_t block_addr){
     if(get_page_status(page_addr) != 1)
         return -1;
     
-    uint32_t pte_block_flag = (uint32_t)((*pte_p) >> 32;
+    uint32_t pte_block_flag = (uint32_t)((*pte_p) >> 32);
     if(is_split_block(pte_block_flag) == false)
         return 1;
     

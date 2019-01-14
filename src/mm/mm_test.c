@@ -93,6 +93,7 @@ bool test_alloc_free(){
     writeValTo7SegsHex(((uint32_t)addr));
     kfree(addr);
     addr = (int *)kmalloc(0, 32);
+    writeValTo7SegsHex(((uint32_t)0));
     writeValTo7SegsHex(((uint32_t)addr));
 }
 
