@@ -15,21 +15,14 @@
 //=====================================================
 
 
-
-
 //INODE的两种类型，对应不同的operations
 #define INODE_DIR 1
 #define INODE_FILE 2
-
-
-
 
 struct qstr {
     unsigned int len;
     const char *name;
 };
-
-
 
 //每个文件系统一个
 struct fs_type{
@@ -238,7 +231,6 @@ struct file {
 
 
 
-//TODO
 struct path {
     struct vfsmount *mnt;
     struct dentry *dentry;

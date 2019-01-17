@@ -63,16 +63,9 @@ int open(const char* filename,int mode){
     if(fd>=0){
         struct file *f;
         f = get_file(filename,mode);
-        // led_red(128);
-        // writeValTo7SegsHex(f->dentry->parent);
-        // led_red(256);
-        // writeValTo7SegsHex(f->inode);
-        // led_red(512);
-        // writeValTo7SegsHex(&(f->inode->data));
-        // led_red(1024);
-        // writeValTo7SegsHex(f->mapping);
-
         current->files[fd]=f;
+        if(f==NULL)
+            return -1;
     }
     return fd;
 }
@@ -89,7 +82,6 @@ int close(int fd){
  @return 指向构建的file结构体的指针
  **/
 struct file * get_file(const char* filename,int mode){
-    //TODO
     int error=0;
     struct nameidata nd;
     
@@ -98,11 +90,12 @@ struct file * get_file(const char* filename,int mode){
         return dentry_open(nd.dentry,nd.mnt,mode);
     return NULL;
 }
-
-//path_lookup - 路径查找,找到最后一级的目录，存在nd
-//@parameter pathname 文件路径名(可以是全路径，也可以是相对路径名)
-//@parameter nd 此时不包含任何有用信息，用来返回查找结果
-//@return 0正确，-1错误
+/**
+path_lookup - 路径查找,找到最后一级的目录，存在nd
+@parameter pathname 文件路径名(可以是全路径，也可以是相对路径名)
+@parameter nd 此时不包含任何有用信息，用来返回查找结果
+@return 0正确，-1错误
+**/
 int path_lookup(const char *name,struct nameidata *nd){
     int error = 0;
     //nd->last_type = 3; //最后一个分量是“/”（也就是整个路径名为“/”）
@@ -130,16 +123,14 @@ int path_lookup(const char *name,struct nameidata *nd){
             c = *(const unsigned char *)name;
         } while (c && (c != '/'));
         this.len = name - (const char *) this.name;
-        /* remove trailing slashes? */
         if (!c)
             goto last_component;//最后一部分
         while (*++name == '/');
         
-        /* This does the actual lookups.. */
-        
         error = do_lookup(nd, &this, &next);//根据父目录项和当前路径名找出下一级的dentry
         if (error)
             break;
+        nd->dentry=next.dentry;
         inode = next.dentry->inode;
         if (!inode)
             return -1;//没有对应的目录
@@ -153,12 +144,13 @@ int path_lookup(const char *name,struct nameidata *nd){
 }
 
 
-
-//根据路径名解析
-//@parameter pathname 文件路径名(可以是全路径，也可以是相对路径名)
-//@parameter mode 读写权限
-//@parameter nd ...
-//@return
+/**
+根据路径名解析 - open_namei
+@parameter pathname 文件路径名(可以是全路径，也可以是相对路径名)
+@parameter mode 读写权限
+@parameter nd 将信息记录在nd中，后续有用
+@return 成功返回0
+**/
 int open_namei(const char *pathname,int mode,struct nameidata *nd){
 
     int error=0;
@@ -194,11 +186,13 @@ int open_namei(const char *pathname,int mode,struct nameidata *nd){
     return 0;
 }
 
-
-//获取dentry
-//@parameter nd 是输入参数，这个结构指定了查找的父目录项以及它所在的vfsmount
-//@parameter name 输入参数，指定了路径分量名称。
-//@parameter path 输出参数，保存查找结果。
+/**
+do_lookup - 获取dentry
+@parameter nd 是输入参数，这个结构指定了查找的父目录项以及它所在的vfsmount
+@parameter name 输入参数，指定了路径分量名称。
+@parameter path 输出参数，保存查找结果。
+@return 返回0成功，-1失败
+**/
 int do_lookup(struct nameidata *nd, struct qstr *name,struct path *path){
     struct vfsmount *mnt = nd->mnt;
     struct dentry *parent = nd->dentry;
@@ -246,6 +240,15 @@ int vfs_create(struct inode *dir, struct dentry *dentry, int mode,struct nameida
 }
 
 struct file* alloc_file();
+
+/**
+dentry_open - 根据nameidata信息创建file
+@parameter dentry 文件的dentry
+@parameter mnt 文件属于哪个挂载点
+@parameter mode 打开文件的权限
+@return 返回创建的file结构体指针
+**/
+
 struct file *dentry_open(struct dentry *dentry, struct vfsmount *mnt, int mode){
     struct file *f =alloc_file();
     // led_red(64);
@@ -270,11 +273,6 @@ struct file *dentry_open(struct dentry *dentry, struct vfsmount *mnt, int mode){
     if(&inode->sb->files){
         list_add(&f->list, &inode->sb->files);
     }
-    // if (f->f_operations && f->f_operations->open) {
-    //     error = f->f_operations->open(inode,f);
-    //     if (error)
-    //         return NULL;
-    // }
     return f;
 }
 
@@ -291,10 +289,5 @@ int __write(int fd,char * buf,size_t len){
     struct file* file = current->files[fd];
     if(file&&file->f_operations&&file->f_operations->write)
         return file->f_operations->write(file,buf,len);
-        // file->f_operations->write(file,buf,len);
-        // led_red(8);
-        // struct page* p= list_entry(file->inode->data.pages.next,struct page,list);
-        // int * i =(int *)p->address;
-        // writeValTo7SegsHex(*i);
     return -1;
 }

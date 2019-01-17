@@ -159,6 +159,8 @@ int generic_file_read(struct file *filp, char  *buf, size_t count){
   read_descriptor_t desc={.written = 0, .arg.buf = iov.iov_base, .count = iov.iov_len,.error = 0};
   if(filp->state.readable)
   	do_generic_mapping_read(filp->mapping,filp,&filp->position,&desc);
+else
+	desc.error=-1;
 
   //retval += desc.written;
   return desc.error;
@@ -289,7 +291,7 @@ int generic_file_write(struct file *file, const char *buf,size_t count){
 
   ret = __generic_file_write_nolock(file, &local_iov, &file->position);
 
-  return ret? 0:-1;
+  return (ret>=0)? 0:-1;
 }
 
 

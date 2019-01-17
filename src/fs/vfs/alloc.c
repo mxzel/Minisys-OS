@@ -5,8 +5,6 @@
 //#include<string.h>
 
 
-//TODO memset/memcopy
-
 //=====================================================
 //=alloc.c
 //=

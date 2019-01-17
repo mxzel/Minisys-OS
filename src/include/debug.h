@@ -19,6 +19,9 @@ void led_red(int value);
 
 void delay();
 
+int keyboard_input();
+int keyboard_value();
+
 void led_no_delay(int value);
 
 #endif

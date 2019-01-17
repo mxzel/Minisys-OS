@@ -50,7 +50,7 @@ int __read(int fd,char * buf,size_t len);
 #define sys_read(fd,type,var) __read(fd,&var,sizeof(type))
 
 /**
-   write - 读文件
+   write - 写文件
    @parameter fd 要写的文件的描述符
    @parameter var 要读的变量
    @parameter type 要读到的变量的类型
