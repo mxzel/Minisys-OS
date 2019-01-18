@@ -42,7 +42,6 @@ void *kmalloc(pid_t pid, size_t size){
      * 如果没有 分配新的页给该进程 然后再进行上述操作
      */
     // writeValTo7SegsHex(0x00);
-    // delay();
     if(size <= 1024){
         // 以block为粒度来分配
         uint32_t new_block_addr = find_block(pid, size);
@@ -56,18 +55,15 @@ void *kmalloc(pid_t pid, size_t size){
             }
             
             // writeValTo7SegsHex(0x01);
-            // delay();
 
             uint32_t phy_page_addr = pmm_alloc_page();
             vmm_alloc_page(phy_page_addr, pid, true);
 
             // writeValTo7SegsHex(0x02);
-            // delay();
 
             new_block_addr = find_block(pid, size);
 
             // writeValTo7SegsHex(new_block_addr);
-            // delay();
             if(new_block_addr == NULL){
                 // find_block 内部出现错误
                 return NULL;
@@ -87,25 +83,19 @@ void *kmalloc(pid_t pid, size_t size){
         }
         ++count;
         // writeValTo7SegsHex(0x01);
-        // delay();
         // 首先分配一个页，根据这个页可以获得分配的所有空间的首地址（虚拟地址），即 ret_addr
         uint32_t phy_page_addr = pmm_alloc_page();
         uint32_t vir_page_addr = vmm_alloc_page(phy_page_addr, pid, false);
 
         // 然后在虚拟内存上连续分配页，这些页在物理内存上可能是不连续的
         // writeValTo7SegsHex(0x02);
-        // delay();
         int i;
         for (i = 1; i < count; ++i){
             phy_page_addr = pmm_alloc_page();
             vmm_alloc_page(phy_page_addr, pid, false);
-            // if(get_page_status(vir_page_addr) != 1){
-            //     writeValTo7SegsHex(0x01010101);
-            // }
         }
 
         // writeValTo7SegsHex(0x03);
-        // delay();
         page_alloc_addrs[idx] = vir_page_addr;
         page_alloc_counts[idx++] = count;
         

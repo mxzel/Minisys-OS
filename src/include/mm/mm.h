@@ -18,14 +18,10 @@ void *addr_to_ptr(uint32_t addr);
 // 内存管理子系统初始化
 void mm_init(void);
 
-// // 为指定进程分配页框
-// void *alloc_page(pid_t pid, int count);
-
+// 为进程分配指定大小的内存
 void *kmalloc(pid_t pid, size_t size);
 
+// 释放内存
 void kfree(void *ptr);
-
-// // 释放指定页框
-// void free_page(uint32_t p);
 
 #endif // INCLUDE_MM_MM_H_

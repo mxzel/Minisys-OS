@@ -35,7 +35,6 @@ int main(){
     return 0;
 }
 
-// TODO: Software User's Manual 文档216页指出了软件初始化需要做的一些事情
 __attribute__ ((nomips16)) void _mips_handle_exception (struct gpctx *ctx, int exception)
 {
    // writeValTo7SegsHex(0xffffffff);
@@ -102,6 +101,7 @@ __attribute__ ((nomips16)) void _mips_handle_exception (struct gpctx *ctx, int e
             // PageMask
             mips32_set_c0(C0_PAGEMASK, 0x0fff);
 
+            // badvaddr
             uint32_t badvaddr = ctx->badvaddr;
             uint32_t vpn = badvaddr >> 12;
             //writeValTo7SegsHex(badvaddr);
@@ -121,10 +121,17 @@ __attribute__ ((nomips16)) void _mips_handle_exception (struct gpctx *ctx, int e
                 mips32_set_c0(C0_ENTRYLO1, 7 | (ppn << 6));
             }
             //writeValTo7SegsHex(get_ppn_by_vpn(vpn)<<12);
+
             // EntryHI
             mips32_set_c0(C0_ENTRYHI, vpn << 12);
 
-            // TLBWR
+            // TLBW
+            /**
+             * 这里使用固定 index 写入，而非 random 寄存器
+             * 因为每次 TLB 写入都是写入相邻的两个虚拟页，随着页框的分配，TLB 中的条目更新不及时，很有可能出现下面的情况：
+             * 其中一个 entry 说2号页可用，3号页不可用，然后另一个 entry 说3号页可用，这时访问 TLB 会出现系统调用的异常
+             * 固定 index 写入可以保证 TLB 中只有一个 entry 中的一个页映射是可用的
+             */
             mips_tlbwi2(
                 mips32_get_c0(C0_ENTRYHI),
                 mips32_get_c0(C0_ENTRYLO0),
@@ -133,11 +140,10 @@ __attribute__ ((nomips16)) void _mips_handle_exception (struct gpctx *ctx, int e
                 1
             );
 
+            // TLBR
+            // 用来验证 TLB 写入是否成功
             // uint32_t hi, lo0, lo1, msk;
             // mips_tlbri2(&hi, &lo0, &lo1, &msk, 1);
-
-            // asm("tlbwr\t\n");
-            //  mips_tlbri2 (tlbhi_t *phi, tlblo_t *plo0, tlblo_t *plo1, unsigned int *pmsk, int index)
 
             // writeValTo7SegsHex(hi);
             // writeValTo7SegsHex(lo0);
